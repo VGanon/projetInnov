@@ -6,7 +6,7 @@
 
 3.  On prend les utilisateurs qui ont noté ce même film  
 
-4.  On calcule la somme d'un XOR entre la note du film de U1 et la note de chaque autre utilisateur  
+4.  On calcule la somme d'un NON XOR entre la note du film de U1 et la note de chaque autre utilisateur.
 
 5.  On trie ce tableau par ordre décroissant  
 
