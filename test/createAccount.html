@@ -1,0 +1,43 @@
+<html>
+	<body>
+		<h1>Test de creation d'un compte utilisateur</h1>
+		<p>
+			Au clic sur le bouton "Create account" :<br/>
+			- Envoi des donnees du formulaire ci-dessous au serveur nodejs<br/>
+			- Le serveur se connecte a une bdd locale : mongodb://localhost:27017/test<br/>
+			- Puis tente de creer un nouvel utilisateur<br/>
+			- Si la creation a marche, la page affiche un message<br/>
+		</p> ------------------------------------------------------------ <br/><br/>
+
+		<div>
+			<form>
+				Account : <input id="username"/><br />
+				Password : <input id="password"/><br />
+				<input id="createAccount" type="button" value="Create account" />
+			</form>
+		</div>
+		<p id="status"></p>
+
+		<!-- imports -->
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			$(document).ready(function(){
+				//Creation de la socket
+				var socket = io();
+
+				//Envoi des donnees du formulaire au serveur
+				$("#createAccount").click(function(){
+					var data = {"username": $("#username").val(), "password": $("#password").val() };
+					console.log("Send data to server :\n", data);
+					socket.emit("createAccount", data);
+				});
+
+				//Reponse du serveur a la creation d'un compte
+				socket.on('accountCreated', function(data){
+					$("#status").html("Account successfully created<br />" + data);
+				});
+			})
+		</script>
+	</body>
+</html>
