@@ -1,3 +1,7 @@
 # NodeJS module
 test/node_modules/
 test/node_modules/*
+
+# sublime text config #
+*.sublime-project
+*.sublime-workspace
