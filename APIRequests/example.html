@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script src="apirequests.js"></script>
+
+</head>
+  <body>
+    <div id="movies">
+    </div>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+/* Ceci est un exemple de traitement des données JSON récupérées via les requêtes à l'API. (ici les films qui sortent bientôt en salle)*/
+  var films = JSON.parse(getUpcomingMovies());
+  var genresJSON = JSON.parse(getGenres());
+  var genreMap = new Object();
+
+  genresJSON.genres.forEach(function(result) {
+    genreMap[result.id] = result.name;
+  });
+  films.results.forEach(function(result) {
+    movieGenres="";
+    for(var i = 0; i < result.genre_ids.length; i++) {
+      movieGenres = movieGenres + genreMap[result.genre_ids[i]];
+      if(i!==(result.genre_ids.length-1)){
+        movieGenres = movieGenres + ", ";
+      }
+    }
+
+    var date = new Date(result.release_date);
+    var dateString = ("0" + date.getUTCDate()).slice(-2) + "/" + ("0" + (date.getUTCMonth()+1)).slice(-2) +"/"+ date.getUTCFullYear();
+    var movies = document.getElementById('movies');
+      var movie = document.createElement('DIV');
+      movie.setAttribute('style', 'height:500px');
+      movie.setAttribute('class', 'movie');
+        var poster = document.createElement('IMG');
+        poster.setAttribute('class', 'poster');
+        poster.setAttribute('src', "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + result.poster_path);
+        poster.setAttribute('style', 'float:left');
+      movie.appendChild(poster);
+        var infos = document.createElement('P');
+        infos.setAttribute('class', 'infos');
+        infos.innerHTML = "Titre : " + result.title + "<br/>Date de sortie : " + dateString + "<br/>" + movieGenres + "<br/>" + result.overview;
+      movie.appendChild(infos);
+    movies.appendChild(movie);
+  });
+
+</script>
