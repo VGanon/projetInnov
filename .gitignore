@@ -1,6 +1,3 @@
 # NodeJS module
-*/node_modules/
-*/node_modules/*
-node_module/
-node_module/*
-
+test/node_modules/
+test/node_modules/*
