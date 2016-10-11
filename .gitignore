@@ -9,4 +9,4 @@ src/node_modules/*
 
 # typescript files #
 ####################
-test/**/*.ts
+**/*.ts
