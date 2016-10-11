@@ -1,6 +1,6 @@
 # NodeJS module
-test/node_modules/
-test/node_modules/*
+src/node_modules/
+src/node_modules/*
 
 # sublime text config #
 #######################
