@@ -7,9 +7,9 @@ var mongo = require('mongodb').MongoClient;
 var assert = require('assert');
 app.use(express.static(path.join(__dirname)));
 
-//Requete GET => envoi de "createAccount.html"
+//Requete GET => envoi de "login.html"
 app.get('/', function(req, res){
-  	res.sendFile(__dirname + '/createAccount.html');
+  	res.sendFile(__dirname + '/login.html');
 });
 
 //Actif sur le port 3000

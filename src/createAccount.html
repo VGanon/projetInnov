@@ -1,20 +1,14 @@
 <html>
 	<body>
-		<h1>Test de creation d'un compte utilisateur</h1>
-		<p>
-			Au clic sur le bouton "Create account" :<br/>
-			- Envoi des donnees du formulaire ci-dessous au serveur nodejs<br/>
-			- Le serveur se connecte a une bdd locale : mongodb://localhost:27017/test<br/>
-			- Puis tente de creer un nouvel utilisateur<br/>
-			- Si la creation a marche, la page affiche un message<br/>
-		</p> ------------------------------------------------------------ <br/><br/>
+		<h1>Creation d'un compte</h1>
 
 		<div>
 			<form>
-				Account : <input id="username"/><br />
-				Password : <input id="password" type = "password"/><br />
-				Confirm password :  <input id="confirmPassword" type = "password"/><br />
-				<input id="createAccount" type="button" value="Create account" />
+				Nom d'utilisateur <input id="username"/><br />
+				Email <input id="email"/><br />
+				Mot de passe <input id="password" type = "password"/><br />
+				Confirmation de mot de passe  <input id="confirmPassword" type = "password"/><br />
+				<input id="createAccount" type="button" value="Inscription" />
 			</form>
 		</div>
 		<p id="status"></p>
