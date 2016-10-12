@@ -12,6 +12,10 @@ app.get('/', function(req, res){
   	res.sendFile(__dirname + '/login.html');
 });
 
+app.get('/getUpcomingMovies', function(req, res){
+  	res.sendFile(__dirname + '/APIRequests/upcomingMovies.html');
+});
+
 //Actif sur le port 3000
 http.listen(3000, function(){
   	console.log('listening on *:3000');
@@ -34,5 +38,3 @@ io.on('connection', function(socket){
 		});
 	});
 });
-
-
