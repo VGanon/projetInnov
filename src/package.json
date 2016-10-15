@@ -1,16 +1,17 @@
-{ "name" : "ProjetInnov"
-, "version" : "0.0.1"
-, "description" : "A platform. THE platform"
-, "main" : "server.js"
-, "dependencies": {
+{
+  "name": "ProjetInnov",
+  "version": "0.0.1",
+  "description": "A platform. THE platform",
+  "main": "server.js",
+  "dependencies": {
+    "express": "latest",
+    "mongodb": "latest",
     "socket.io": "latest"
-    ,"express": "latest"
-    ,"mongodb": "latest"
-  }
-,"repository": {
+  },
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/VGanon/projetInnov"
-  }
-, "author": ""
-, "license": "ISC"
+  },
+  "author": "",
+  "license": "ISC"
 }
