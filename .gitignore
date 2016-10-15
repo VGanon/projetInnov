@@ -10,3 +10,4 @@ src/node_modules/*
 # typescript files #
 ####################
 **/*.ts
+tsconfig.json
