@@ -208,14 +208,4 @@ console.log(firstTen);
 var allRecommendationsForPH = allRecommendationsForU1(firstTen, notreBdd, ph);
 console.log("Les recommendations pour PH: ");
 console.log(allRecommendationsForPH);
-/*
-bordel à tester
-let table = sumNonXORuserObject(best_ph, userRecommended);
-//console.log(table);
-table = filterDescObject(table);
-console.log(table);
-let firstTen = getFirstTen(table);
-let criteriaSum = 1; // supposons
-let otherRecs = otherRecommendations(firstTen, notreBdd, criteriaSum);
-console.log("otherRecs: " + otherRecs);
-*/ 
+console.log("ça passe !");
