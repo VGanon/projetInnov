@@ -132,38 +132,14 @@ function sumNonXORuserObject(u1Movie: RatedMovie, movies: RatedMovie[]): any {
       "score": compatibleScore, 
       "rater": movies[i].rater
     }
-    console.log("tuple: " + tuple.score + " " + tuple.rater);
+    //console.log("tuple: " + tuple.score + " " + tuple.rater);
     result.push(tuple);
-    console.log("table length: " + result.length);
+    //console.log("table length: " + result.length);
   }
   return result;
 }
 
 // 5.  On trie ce tableau des utilisateurs trouvés par ordre décroissant  
-/*
-function filterDesc(array: any): void {
-  let maxTuple = function(table: any) {
-    let max = table[0];
-    for(let i=1; i<table.length; i++) {
-      if(max[0] > (table[i])[0]) {
-        console.log("table @i: " + table[i]);
-        max = table[i];
-      }
-    }
-    return max;
-  }
-  let result = [];
-  let arrayLength = array.length;
-  for(let i=0; i<arrayLength; i++) {
-    let max = maxTuple(array);
-    result.push(max);
-    array.splice(array.indexOf(max), 1);
-    console.log("toto");
-  }
-  array = result;
-}
-*/
-
 function maxTuple(table: any) {
   let max = table[0];
   for(let i=1; i<table.length; i++) {
@@ -263,7 +239,6 @@ let userRecommended = [best_ben, best_thain, best_bast];
 //let table = sumNonXORuserArray(best_ph, userRecommended);
 let table = sumNonXORuserObject(best_ph, userRecommended);
 //console.log(table);
-//filterDesc(table);
 table = filterDescObject(table);
 console.log(table);
 let firstTen = getFirstTen(table);
