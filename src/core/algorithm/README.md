@@ -1,3 +1,6 @@
+# Lancer typescript transcompiler
+sur le répertoire projetInnov, cmd: tsc
+
 # Comment tester
 ouvrir le fichier testAlgorithmeRG.html, puis ouvrir le console du navigateur.
 
