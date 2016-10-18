@@ -4,6 +4,7 @@
   "description": "A platform. THE platform",
   "main": "server.js",
   "dependencies": {
+    "angular": "^1.5.8",
     "express": "latest",
     "mongodb": "latest",
     "socket.io": "latest"
