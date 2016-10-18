@@ -1,4 +1,4 @@
-<html ng-app="filmApp">
+<html ng-app="filmApp" ng-controller="FilmController as filmList">
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="index.css" type="text/css">
@@ -6,14 +6,22 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="node_modules/angular/angular.js"></script>
 		<script src="index.js"></script>
+		<script src="core/apiRequests/apirequests.js"></script>
 	</head>
 	<body>
 		<!-- TODO barre a completer -->
 		<div id="topbar">
-			<input placeholder="Chercher un film" />
+			<a id="home" href="#" onclick="window.location.reload()">
+				<img src="images/accueil.png" />
+			</a>
+			<input placeholder="Chercher des films, des acteurs ou d'autres choses" ng-model="inputText" 
+				onkeydown="if(event.keyCode === 13) $('#search').click()" />
+			<a id="search" href="#" ng-click="filmList.search(inputText)">
+				<img src="images/search.png" />
+			</a>
 		</div>
 		<!-- Corps de la page dynamique (angularjs) -->
-		<div id="content" ng-controller="FilmController as filmList">
+		<div id="content">
 			<div ng-repeat="film in filmList.films" ng-class-even="'background'" class="film">
 				<div class="rank">
 					#{{film.rank}}
@@ -31,6 +39,7 @@
 				</p>
 			</div>
 			<div class="center">
+				<!-- TODO : au clic, affiche 10 films supplementaires -->
 				<button>Afficher plus</button>
 			</div>
 		</div>

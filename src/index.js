@@ -58,4 +58,10 @@ angular.module('filmApp', []).controller('FilmController', function() {
 		"\"L'Armée de Dumbledore\", pour leur enseigner l'art de la défense contre les forces du " +
 		"Mal et se préparer à la guerre qui s'annonce... "
 	));
+
+	filmList.search = function(text){
+		console.log("Input text : " + text);
+		console.log(JSON.parse(getMovieByTitle(text)));
+		console.log(JSON.parse(getPersonDetails(text)));
+	}
 });

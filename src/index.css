@@ -2,6 +2,8 @@ body {
 	margin: 0;
 }
 
+/* Barre de menu */
+
 #topbar {
 	position: fixed;
 	height: 40px;
@@ -12,6 +14,32 @@ body {
 	padding: 0 5px;
 	z-index: 1;
 }
+
+#topbar #home img {
+	height: 35px;
+	margin-right: 10px;
+}
+
+#topbar input {
+	width: 400px;
+	height: 25px;
+	border: 0;
+	padding: 5px;
+}
+
+#topbar #search {
+	width: 40px;
+	background-color: #e6e6e6;
+}
+
+#topbar #search img {
+	height: 25px;
+	display: block;
+	margin: 0 auto;
+}
+
+
+/* Corps de la page */
 
 #content {
 	margin-top: 40px;
@@ -42,7 +70,7 @@ div.producer {
 	font-style: italic;
 }
 
-img {
+div.film img {
 	height: 400px;
 	float: left;
 	margin-right: 20px;
