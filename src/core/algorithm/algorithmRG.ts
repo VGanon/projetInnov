@@ -50,31 +50,20 @@ function rateMovie(rater: User, movie: Movie, score: number[]): RatedMovie {
 // 2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire : 
 // - pour chaque film, on calcule la somme des critères.
 // - L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement. 
-/*
-function recommendedMovie(movies: RatedMovie[]): RatedMovie {
-  let max = movies[0];
-  for(let i=1; i<movies.length; i++) {
-    if(movies[i].sumCriteria() > max.sumCriteria()) {
-      max = movies[i];
-    }
-  }
-  return max;
-}
-*/
 
 // 3.  On prend les utilisateurs qui ont noté ce même film
 // 2 accesseurs: 
-function allUsersWhoRatedThisMovie(movie: Movie, bdd: RatedMovie[]): User[] {
+function allInstancesOfThisRatedMovie(movie: Movie, bdd: RatedMovie[], excludeUser: User): RatedMovie[] {
   let result = [];
   for(let i=0; i<bdd.length; i++) {
-    if(movie.title === bdd[i].title) {
+    if(movie.title === bdd[i].title && bdd[i].rater.name !== excludeUser.name) {
       result.push(bdd[i]);
     }
   }
   return result;
 }
 
-function allRatedMoviesFromUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
+function watchedMoviesOfUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
   for(let i=0; i<bdd.length; i++) {
     if(user === bdd[i].rater) {
@@ -98,7 +87,7 @@ function maxCriteriaMovie(bdd: RatedMovie[]): RatedMovie {
 // Retourner une liste de films classée par l'ordre de SumCriteria descendant
 function recommendedMoviesByUser(chosenUser: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
-  let ratedMovies = allRatedMoviesFromUser(chosenUser, bdd);
+  let ratedMovies = watchedMoviesOfUser(chosenUser, bdd);
   
   let len = bdd.length;
   for(let i=0; i<len; i++) {
@@ -128,7 +117,7 @@ function sumNonXOR(movie1: RatedMovie, movie2: RatedMovie): number {
   return sum;
 }
 // Mettre tous les sumNonXOR dans un tableau
-// movies: les meilleurs recommendations de Benjamin, Thain, Bastien, etc
+// movies: le même film noté par Benjamin, Thain, Bastien, etc
 function sumNonXORuserObject(u1Movie: RatedMovie, movies: RatedMovie[]): any {
   let result = [];
   for(let i=0; i<movies.length; i++) {
@@ -184,7 +173,7 @@ function getFirstTen(array: any): any {
 // -> Si au bout de 3 itérations ce n'est pas satisfaisant, alors on passe à l'algo de substitution
 function allRecommendationsForU1(compatibleUsers: any, bddOfRatedMovies: RatedMovie[], u1: User): any {
   let result = [];
-  let moviesWatchedByU1 = allRatedMoviesFromUser(u1, bddOfRatedMovies);
+  let moviesWatchedByU1 = watchedMoviesOfUser(u1, bddOfRatedMovies);
   for(let i=0; i<compatibleUsers.length; i++) {
     let recommendationsDescUser = recommendedMoviesByUser(compatibleUsers[i], bddOfRatedMovies);
     // tricher un peu, ici on donne toujours le meilleur film de compatibleUsers[i]
@@ -223,20 +212,15 @@ console.log(bast_ib);
 console.log("Notre stub de bdd:");
 let notreBdd = [ph_ib, ph_du, ben_ib, thain_ib, bast_ib];
 console.log(notreBdd);
-// Les résultats tirés sur le film Inglorious Basterds sont:
-let whoWatchedIngBasterds = allUsersWhoRatedThisMovie(ingloriousBasterds, notreBdd);
-console.log("Les utilisateurs ayant vu inglorious basterds sont: " + whoWatchedIngBasterds);
-let allRecommendationsForPH = allRecommendationsForU1(whoWatchedIngBasterds, notreBdd, ph);
-console.log("Les recommendations pour PH: " + allRecommendationsForPH);
-
-/*
-bordel à tester
-let table = sumNonXORuserObject(best_ph, userRecommended);
-//console.log(table);
-table = filterDescObject(table);
-console.log(table);
-let firstTen = getFirstTen(table);
-let criteriaSum = 1; // supposons
-let otherRecs = otherRecommendations(firstTen, notreBdd, criteriaSum);
-console.log("otherRecs: " + otherRecs);
-*/
+let allRatingOfIngBastExceptPH = allInstancesOfThisRatedMovie(ingloriousBasterds, notreBdd, ph);
+//console.log("Les utilisateurs ayant vu inglorious basterds sauf PH sont: " + allRatingOfIngBastExceptPH);
+console.log("ça passe !");
+let nonXORtableDePH = sumNonXORuserObject(ph_ib, allRatingOfIngBastExceptPH);
+nonXORtableDePH = filterDescObject(nonXORtableDePH);
+let firstTen = getFirstTen(nonXORtableDePH);
+console.log("First ten: ");
+console.log(firstTen);
+let allRecommendationsForPH = allRecommendationsForU1(firstTen, notreBdd, ph);
+console.log("Les recommendations pour PH: ");
+console.log(allRecommendationsForPH);
+console.log("ça passe !");
