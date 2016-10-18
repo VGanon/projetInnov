@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/getUpcomingMovies', function(req, res){
-  	res.sendFile(__dirname + '/APIRequests/upcomingMovies.html');
+  	res.sendFile(__dirname + '/core/apiRequests/upcomingMovies.html');
 });
 
 //Actif sur le port 3000
