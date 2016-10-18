@@ -29,7 +29,7 @@ class RatedMovie extends Movie {
   }
   
   // Calculer la somme des critères
-  makeSumCriteria(): number {
+  sumCriteria(): number {
     let sum = 0;
     for(let i=0; i<this.score.length; i++) {
       if(this.score[i] === 1) {
@@ -50,45 +50,63 @@ function rateMovie(rater: User, movie: Movie, score: number[]): RatedMovie {
 // 2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire : 
 // - pour chaque film, on calcule la somme des critères.
 // - L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement. 
+/*
 function recommendedMovie(movies: RatedMovie[]): RatedMovie {
   let max = movies[0];
   for(let i=1; i<movies.length; i++) {
-    if(movies[i].makeSumCriteria() > max.makeSumCriteria()) {
+    if(movies[i].sumCriteria() > max.sumCriteria()) {
       max = movies[i];
     }
   }
   return max;
 }
-
-function recommendedMovieByCriteriaSum(movies: RatedMovie[], sumCriteria: number) {
-  let max = movies[0];
-  for(let i=1; i<movies.length; i++) {
-    if( (movies[i].makeSumCriteria() > max.makeSumCriteria()) &&
-      (movies[i].makeSumCriteria() < sumCriteria) ) {
-      max = movies[i];
-    }
-  }
-  return max;
-}
+*/
 
 // 3.  On prend les utilisateurs qui ont noté ce même film
 // 2 accesseurs: 
-function allUsersWhoRatedThisMovie(movie: Movie, bdd: RatedMovie[]) {
+function allUsersWhoRatedThisMovie(movie: Movie, bdd: RatedMovie[]): User[] {
   let result = [];
   for(let i=0; i<bdd.length; i++) {
     if(movie.title === bdd[i].title) {
       result.push(bdd[i]);
     }
   }
+  return result;
 }
 
-function allRatedMoviesFromAnUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
+function allRatedMoviesFromUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
   for(let i=0; i<bdd.length; i++) {
     if(user === bdd[i].rater) {
       result.push(bdd[i]);
     }
   }
+  return result;
+}
+
+// Retourner le film qui a la somme des criteria la plus grande dans une collection des films notés 
+function maxCriteriaMovie(bdd: RatedMovie[]): RatedMovie {
+  let max = bdd[0];
+  for(let i=1; i<bdd.length; i++) {
+    if(max.sumCriteria() < bdd[i].sumCriteria()) {
+      max = bdd[i];
+    }
+  }
+  return max;
+}
+
+// Retourner une liste de films classée par l'ordre de SumCriteria descendant
+function recommendedMoviesByUser(chosenUser: User, bdd: RatedMovie[]): RatedMovie[] {
+  let result = [];
+  let ratedMovies = allRatedMoviesFromUser(chosenUser, bdd);
+  
+  let len = bdd.length;
+  for(let i=0; i<len; i++) {
+    let max = maxCriteriaMovie(bdd);
+    result.unshift(max);
+    bdd.splice(bdd.indexOf(max), 1);
+  }
+
   return result;
 }
 
@@ -111,19 +129,6 @@ function sumNonXOR(movie1: RatedMovie, movie2: RatedMovie): number {
 }
 // Mettre tous les sumNonXOR dans un tableau
 // movies: les meilleurs recommendations de Benjamin, Thain, Bastien, etc
-function sumNonXORuserArray(u1Movie: RatedMovie, movies: RatedMovie[]): any {
-  let tuple: [number, User]; // compatible (NXOR) score, User
-  let result = [];
-  for(let i=0; i<movies.length; i++) {
-    let compatibleScore = sumNonXOR(u1Movie, movies[i]);
-    tuple = [compatibleScore, movies[i].rater];
-    console.log("tuple: " + tuple);
-    result.push(tuple);
-    console.log("table length: " + result.length);
-  }
-  return result;
-}
-
 function sumNonXORuserObject(u1Movie: RatedMovie, movies: RatedMovie[]): any {
   let result = [];
   for(let i=0; i<movies.length; i++) {
@@ -140,7 +145,7 @@ function sumNonXORuserObject(u1Movie: RatedMovie, movies: RatedMovie[]): any {
 }
 
 // 5.  On trie ce tableau des utilisateurs trouvés par ordre décroissant  
-function maxTuple(table: any) {
+function maxTuple(table: any): any {
   let max = table[0];
   for(let i=1; i<table.length; i++) {
     if(max.score > table[i].score) {
@@ -157,7 +162,6 @@ function filterDescObject(array: any): any {
     let max = maxTuple(array);
     result.unshift(max);
     array.splice(array.indexOf(max), 1);
-    console.log("toto");
   }
   return result;
 }
@@ -178,22 +182,13 @@ function getFirstTen(array: any): any {
 // 7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.  
 //     -> Si on obtient a en-dessous de 8 films, on recommence avec le deuxième meilleur film que U1 a aimé.
 // -> Si au bout de 3 itérations ce n'est pas satisfaisant, alors on passe à l'algo de substitution
-function otherRecommendations(compatibleUsers: any, bddOfRatedMovies: RatedMovie[], criteriaSum: number): any {
-  let allRatedMoviesFromAnUser = function(user: User, bdd: RatedMovie[]): RatedMovie[] {
-    let result = [];
-    for(let i=0; i<bdd.length; i++) {
-      if(user === bdd[i].rater) {
-        result.push(bdd[i]);
-      }
-    }
-    return result;
-  }
+function allRecommendationsForU1(compatibleUsers: any, bddOfRatedMovies: RatedMovie[], u1: User): any {
   let result = [];
+  let moviesWatchedByU1 = allRatedMoviesFromUser(u1, bddOfRatedMovies);
   for(let i=0; i<compatibleUsers.length; i++) {
-    let recommendation = recommendedMovieByCriteriaSum(
-      allRatedMoviesFromAnUser(compatibleUsers[i], bddOfRatedMovies),
-      criteriaSum);
-    result.push(recommendation);
+    let recommendationsDescUser = recommendedMoviesByUser(compatibleUsers[i], bddOfRatedMovies);
+    // tricher un peu, ici on donne toujours le meilleur film de compatibleUsers[i]
+    result.push(recommendationsDescUser[0]);
   }
   return result;
 }
@@ -228,15 +223,14 @@ console.log(bast_ib);
 console.log("Notre stub de bdd:");
 let notreBdd = [ph_ib, ph_du, ben_ib, thain_ib, bast_ib];
 console.log(notreBdd);
-console.log("Test fonction recommendedMovie():");
-let best_ph = recommendedMovie([ph_ib, ph_du]);
-console.log(best_ph);
-let best_ben = recommendedMovie([ben_ib]);
-let best_thain = recommendedMovie([thain_ib]);
-let best_bast = recommendedMovie([bast_ib]);
-// Ici dans le test, on suppose que les résultats tirés sur le film Inglorious Basterds sont:
-let userRecommended = [best_ben, best_thain, best_bast];
-//let table = sumNonXORuserArray(best_ph, userRecommended);
+// Les résultats tirés sur le film Inglorious Basterds sont:
+let whoWatchedIngBasterds = allUsersWhoRatedThisMovie(ingloriousBasterds, notreBdd);
+console.log("Les utilisateurs ayant vu inglorious basterds sont: " + whoWatchedIngBasterds);
+let allRecommendationsForPH = allRecommendationsForU1(whoWatchedIngBasterds, notreBdd, ph);
+console.log("Les recommendations pour PH: " + allRecommendationsForPH);
+
+/*
+bordel à tester
 let table = sumNonXORuserObject(best_ph, userRecommended);
 //console.log(table);
 table = filterDescObject(table);
@@ -245,3 +239,4 @@ let firstTen = getFirstTen(table);
 let criteriaSum = 1; // supposons
 let otherRecs = otherRecommendations(firstTen, notreBdd, criteriaSum);
 console.log("otherRecs: " + otherRecs);
+*/
