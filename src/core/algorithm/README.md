@@ -1,4 +1,6 @@
 # Comment tester
+npm run watch
+
 ouvrir le fichier testAlgorithmeRG.html, puis ouvrir le console du navigateur.
 
 # Résultat de test

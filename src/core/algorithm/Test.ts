@@ -1,21 +1,22 @@
-import { User } from "./Definition";
+/*import { User } from "./Definition";
 import { Movie } from "./Definition";
-import { RatedMovie } from "./Definition";
+import { RatedMovie } from "./Definition";*/
+import * as def from "./Definition";
 import * as arg from "./AlgorithmRGMethods";
 
 // Some samples to test
 console.log("Les utilisateurs:");
-let ph = new User("PH");
-let kribouille = new User("Benjamin");
-let thain = new User("Alexandre");
-let bastien = new User("Bastien");
+let ph = new def.User("PH");
+let kribouille = new def.User("Benjamin");
+let thain = new def.User("Alexandre");
+let bastien = new def.User("Bastien");
 console.log(ph);
 console.log(kribouille);
 console.log(thain);
 console.log(bastien);
 console.log("Les films:");
-let ingloriousBasterds = new Movie("Inglorious Basterds", ["action", "drama"], ["c1", "c2", "c3", "c4", "c5"]);
-let djangoUnchained = new Movie("Django Unchained", ["action", "comedy"], ["c1", "c2", "c3", "c4", "c5"]);
+let ingloriousBasterds = new def.Movie("Inglorious Basterds", ["action", "drama"], ["c1", "c2", "c3", "c4", "c5"]);
+let djangoUnchained = new def.Movie("Django Unchained", ["action", "comedy"], ["c1", "c2", "c3", "c4", "c5"]);
 console.log(ingloriousBasterds);
 console.log(djangoUnchained);
 console.log("Les utilisateurs notent quelques films:");
