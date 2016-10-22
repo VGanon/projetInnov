@@ -1,6 +1,3 @@
-# Lancer typescript transcompiler
-sur le répertoire projetInnov, cmd: tsc
-
 # Comment tester
 npm run watch
 
