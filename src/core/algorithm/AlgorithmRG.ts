@@ -44,7 +44,7 @@ function nextBestMovieByUser(bdd: RatedMovie[], bestMovie: RatedMovie): RatedMov
 function ratedMoviesByScoreDescOfUser(chosenUser: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
   let ratedMovies = watchedMoviesOfUser(chosenUser, bdd);
-  let len = bdd.length;
+  let len = ratedMovies.length;
   for(let i=0; i<len; i++) {
     let max = maxCriteriaMovie(ratedMovies);
     result.unshift(max);
@@ -205,8 +205,12 @@ export function launchAlgorithmRG(userOne: User, ratedMovieDatabase: RatedMovie[
   // Scanning through each user who shares the similar opinion
   for(let i=0; i<table.length; i++) {
     let allRatedMoviesByScoreDescOfCurrentUser = ratedMoviesByScoreDescOfUser(table[i]["rater"], ratedMovieDatabase);
+    /*console.log("allRatedMoviesByScoreDescOfCurrentUser");
+    console.log(allRatedMoviesByScoreDescOfCurrentUser);*/
     // Scanning through each movie of this user
     for(let j=0; j<allRatedMoviesByScoreDescOfCurrentUser.length; j++) {
+      /*console.log("210. allRatedMoviesByScoreDescOfCurrentUser[j] is ");
+      console.log(allRatedMoviesByScoreDescOfCurrentUser[j]);*/
       let suspectedTitle = allRatedMoviesByScoreDescOfCurrentUser[j].title;
       // Detect whether u1 has watched the movie at (j)
       let isMovieWatched = false;

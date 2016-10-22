@@ -54,6 +54,8 @@
 	var p4 = new def.User("Bastien");
 	var m1 = new def.Movie("Inglorious Basterds", ["action", "drama"], ["c1", "c2", "c3", "c4", "c5"]);
 	var m2 = new def.Movie("Django Unchained", ["action", "comedy"], ["c1", "c2", "c3", "c4", "c5"]);
+	var m3 = new def.Movie("Harry Potter episode 100", [], ["c1", "c2", "c3", "c4", "c5"]);
+	var m4 = new def.Movie("American Pron", [], ["c1", "c2", "c3", "c4", "c5"]);
 	algo.addNewRatedMovie(bdd, p1, m1, [0, 1, 0, 1, 0]);
 	algo.addNewRatedMovie(bdd, p2, m1, [1, 0, 0, 0, 1]);
 	algo.addNewRatedMovie(bdd, p3, m1, [0, 1, 1, 0, 0]);
@@ -62,6 +64,8 @@
 	algo.addNewRatedMovie(bdd, p2, m2, [1, 0, 1, 0, 1]);
 	algo.addNewRatedMovie(bdd, p3, m2, [0, 1, 0, 1, 0]);
 	algo.addNewRatedMovie(bdd, p4, m2, [1, 0, 0, 1, 1]);
+	algo.addNewRatedMovie(bdd, p4, m3, [1, 0, 0, 1, 1]); // seul p4 a regardé Harry Potter episode 100
+	algo.addNewRatedMovie(bdd, p3, m4, [1, 0, 0, 1, 1]); // seul p3 a regardé ce film m4
 	var recommendationForP1 = algo.launchAlgorithmRG(p1, bdd);
 	console.log(recommendationForP1);
 
@@ -163,7 +167,7 @@
 	function ratedMoviesByScoreDescOfUser(chosenUser, bdd) {
 	    var result = [];
 	    var ratedMovies = watchedMoviesOfUser(chosenUser, bdd);
-	    var len = bdd.length;
+	    var len = ratedMovies.length;
 	    for (var i = 0; i < len; i++) {
 	        var max = maxCriteriaMovie(ratedMovies);
 	        result.unshift(max);
@@ -311,8 +315,12 @@
 	    // Scanning through each user who shares the similar opinion
 	    for (var i = 0; i < table.length; i++) {
 	        var allRatedMoviesByScoreDescOfCurrentUser = ratedMoviesByScoreDescOfUser(table[i]["rater"], ratedMovieDatabase);
+	        /*console.log("allRatedMoviesByScoreDescOfCurrentUser");
+	        console.log(allRatedMoviesByScoreDescOfCurrentUser);*/
 	        // Scanning through each movie of this user
 	        for (var j = 0; j < allRatedMoviesByScoreDescOfCurrentUser.length; j++) {
+	            /*console.log("210. allRatedMoviesByScoreDescOfCurrentUser[j] is ");
+	            console.log(allRatedMoviesByScoreDescOfCurrentUser[j]);*/
 	            var suspectedTitle = allRatedMoviesByScoreDescOfCurrentUser[j].title;
 	            // Detect whether u1 has watched the movie at (j)
 	            var isMovieWatched = false;
