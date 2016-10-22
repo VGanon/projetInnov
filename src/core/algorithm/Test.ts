@@ -1,47 +1,24 @@
-/*import { User } from "./Definition";
-import { Movie } from "./Definition";
-import { RatedMovie } from "./Definition";*/
 import * as def from "./Definition";
-import * as arg from "./AlgorithmRGMethods";
+import * as algo from "./AlgorithmRG";
 
-// Some samples to test
-console.log("Les utilisateurs:");
-let ph = new def.User("PH");
-let kribouille = new def.User("Benjamin");
-let thain = new def.User("Alexandre");
-let bastien = new def.User("Bastien");
-console.log(ph);
-console.log(kribouille);
-console.log(thain);
-console.log(bastien);
-console.log("Les films:");
-let ingloriousBasterds = new def.Movie("Inglorious Basterds", ["action", "drama"], ["c1", "c2", "c3", "c4", "c5"]);
-let djangoUnchained = new def.Movie("Django Unchained", ["action", "comedy"], ["c1", "c2", "c3", "c4", "c5"]);
-console.log(ingloriousBasterds);
-console.log(djangoUnchained);
-console.log("Les utilisateurs notent quelques films:");
-let ph_ib = arg.rateMovie(ph, ingloriousBasterds, [1, 0, 1, 0, 1]);
-let ph_du = arg.rateMovie(ph, djangoUnchained, [1, 0, 0, 0, 0]);
-let ben_ib = arg.rateMovie(kribouille, ingloriousBasterds, [0, 0, 1, 1, 1]);
-let thain_ib = arg.rateMovie(thain, ingloriousBasterds, [1, 1, 1, 0, 1]);
-let bast_ib = arg.rateMovie(bastien, ingloriousBasterds, [1, 0, 1, 0, 1]);
-console.log(ph_ib);
-console.log(ph_du);
-console.log(ben_ib);
-console.log(thain_ib);
-console.log(bast_ib);
-console.log("Notre stub de bdd:");
-let notreBdd = [ph_ib, ph_du, ben_ib, thain_ib, bast_ib];
-console.log(notreBdd);
-let allRatingOfIngBastExceptPH = arg.allInstancesOfThisRatedMovie(ingloriousBasterds, notreBdd, ph);
-//console.log("Les utilisateurs ayant vu inglorious basterds sauf PH sont: " + allRatingOfIngBastExceptPH);
-console.log("ça passe !");
-let nonXORtableDePH = arg.sumNonXORuserObject(ph_ib, allRatingOfIngBastExceptPH);
-nonXORtableDePH = arg.filterDescObject(nonXORtableDePH);
-let firstTen = arg.getFirstTen(nonXORtableDePH);
-console.log("First ten: ");
-console.log(firstTen);
-let allRecommendationsForPH = arg.allRecommendationsForU1(firstTen, notreBdd, ph);
-console.log("Les recommendations pour PH: ");
-console.log(allRecommendationsForPH);
-console.log("ça passe !");
+let bdd = [];
+
+let p1 = new def.User("PH");
+let p2 = new def.User("Benjamin");
+let p3 = new def.User("Alexandre");
+let p4 = new def.User("Bastien");
+
+let m1 = new def.Movie("Inglorious Basterds", ["action", "drama"], ["c1", "c2", "c3", "c4", "c5"]);
+let m2 = new def.Movie("Django Unchained", ["action", "comedy"], ["c1", "c2", "c3", "c4", "c5"]);
+
+algo.addNewRatedMovie(bdd, p1, m1, [0, 1, 0, 1, 0]);
+algo.addNewRatedMovie(bdd, p2, m1, [1, 0, 0, 0, 1]);
+algo.addNewRatedMovie(bdd, p3, m1, [0, 1, 1, 0, 0]);
+algo.addNewRatedMovie(bdd, p4, m1, [1, 0, 0, 0, 1]);
+algo.addNewRatedMovie(bdd, p1, m2, [0, 1, 0, 1, 1]);
+algo.addNewRatedMovie(bdd, p2, m2, [1, 0, 1, 0, 1]);
+algo.addNewRatedMovie(bdd, p3, m2, [0, 1, 0, 1, 0]);
+algo.addNewRatedMovie(bdd, p4, m2, [1, 0, 0, 1, 1]);
+
+let recommendationForP1 = algo.launchAlgorithmRG(p1, bdd);
+console.log(recommendationForP1);
