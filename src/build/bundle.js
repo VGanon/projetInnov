@@ -67,7 +67,11 @@
 	algo.addNewRatedMovie(bdd, p4, m3, [1, 0, 0, 1, 1]); // seul p4 a regardé Harry Potter episode 100
 	algo.addNewRatedMovie(bdd, p3, m4, [1, 0, 0, 1, 1]); // seul p3 a regardé ce film m4
 	var recommendationForP1 = algo.launchAlgorithmRG(p1, bdd);
+	console.log("recommendationForP1");
 	console.log(recommendationForP1);
+	var recommendationForP3 = algo.launchAlgorithmRG(p3, bdd);
+	console.log("recommendationForP3");
+	console.log(recommendationForP3);
 
 
 /***/ },

@@ -18,7 +18,9 @@ Résultat : on obtient les utilisateurs qui ont noté à l'identique ou presque 
 7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.  
     -> Si on obtient a en-dessous de 8 films, on recommence avec le deuxième meilleur film que U1 a aimé.
 -> Si au bout de 3 itérations ce n'est pas satisfaisant, alors on passe à l'algo de substitution
-
+7. (version moins lourd)
+Pour chaque user on prend leur meilleur film que U1 n'a pas vu (si U1 l'a vu, passe à leur deuxième...n-ème meilleur).
+  Si on obtient moins de 3 résultats, alors on passe à l'algo de substitution.
 
 # Algo de substitution : par catégorie
 
