@@ -1,4 +1,4 @@
-<html ng-app="filmApp" ng-controller="FilmController as filmList">
+<html ng-app="movieRecommendationApp" ng-controller="Controller as ctrl">
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="index.css" type="text/css">
@@ -11,37 +11,85 @@
 	<body>
 		<!-- TODO barre a completer -->
 		<div id="topbar">
-			<a id="home" href="#" onclick="window.location.reload()">
+			<a id="home" href="#" ng-click="ctrl.showRecommendedMovies()">
 				<img src="images/accueil.png" />
 			</a>
-			<input placeholder="Chercher des films, des acteurs ou d'autres choses" ng-model="inputText" 
+			<input placeholder="Chercher des movies, des acteurs ou d'autres choses" ng-model="inputText" 
 				onkeydown="if(event.keyCode === 13) $('#search').click()" />
-			<a id="search" href="#" ng-click="filmList.search(inputText)">
+			<a id="search" href="#" ng-click="ctrl.search(inputText)">
 				<img src="images/search.png" />
 			</a>
 		</div>
-		<!-- Corps de la page dynamique (angularjs) -->
+
+		<!-- Corps de la page -->
 		<div id="content">
-			<div ng-repeat="film in filmList.films" ng-class-even="'background'" class="film">
-				<div class="rank">
-					#{{film.rank}}
+			<!-- Accueil -->
+			<div id="home" ng-show="ctrl.data.movies">
+				<div ng-repeat="movie in ctrl.data.movies" ng-class-even="'background'" class="movie">
+					<div class="rank">
+						#{{movie.rank}}
+					</div>
+					<img ng-src={{movie.imgUrl}} />
+					<p>
+						<div class="title">
+							{{movie.title}}
+						</div>
+						<div class="information">
+							de {{movie.information}}
+						</div>
+					</p><p>
+						{{movie.description}}
+					</p>
 				</div>
-				<img ng-src={{film.imgUrl}} />
-				<p>
-					<div class="title">
-						{{film.title}}
-					</div>
-					<div class="producer">
-						de {{film.producer}}
-					</div>
-				</p><p>
-					{{film.description}}
-				</p>
+				<div class="center">
+					<!-- TODO : au clic, affiche 10 movies supplementaires -->
+					<button>Afficher plus</button>
+				</div>
 			</div>
-			<div class="center">
-				<!-- TODO : au clic, affiche 10 films supplementaires -->
-				<button>Afficher plus</button>
+
+			<!-- Recherche -->
+			<div id="search" ng-show="ctrl.data.search">
+				<h3>Films</h3>
+				<div ng-repeat="movie in ctrl.data.search.movies.results" ng-class-even="'background'" class="movie">
+					<img ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" />
+					<p>
+						<div class="title">
+							{{movie.title}}
+						</div>
+						<div class="information">
+							{{movie.release_date}}
+						</div>
+					</p><p>
+						{{movie.overview}}
+					</p>
+				</div>
+				<h3>Acteurs</h3>
+				<div class="actors">
+					<span ng-repeat="actor in ctrl.data.search.actors.results">
+						<a href="#" ng-click="ctrl.searchByActor(actor.name, actor.known_for)">
+							{{actor.name}}
+						</a>, 
+					</span>
+				</div>
 			</div>
+			<!-- Recherche selon un acteur -->
+			<div id="searchByActor" ng-show="ctrl.data.searchByActor">
+				<h3>Films populaires avec {{ctrl.data.searchByActor.actor}}</h3>
+				<div ng-repeat="movie in ctrl.data.searchByActor.movies" ng-class-even="'background'" class="movie">
+					<img ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" />
+					<p>
+						<div class="title">
+							{{movie.title}}
+						</div>
+						<div class="information">
+							{{movie.release_date}}
+						</div>
+					</p><p>
+						{{movie.overview}}
+					</p>
+				</div>
+			</div>
+		
 		</div>
 	</body>
 </html>

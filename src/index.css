@@ -24,7 +24,7 @@ body {
 	width: 400px;
 	height: 25px;
 	border: 0;
-	padding: 5px;
+	padding: 0 5px;
 }
 
 #topbar #search {
@@ -46,12 +46,16 @@ body {
 	position: absolute;
 }
 
-div.film {
+div.movie {
 	min-height: 400px;
 	padding: 20px 20px;
 }
 
-div.film.background {
+div.actors {
+	padding: 20px 20px;
+}
+
+div.movie.background {
 	background-color: #f1f1f1;
 }
 
@@ -66,11 +70,11 @@ div.title {
 	font-size: 20px;
 }
 
-div.producer {
+div.information {
 	font-style: italic;
 }
 
-div.film img {
+div.movie img {
 	height: 400px;
 	float: left;
 	margin-right: 20px;

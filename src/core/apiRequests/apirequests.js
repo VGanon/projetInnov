@@ -63,6 +63,14 @@ function getPersonDetails(id){
 }
 
 /**
+* Retourne les personnes dont le nom match avec le paramètre
+*/
+function getPeople(text){
+  var url = "http://api.themoviedb.org/3/search/person?api_key=" + api_key + "&query=" + text + "&language=fr"
+  return get(url);
+}
+
+/**
 * Retourne les images de la personne (acteur ou autre) passée en paramètre
 */
 function getPersonImages(id){
