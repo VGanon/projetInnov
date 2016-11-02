@@ -1,96 +1,160 @@
-<html ng-app="movieRecommendationApp" ng-controller="Controller as ctrl">
+<html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="index.css" type="text/css">
-		<!-- Imports -->
-		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-		<script src="node_modules/angular/angular.js"></script>
-		<script src="index.js"></script>
-		<script src="core/apiRequests/apirequests.js"></script>
+		<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<title>Accueil</title>
 	</head>
+	
 	<body>
-		<!-- TODO barre a completer -->
-		<div id="topbar">
-			<a id="home" href="#" ng-click="ctrl.showRecommendedMovies()">
-				<img src="images/accueil.png" />
-			</a>
-			<input placeholder="Chercher des movies, des acteurs ou d'autres choses" ng-model="inputText" 
-				onkeydown="if(event.keyCode === 13) $('#search').click()" />
-			<a id="search" href="#" ng-click="ctrl.search(inputText)">
-				<img src="images/search.png" />
-			</a>
-		</div>
+	
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">MoviesBestChoice</a>
+				</div>
 
-		<!-- Corps de la page -->
-		<div id="content">
-			<!-- Accueil -->
-			<div id="home" ng-show="ctrl.data.movies">
-				<div ng-repeat="movie in ctrl.data.movies" ng-class-even="'background'" class="movie">
-					<div class="rank">
-						#{{movie.rank}}
-					</div>
-					<img ng-src={{movie.imgUrl}} />
-					<p>
-						<div class="title">
-							{{movie.title}}
-						</div>
-						<div class="information">
-							de {{movie.information}}
-						</div>
-					</p><p>
-						{{movie.description}}
-					</p>
-				</div>
-				<div class="center">
-					<!-- TODO : au clic, affiche 10 movies supplementaires -->
-					<button>Afficher plus</button>
-				</div>
-			</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Accueil</a></li>
+					</ul>
+					
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/createAccount.html"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+						<li><a href="/login.html"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+					</ul>
 
-			<!-- Recherche -->
-			<div id="search" ng-show="ctrl.data.search">
-				<h3>Films</h3>
-				<div ng-repeat="movie in ctrl.data.search.movies.results" ng-class-even="'background'" class="movie">
-					<img ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" />
-					<p>
-						<div class="title">
-							{{movie.title}}
+					<form class="navbar-form" role="search">
+						<div class="input-group" style="padding-left:200px;">
+							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Recherche des films">
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default" style="height:34px">
+									<span class="glyphicon glyphicon-search">
+										<span class="sr-only">Rechercher des films</span>
+									</span>
+								</button>
+							</span>
 						</div>
-						<div class="information">
-							{{movie.release_date}}
-						</div>
-					</p><p>
-						{{movie.overview}}
-					</p>
-				</div>
-				<h3>Acteurs</h3>
-				<div class="actors">
-					<span ng-repeat="actor in ctrl.data.search.actors.results">
-						<a href="#" ng-click="ctrl.searchByActor(actor.name, actor.known_for)">
-							{{actor.name}}
-						</a>, 
-					</span>
-				</div>
-			</div>
-			<!-- Recherche selon un acteur -->
-			<div id="searchByActor" ng-show="ctrl.data.searchByActor">
-				<h3>Films populaires avec {{ctrl.data.searchByActor.actor}}</h3>
-				<div ng-repeat="movie in ctrl.data.searchByActor.movies" ng-class-even="'background'" class="movie">
-					<img ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" />
-					<p>
-						<div class="title">
-							{{movie.title}}
-						</div>
-						<div class="information">
-							{{movie.release_date}}
-						</div>
-					</p><p>
-						{{movie.overview}}
-					</p>
-				</div>
-			</div>
+					</form>
+				
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+			
+		</nav>
 		
+		<div class="jumbotron">
+			<div class="container">
+				<h1>MoviesBestChoice</h1>
+				<p>Trouve les meilleurs films pour vous, selon la liste de vos amis & les différents catégories de films ...</p>
+				<p><a class="btn btn-primary btn-lg" href="/createAccount.html" role="button">Inscrivez-vous!</a></p>
+			</div>
 		</div>
+		
+	
+		
+		<div class="container">
+			<div class="row main">
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Films prochainement au cinéma</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+			</div>
+			
+			<div id="movies-row1" class="row"></div>
+			
+			<footer>
+				<hr>
+				<p>© Copyright 2016</p>
+			</footer>
+			
+		</div>
+		
+		
+		
+		
+		<!-- Imports -->
+		<script src="node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+		<script src="/core/APIRequests/apirequests.js"></script>
+
+		<!-- Mise en place dynamique de la page -->
+		<script type="text/javascript">
+			/* Ceci est un exemple de traitement des données JSON récupérées via les requêtes à l'API. (ici les films qui sortent bientôt en salle)*/
+			var films = JSON.parse(getUpcomingMovies());
+			var genresJSON = JSON.parse(getGenres());
+			var genreMap = new Object();
+
+			
+			genresJSON.genres.forEach(function(result) {
+				genreMap[result.id] = result.name;
+			});
+			
+			function test(result) {
+				movieGenres="";
+				for(var i = 0; i < result.genre_ids.length; i++) {
+					movieGenres = movieGenres + genreMap[result.genre_ids[i]];
+					if(i!==(result.genre_ids.length-1)){
+						movieGenres = movieGenres + ", ";
+					}
+				}
+
+				var date = new Date(result.release_date);
+				var dateString = ("0" + date.getUTCDate()).slice(-2) + "/" + ("0" + (date.getUTCMonth()+1)).slice(-2) +"/"+ date.getUTCFullYear();
+				var movies = document.getElementById('movies-row1');
+				  var movie = document.createElement('DIV');
+				  movie.setAttribute('style', 'height:200px');
+				  movie.setAttribute('class', 'col-md-4');
+				  movie.setAttribute('style', 'height:800px');
+				    var link = document.createElement('A');
+					link.setAttribute('class','btn btn-primary btn-lg');
+					var poster = document.createElement('IMG');
+					poster.setAttribute('class', 'poster');
+					poster.setAttribute('align', 'middle');
+					poster.setAttribute('src', "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + result.poster_path);
+					poster.setAttribute('style', 'float:left; height:400px');
+					link.appendChild(poster);
+				  movie.appendChild(link);
+					var title = document.createElement('H3');
+					title.innerHTML = result.title;
+				  movie.appendChild(title);
+					var date = document.createElement('H4');
+					date.innerHTML = dateString;
+				  movie.appendChild(date);
+					var genre = document.createElement('P');
+					genre.innerHTML = movieGenres;
+				  movie.appendChild(genre);
+					var overview = document.createElement('P');
+					var textoverview = result.overview;
+					if(result.overview.length > 50) {
+						textoverview = result.overview.slice(0,200) + "...";
+						
+					}
+					overview.innerHTML = textoverview;
+				  movie.appendChild(overview);
+					var detailsBtn = document.createElement('A');
+					detailsBtn.setAttribute('class','btn btn-primary btn-lg');
+					detailsBtn.setAttribute('role', 'button');
+					detailsBtn.innerHTML = 'Voir plus »';
+				  movie.appendChild(detailsBtn);
+				movies.appendChild(movie);
+			}
+
+			films.results.slice(0,9).forEach(test);
+			
+
+		</script>
+
+
 	</body>
 </html>
 

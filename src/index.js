@@ -23,7 +23,7 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 		//this.data = {"movies": algo()};
 		// ----- TMP 
 		this.data = {"movies": []};
-		this.data.movies.push(this.generateMovieDescription("Django Unchained", "Quentin Tarantino", "../tmp/images/django_unchained.jpg", 1, 
+		this.data.movies.push(this.generateMovieDescription("Django Unchained", "Quentin Tarantino", "tmp/images/django_unchained.jpg", 1, 
 			"Dans le sud des États-Unis, deux ans avant la guerre de Sécession, le Dr King Schultz," +
 			"un chasseur de primes allemand, fait l’acquisition de Django, un esclave qui peut l’aider" + 
 			"à traquer les frères Brittle, les meurtriers qu’il recherche. Schultz promet à Django de lui" +
@@ -37,7 +37,7 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 			"ils vont devoir choisir entre l’indépendance et la solidarité, entre le sacrifice et la survie..."
 		));
 
-		this.data.movies.push(this.generateMovieDescription("Inglourious Basterds", "Quentin Tarantino", "../tmp/images/inglourious_basterds.jpg", 2, 
+		this.data.movies.push(this.generateMovieDescription("Inglourious Basterds", "Quentin Tarantino", "tmp/images/inglourious_basterds.jpg", 2, 
 			"Dans la France occupée de 1940, Shosanna Dreyfus assiste à l'exécution de sa famille tombée " +
 			"entre les mains du colonel nazi Hans Landa. Shosanna s'échappe de justesse et s'enfuit à " +
 			"Paris où elle se construit une nouvelle identité en devenant exploitante d'une salle de cinéma." +
@@ -49,7 +49,7 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 			"est décidée à mettre à exécution une vengeance très personnelle..."
 		));
 
-		this.data.movies.push(this.generateMovieDescription("Harry Potter et l'Ordre du Phénix", "J. K. Rowling, David Yates", "../tmp/images/harry_potter_5.jpg", 3, 
+		this.data.movies.push(this.generateMovieDescription("Harry Potter et l'Ordre du Phénix", "J. K. Rowling, David Yates", "tmp/images/harry_potter_5.jpg", 3, 
 			"Alors qu'il entame sa cinquième année d'études à Poudlard, Harry Potter découvre" +
 			"que la communauté des sorciers ne semble pas croire au retour de Voldemort, " +
 			"convaincue par une campagne de désinformation orchestrée par le Ministre de la " +
