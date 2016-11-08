@@ -1,11 +1,3 @@
-// class User
-export class User {
-  name: string;
-  constructor(u: string) {
-    this.name = u;
-  }
-}
-
 // class Movie
 export class Movie {
   title: string;
@@ -27,7 +19,7 @@ export class RatedMovie extends Movie {
     this.rater = rater;
     this.score = score;
   }
-  
+
   // Calculer la somme des critères
   sumCriteria(): number {
     let sum = 0;
