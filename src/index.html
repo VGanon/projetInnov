@@ -4,9 +4,9 @@
 		<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<title>Accueil</title>
 	</head>
-	
+
 	<body>
-	
+
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -25,7 +25,7 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#">Accueil</a></li>
 					</ul>
-					
+
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="/createAccount.html"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
 						<li><a href="/login.html"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
@@ -43,12 +43,12 @@
 							</span>
 						</div>
 					</form>
-				
+
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
-			
+
 		</nav>
-		
+
 		<div class="jumbotron">
 			<div class="container">
 				<h1>MoviesBestChoice</h1>
@@ -56,31 +56,31 @@
 				<p><a class="btn btn-primary btn-lg" href="/createAccount.html" role="button">Inscrivez-vous!</a></p>
 			</div>
 		</div>
-		
-	
-		
+
+
+
 		<div class="container">
 			<div class="row main">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
-	               		<h1 class="title">Films prochainement au cinéma</h1>
+	               		<h1 class="title">Films populaires</h1>
 	               		<hr />
 	               	</div>
 	            </div>
 			</div>
-			
+
 			<div id="movies-row1" class="row"></div>
-			
+
 			<footer>
 				<hr>
 				<p>© Copyright 2016</p>
 			</footer>
-			
+
 		</div>
-		
-		
-		
-		
+
+
+
+
 		<!-- Imports -->
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -90,15 +90,15 @@
 		<!-- Mise en place dynamique de la page -->
 		<script type="text/javascript">
 			/* Ceci est un exemple de traitement des données JSON récupérées via les requêtes à l'API. (ici les films qui sortent bientôt en salle)*/
-			var films = JSON.parse(getUpcomingMovies());
+			var films = JSON.parse(getPopularMovies());
 			var genresJSON = JSON.parse(getGenres());
 			var genreMap = new Object();
 
-			
+
 			genresJSON.genres.forEach(function(result) {
 				genreMap[result.id] = result.name;
 			});
-			
+
 			function test(result) {
 				movieGenres="";
 				for(var i = 0; i < result.genre_ids.length; i++) {
@@ -137,7 +137,7 @@
 					var textoverview = result.overview;
 					if(result.overview.length > 50) {
 						textoverview = result.overview.slice(0,200) + "...";
-						
+
 					}
 					overview.innerHTML = textoverview;
 				  movie.appendChild(overview);
@@ -150,12 +150,10 @@
 			}
 
 			films.results.slice(0,9).forEach(test);
-			
+
 
 		</script>
 
 
 	</body>
 </html>
-
-
