@@ -14,7 +14,7 @@
 			<a id="home" href="#" ng-click="ctrl.showRecommendedMovies()">
 				<img src="images/accueil.png" />
 			</a>
-			<input placeholder="Chercher des movies, des acteurs ou d'autres choses" ng-model="inputText" 
+			<input placeholder="Chercher des films, des acteurs ou d'autres choses" ng-model="inputText" 
 				onkeydown="if(event.keyCode === 13) $('#search').click()" />
 			<a id="search" href="#" ng-click="ctrl.search(inputText)">
 				<img src="images/search.png" />
@@ -72,6 +72,7 @@
 					</span>
 				</div>
 			</div>
+			
 			<!-- Recherche selon un acteur -->
 			<div id="searchByActor" ng-show="ctrl.data.searchByActor">
 				<h3>Films populaires avec {{ctrl.data.searchByActor.actor}}</h3>
