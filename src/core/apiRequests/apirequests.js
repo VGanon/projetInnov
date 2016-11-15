@@ -14,6 +14,14 @@ function getUpcomingMovies(){
 }
 
 /**
+* Retourne les films les plus populaires
+*/
+function getPopularMovies(){
+  var url = "https://api.themoviedb.org/3/movie/popular?api_key=" + api_key + "&language=fr";
+  return get(url);
+}
+
+/**
 * Retourne les films correspondants au titre passé en paramètre
 */
 function getMovieByTitle(title){

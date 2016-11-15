@@ -1,10 +1,4 @@
-// class User
-export class User {
-  name: string;
-  constructor(u: string) {
-    this.name = u;
-  }
-}
+import { User } from "./User";
 
 // class Movie
 export class Movie {
@@ -27,15 +21,16 @@ export class RatedMovie extends Movie {
     this.rater = rater;
     this.score = score;
   }
-  
+
   // Calculer la somme des critères
   sumCriteria(): number {
     let sum = 0;
-    for(let i=0; i<this.score.length; i++) {
+    for(let i = 0; i < this.score.length; i++) {
       if(this.score[i] === 1) {
         sum++;
       }
     }
     return sum;
   }
+
 }

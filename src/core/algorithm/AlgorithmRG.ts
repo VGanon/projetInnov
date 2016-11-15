@@ -1,20 +1,18 @@
-import { User } from "./Definition";
-import { Movie } from "./Definition";
-import { RatedMovie } from "./Definition";
+import { User } from "./User";
+import { Movie } from "./Movies";
+import { RatedMovie } from "./Movies";
+import * as importMoviesUtils from "./MoviesUtils";
+var moviesUtils: any = importMoviesUtils;
 
-function rateMovie(rater: User, movie: Movie, score: number[]): RatedMovie {
-  return new RatedMovie(movie.title, movie.genres, movie.criteria, rater, score);
-}
-
-// 2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire : 
+// 2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire :
 // - pour chaque film, on calcule la somme des critères.
-// - L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement. 
+// - L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement.
 
 // Retourner les films notés par user dans la base des films notés
 function watchedMoviesOfUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
   for(let i=0; i<bdd.length; i++) {
-    if(user === bdd[i].rater) {
+    if(user.name == bdd[i].rater.name) { //Egalité simple car potentiellement => Objets différents
       result.push(bdd[i]);
     }
   }
@@ -22,8 +20,10 @@ function watchedMoviesOfUser(user: User, bdd: RatedMovie[]): RatedMovie[] {
 }
 
 // choisit le film que l'utilisteur a le plus aimé
-// Retourner le film qui a la somme des criteria la plus grande dans une collection des films notés 
+// Retourner le film qui a la somme des criteria la plus grande dans une collection des films notés
 function maxCriteriaMovie(bdd: RatedMovie[]): RatedMovie {
+  if (bdd.length > 0) {
+
   let max = bdd[0];
   for(let i=1; i<bdd.length; i++) {
     if(max.sumCriteria() < bdd[i].sumCriteria()) {
@@ -32,20 +32,21 @@ function maxCriteriaMovie(bdd: RatedMovie[]): RatedMovie {
   }
   return max;
 }
+return undefined;
+}
 
 /*// Retourner le "second best" film raté par l'utilisateur,
 // par rapport au meilleur film en paramètre.
 // Exemple : si le meilleur film a un score de 3/5. Alors le "2nd meilleur" aura un score MAX 3/5.
 function nextBestMovieByUser(bdd: RatedMovie[], bestMovie: RatedMovie): RatedMovie {
-  let result = 
+  let result =
 }*/
 
 // Retourner une liste de films classée par l'ordre de SumCriteria descendant
 function ratedMoviesByScoreDescOfUser(chosenUser: User, bdd: RatedMovie[]): RatedMovie[] {
   let result = [];
   let ratedMovies = watchedMoviesOfUser(chosenUser, bdd);
-  let len = ratedMovies.length;
-  for(let i=0; i<len; i++) {
+  for(let i = 0; i < ratedMovies.length; i++) {
     let max = maxCriteriaMovie(ratedMovies);
     result.unshift(max);
     ratedMovies.splice(ratedMovies.indexOf(max), 1);
@@ -88,7 +89,7 @@ function nonXORTable(u1Movie: RatedMovie, movies: RatedMovie[]): any {
   for(let i=0; i<movies.length; i++) {
     let compatibleScore = sumNonXOR(u1Movie, movies[i]);
     let tuple = {
-      "score": compatibleScore, 
+      "score": compatibleScore,
       "rater": movies[i].rater
     }
     //console.log("tuple: " + tuple.score + " " + tuple.rater);
@@ -135,7 +136,7 @@ function first10(array: any): any {
   }
 }
 
-// 7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.  
+// 7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.
 //     -> Si on obtient a en-dessous de 8 films, on recommence avec le deuxième meilleur film que U1 a aimé.
 // -> Si au bout de 3 itérations ce n'est pas satisfaisant, alors on passe à l'algo de substitution
 function recommendationsForU1(compatibleUsers: any, bddOfRatedMovies: RatedMovie[], u1: User): any {
@@ -154,24 +155,24 @@ function recommendationsForU1(compatibleUsers: any, bddOfRatedMovies: RatedMovie
 /*
 # Algo de recommandation général
 
-1.  Utilisateur U1 note un ensemble de films. 
-Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). 
-Si l'utilisateur a aimé un critère dans ce film, il passe ce critère à 1. 
+1.  Utilisateur U1 note un ensemble de films.
+Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc).
+Si l'utilisateur a aimé un critère dans ce film, il passe ce critère à 1.
 
-2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire : 
+2.  L'algo choisit le film que l'utilisteur a le plus aimé (à préciser), c'est à dire :
 - pour chaque film, on calcule la somme des critères.
-- L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement. 
+- L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement.
 
-3.  On prend les utilisateurs qui ont noté ce même film  
+3.  On prend les utilisateurs qui ont noté ce même film
 
 4.  On calcule la somme d'un NON XOR entre la note du film de U1 et la note de chaque autre utilisateur.
 Résultat : on obtient les utilisateurs qui ont noté à l'identique ou presque le même film que U1.
 
-5.  On trie ce tableau des utilisateurs trouvés par ordre décroissant  
+5.  On trie ce tableau des utilisateurs trouvés par ordre décroissant
 
-6.  On prend les 10 premiers résultats du tableau, ce qui correspond à 10 utilisateurs  
+6.  On prend les 10 premiers résultats du tableau, ce qui correspond à 10 utilisateurs
 
-7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.  
+7.  Pour chaque user on choisit le film avec la meilleure somme des critères et que U1 n'a pas vu.
     -> Si on obtient a en-dessous de 8 films, on recommence avec le deuxième meilleur film que U1 a aimé.
 -> Si au bout de 3 itérations ce n'est pas satisfaisant, alors on passe à l'algo de substitution
 
@@ -188,11 +189,11 @@ export function addNewRatedMovie(bdd: RatedMovie[], rater: User, movie: Movie, s
 
 export function launchAlgorithmRG(userOne: User, ratedMovieDatabase: RatedMovie[]): any {
   // Point 2
-  let allRatedMoviesByScoreDescOfU1 = 
+  let allRatedMoviesByScoreDescOfU1 =
     ratedMoviesByScoreDescOfUser(userOne, watchedMoviesOfUser(userOne, ratedMovieDatabase));
   let bestMovieByU1 = allRatedMoviesByScoreDescOfU1[0];
   // Point 3
-  let identicalMovieRatedByOthers = 
+  let identicalMovieRatedByOthers =
     allInstancesOfThisRatedMovie(bestMovieByU1, ratedMovieDatabase, userOne);
   // Point 4
   let table = nonXORTable(bestMovieByU1, identicalMovieRatedByOthers);
@@ -247,11 +248,11 @@ export function launchLocalTest() {
   /*console.log(ingloriousBasterds);
   console.log(djangoUnchained);
   console.log("Les utilisateurs notent quelques films:");*/
-  let ph_ib = rateMovie(ph, ingloriousBasterds, [1, 0, 1, 0, 1]);
-  let ph_du = rateMovie(ph, djangoUnchained, [1, 0, 0, 0, 0]);
-  let ben_ib = rateMovie(kribouille, ingloriousBasterds, [0, 0, 1, 1, 1]);
-  let thain_ib = rateMovie(thain, ingloriousBasterds, [1, 1, 1, 0, 1]);
-  let bast_ib = rateMovie(bastien, ingloriousBasterds, [1, 0, 1, 0, 1]);
+  let ph_ib = moviesUtils.createRatedMovieFromMovie(ph, ingloriousBasterds, [1, 0, 1, 0, 1]);
+  let ph_du = moviesUtils.createRatedMovieFromMovie(ph, djangoUnchained, [1, 0, 0, 0, 0]);
+  let ben_ib = moviesUtils.createRatedMovieFromMovie(kribouille, ingloriousBasterds, [0, 0, 1, 1, 1]);
+  let thain_ib = moviesUtils.createRatedMovieFromMovie(thain, ingloriousBasterds, [1, 1, 1, 0, 1]);
+  let bast_ib = moviesUtils.createRatedMovieFromMovie(bastien, ingloriousBasterds, [1, 0, 1, 0, 1]);
   /*console.log(ph_ib);
   console.log(ph_du);
   console.log(ben_ib);

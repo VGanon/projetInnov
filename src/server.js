@@ -7,13 +7,17 @@ var mongo = require('mongodb').MongoClient;
 var assert = require('assert');
 app.use(express.static(path.join(__dirname)));
 
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+
 //Requete GET => envoi de "login.html"
 app.get('/', function(req, res){
   	res.sendFile(__dirname + '/login.html');
 });
 
 app.get('/getUpcomingMovies', function(req, res){
-  	res.sendFile(__dirname + '/core/apiRequests/upcomingMovies.html');
+  	res.sendFile(__dirname + '/core/APIRequests/upcomingMovies.html');
 });
 
 //Actif sur le port 3000
