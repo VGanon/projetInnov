@@ -16,8 +16,24 @@ app.get('/', function(req, res){
   	res.sendFile(__dirname + '/login.html');
 });
 
-app.get('/getUpcomingMovies', function(req, res){
+/*app.get('/getUpcomingMovies', function(req, res){
   	res.sendFile(__dirname + '/core/APIRequests/upcomingMovies.html');
+});*/
+
+app.get('/login', function(req, res){
+  	res.sendFile(__dirname + '/login.html');
+});
+
+app.get('/subscribe', function(req, res){
+  	res.sendFile(__dirname + '/createAccount.html');
+});
+
+app.get('/index', function(req, res){
+  	res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/home', function(req, res){
+  	res.sendFile(__dirname + '/home.html');
 });
 
 //Actif sur le port 3000
