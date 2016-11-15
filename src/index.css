@@ -1,0 +1,21 @@
+#topbar input {
+	width: 250px;
+}
+
+div.movie {
+	height: 700px;
+	margin-bottom: 20px;
+}
+
+div.movie img.poster {
+	float: left;
+	height: 400px;
+}
+
+a.actor {
+	margin: 7px;
+}
+
+p {
+	text-align: justify;
+}
