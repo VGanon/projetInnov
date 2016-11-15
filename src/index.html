@@ -1,13 +1,13 @@
-<html>
+<html ng-app="movieRecommendationApp" ng-controller="Controller as ctrl">
 	<head>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="index.css" type="text/css">
 		<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<title>Accueil</title>
+		<title>MoviesBestChoice</title>
 	</head>
-
 	<body>
-
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<!-- Barre de menu -->
+		<nav id="topbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -17,143 +17,96 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">MoviesBestChoice</a>
+					<a class="navbar-brand" href="#" ng-click="ctrl.showPopularMovies()">MoviesBestChoice</a>
 				</div>
-
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#">Accueil</a></li>
 					</ul>
-
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="/createAccount.html"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
 						<li><a href="/login.html"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 					</ul>
-
 					<form class="navbar-form" role="search">
 						<div class="input-group" style="padding-left:200px;">
-							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Recherche des films">
+							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Chercher des films, des acteurs, ... choses" ng-model="inputText" onkeydown="if(event.keyCode === 13) $('#search').click()" />
 							<span class="input-group-btn">
-								<button type="submit" class="btn btn-default" style="height:34px">
+								<button id="search" type="submit" class="btn btn-default" style="height:34px" ng-click="ctrl.search(inputText)">
 									<span class="glyphicon glyphicon-search">
-										<span class="sr-only">Rechercher des films</span>
+										<span class="sr-only">Rechercher</span>
 									</span>
 								</button>
 							</span>
 						</div>
 					</form>
-
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
-
 		</nav>
 
+		<!-- Bandeau header -->
 		<div class="jumbotron">
 			<div class="container">
 				<h1>MoviesBestChoice</h1>
-				<p>Trouve les meilleurs films pour vous, selon la liste de vos amis & les différents catégories de films ...</p>
+				<p>Trouvez les meilleurs films pour vous, selon la liste de vos amis & les différentes catégories de films...</p>
 				<p><a class="btn btn-primary btn-lg" href="/createAccount.html" role="button">Inscrivez-vous!</a></p>
 			</div>
 		</div>
 
 
+		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
 
-		<div class="container">
-			<div class="row main">
+		<div id="main" class="container">
+			<!-- Titre dynamique du corps de page -->
+			<div class="row main-header">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
-	               		<h1 class="title">Films populaires</h1>
+	               		<h1 class="title">{{ctrl.pageTitle}}</h1>
 	               		<hr />
 	               	</div>
 	            </div>
 			</div>
 
-			<div id="movies-row1" class="row"></div>
+			<!-- Contenu dynamique de la page -->
+			<div id="content">
+				<!-- Iteration sur les films -->
+				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
+					<a class="btn btn-primary btn-lg">
+						<img ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+					</a>
+					<h3>
+						<span ng-show="ctrl.enableRanking">
+							#{{$index+1}}&nbsp;-&nbsp;
+						</span>
+						{{movie.title}}
+					</h3>
+					<h4>{{ctrl.adjustDate(movie.release_date)}}</h4>
+					<p>{{ctrl.getMovieGenres(movie.genre_ids)}}</p>
+					<p>{{ctrl.adjustOverview(movie.overview)}}</p>
+					<a class="btn btn-primary btn-lg" role="button">Voir plus »</a>
+				</div>
+				<!-- Iteration sur les acteurs -->
+				<span ng-repeat="actor in ctrl.actors" ng-show="ctrl.actors">
+					<a class="actor" href="#" ng-click="ctrl.searchByActor(actor.name, actor.known_for)">
+						{{actor.name}}
+					</a>  
+				</span>
+				<!-- TMP TEST : bouton pour afficher les films recommandes -->
+				<button ng-click="ctrl.showRecommendedMovies()">TEST : Films recommandés</button>
+			</div>
 
 			<footer>
-				<hr>
+				<hr />
 				<p>© Copyright 2016</p>
 			</footer>
-
 		</div>
-
-
-
 
 		<!-- Imports -->
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
 		<script src="core/APIRequests/apirequests.js"></script>
-
-		<!-- Mise en place dynamique de la page -->
-		<script type="text/javascript">
-			/* Ceci est un exemple de traitement des données JSON récupérées via les requêtes à l'API. (ici les films qui sortent bientôt en salle)*/
-			var films = JSON.parse(getPopularMovies());
-			var genresJSON = JSON.parse(getGenres());
-			var genreMap = new Object();
-
-
-			genresJSON.genres.forEach(function(result) {
-				genreMap[result.id] = result.name;
-			});
-
-			function test(result) {
-				movieGenres="";
-				for(var i = 0; i < result.genre_ids.length; i++) {
-					movieGenres = movieGenres + genreMap[result.genre_ids[i]];
-					if(i!==(result.genre_ids.length-1)){
-						movieGenres = movieGenres + ", ";
-					}
-				}
-
-				var date = new Date(result.release_date);
-				var dateString = ("0" + date.getUTCDate()).slice(-2) + "/" + ("0" + (date.getUTCMonth()+1)).slice(-2) +"/"+ date.getUTCFullYear();
-				var movies = document.getElementById('movies-row1');
-				  var movie = document.createElement('DIV');
-				  movie.setAttribute('style', 'height:200px');
-				  movie.setAttribute('class', 'col-md-4');
-				  movie.setAttribute('style', 'height:800px');
-				    var link = document.createElement('A');
-					link.setAttribute('class','btn btn-primary btn-lg');
-					var poster = document.createElement('IMG');
-					poster.setAttribute('class', 'poster');
-					poster.setAttribute('align', 'middle');
-					poster.setAttribute('src', "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + result.poster_path);
-					poster.setAttribute('style', 'float:left; height:400px');
-					link.appendChild(poster);
-				  movie.appendChild(link);
-					var title = document.createElement('H3');
-					title.innerHTML = result.title;
-				  movie.appendChild(title);
-					var date = document.createElement('H4');
-					date.innerHTML = dateString;
-				  movie.appendChild(date);
-					var genre = document.createElement('P');
-					genre.innerHTML = movieGenres;
-				  movie.appendChild(genre);
-					var overview = document.createElement('P');
-					var textoverview = result.overview;
-					if(result.overview.length > 50) {
-						textoverview = result.overview.slice(0,200) + "...";
-
-					}
-					overview.innerHTML = textoverview;
-				  movie.appendChild(overview);
-					var detailsBtn = document.createElement('A');
-					detailsBtn.setAttribute('class','btn btn-primary btn-lg');
-					detailsBtn.setAttribute('role', 'button');
-					detailsBtn.innerHTML = 'Voir plus »';
-				  movie.appendChild(detailsBtn);
-				movies.appendChild(movie);
-			}
-
-			films.results.slice(0,9).forEach(test);
-
-
-		</script>
-
-
+		<script src="node_modules/angular/angular.js"></script>
+		<script src="index.js"></script>
 	</body>
 </html>
