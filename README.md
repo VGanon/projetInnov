@@ -38,7 +38,7 @@ Cet algo est le même que le général mais on se base sur un seul user.
 
 # Algo deuxième version : règles d'association
 
-## Algo de recommandation général. Appliquable 
+## Algo de recommandation général. Filtrage de la liste des users et/ou de la liste des films possible :)
 
 Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, cela équivaut à passer ce critère à 1. S'il ne l'a pas aimé, le critère est à 0. 
 
