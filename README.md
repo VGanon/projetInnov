@@ -38,66 +38,30 @@ Cet algo est le même que le général mais on se base sur un seul user.
 
 # Algo deuxième version : règles d'association
 
-## Algo de recommandation général
+## Algo de recommandation général. Appliquable 
 
-Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, il passe ce critère à 1. 
+Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, cela équivaut à passer ce critère à 1. S'il ne l'a pas aimé, le critère est à 0. 
 
-Point 2.  L'algo choisit le film BEST_MOVIE que l'utilisteur a le plus aimé (à préciser), c'est à dire : 
-- pour chaque film, on calcule la somme des critères.
-- L'algo choisit la somme maximale ce qui correspond à ce que l'utilisateur a le plus aimé objectivement. 
-
-Point 3.  On prend les utilisateurs qui ont noté ce même film. Parmi cette liste, on sélectionne ceux qui ont le plus aimé ce BEST_MOVIE. Score minimal requis pour faire parti de la liste : 7 critères aimés sur les 13. 
-
-Point 4 : Pour chaque utilisateur, on construit la matrice suivante.
+Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV OU tableau JS, à voir après les tests selon la librairie retenue). Cette liste contient l'id du user ainsi que les critères qu'il a aimé (critère précédé de l'id du film).
 <table>
     <tr>
-        <th>Critères</th>
-        <th>Terminator</th>
-        <th>Le Pont des Espions</th>
-        <th>Le Père Noël est une ordure</th>
-        <th>etc</th>
+        <th>123</th>
+        <td>14186_Scénario</td>
+        <td>14186_Réalisation</td>
+        <td>14186_Costumes</td>
+        <td>14186_Narration</td>   
     </tr>
     <tr>
-        <th>Scénario</th>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>...</td>
-    </tr>
-    <tr>
-        <th>Jeu d'acteurs</th>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>...</td>
-    </tr>
-    <tr>
-        <th>Réalisation</th>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-        <td>...</td>
-    </tr>
-    <tr>
-        <th>Bande son</th>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-        <td>...</td>
-    </tr>
-    <tr>
-        <th>etc</th>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
+        <th>123</th>
+        <td>2586_Décors</td>
+        <td>2586_Ambiance</td>
+        <td>2586_Rythme</td>   
     </tr>
 </table>
 
-Cette matrice se construit à l'aide de listes. Voir le readme de https://github.com/dmarges/apriori.
+Point 3 : On fait appel à l'algorithme de Apriori. Celui-ci nous renvoie des pseudos-dépendances fonctionnelles, du type "14186_Scénario --> 2586_Décors". Cela signifie que les gens qui aiment le scénario du film 14186 aiment les décors du film 2586. On classe les règles selon leur indice de confiance.
 
-Point 5 : Faire appel à l'algo Apriori avec un indice de support et de confiance minimal _à fixer_. Cet algo va retourner les règles d'associations les plus pertinentes. Dans notre exemple, il peut retourner "Terminator -> Le pont des espions" ce qui veut dire qu'il est fort probable que notre U1 qui adore Terminator va également adorer Le pont des espions.
+Point 4 : Enfin, on regarde les films que U1 a aimé et on cherche des règles en relation avec ces films. 
+Exemple : U1 aime Terminator d'identifiant 5247. On regarde les règles (de la plus confiante à la moins confiante) qui contiennent à gauche un "5247". On regarde le film que ces rèles impliquent et on vérifie que U1 n'a pas déjà vu ce film. Dans ce cas, on l'ajoute aux recommandations.
 
-Point 6 : on rassemble les résultats les plus pertinents de chaque utilisateur dans une liste de recommandations, après suppression des potentiels doublons.
 
-# TODO : algorithme de recommandation par catégorie
