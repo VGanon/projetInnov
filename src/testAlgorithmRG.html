@@ -2,10 +2,19 @@
 <html>
 <head>
   <title>Test d'algo</title>
+  <meta charset="utf-8">
+  <script src="node_modules/angular/angular.js"></script>
 </head>
-<body>
+<body ng-app="display" ng-controller="displayCtrl">
   <h1>Chrome : Ctrl Shift J (ouvrir le console)</h1>
 
+  <div class="container-fluid">
+    <div class="row" ng-repeat="ratedMovie in stub">
+      <div htd-rated-movie-card></div>
+    </div>
+  </div>
+
+  <script src="core/display/display.module.js"></script>
   <!-- Algorithme de recommendation générale -->
   <script src="build/bundle.js"></script>
 </body>
