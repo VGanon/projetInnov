@@ -49,10 +49,16 @@ Point 2.  On extrait les données de la table "NOTE" pour construire la liste su
         <td>14186_Scénario</td>
         <td>14186_Réalisation</td>
         <td>14186_Costumes</td>
-        <td>14186_Narration</td>   
+        <td>14186_Narration</td>
+        <td>2586_Décors</td>
+        <td>2586_Ambiance</td>
+        <td>2586_Rythme</td> 
     </tr>
     <tr>
-        <th>123</th>
+        <th>124</th>
+        <td>14186_Scénario</td>
+        <td>14186_Réalisation</td>
+        <td>14186_Décors</td>
         <td>2586_Décors</td>
         <td>2586_Ambiance</td>
         <td>2586_Rythme</td>   
