@@ -26,11 +26,6 @@
 				$('#categories').multiselect();
 			});
 		</script>
-		<script type="text/javascript">
-            $(".form_datetime").datepicker({
-				format: "dd MM yyyy"
-			});
-        </script>
 	</head>
 	<body>
 	
@@ -103,7 +98,7 @@
 						
 											
 						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">Nom</label>
+							<label for="name" class="cols-sm-2 control-label">Nom *</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
@@ -116,17 +111,15 @@
 						<div class="form-group">
 							<label for="birthday" class="cols-sm-2 control-label">Date de naisance</label>
 							<div class="cols-sm-10">
-								<div class='input-group date' id='datetimepicker1'>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-									<input type='text' class="form-control" />
+								<div class="input-group date">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
+									<input type="date" class="form-control" name="birthday" id="birthday"  placeholder="Date de naissance (jj/mm/aaaa)"/>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">Email</label>
+							<label for="email" class="cols-sm-2 control-label">Email *</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
@@ -136,7 +129,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">Nom d'utilisateur</label>
+							<label for="username" class="cols-sm-2 control-label">Nom d'utilisateur *</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
@@ -146,7 +139,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label">Mot de passe</label>
+							<label for="password" class="cols-sm-2 control-label">Mot de passe *</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
@@ -156,7 +149,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">Confirmer votre mot de passe</label>
+							<label for="confirm" class="cols-sm-2 control-label">Confirmer votre mot de passe *</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
@@ -183,7 +176,7 @@
 									<option value="musical">Musical</option>
 									<option value="mysterieux">Mystérieux</option>
 									<option value="romance">Romance</option>
-									<option value="science_fiction">Science Fiction</option>
+									<option value="science_fiction">Science-Fiction</option>
 									<option value="thriller">Thriller</option>
 									<option value="guerre">Guerre</option>
 									<option value="western">Western</option>
@@ -217,11 +210,18 @@
 					var email = $("#email");
 					var password = $("#password");
 					var confirmPassword = $("#confirmPassword");
+					var sexe = null;
 					var birthday = $("#birthday");
 					var categories = $("#categories");
 					
+					if(document.getElementById('homme').checked) {
+						sexe = 'Homme';
+					}else if(document.getElementById('femme').checked) {
+						sexe = 'Femme';
+					}
+					
 					var data = {"username": username.val(), "email": email.val(), "password": password.val(), "confirmPassword": confirmPassword.val(),
-						"birthday": birthday.val(), "categories": categories.val()};
+						"sexe": sexe, "birthday": birthday.val(), "categories": categories.val()};
 					console.log("Send data to server :\n", data);
 					socket.emit("createAccount", data);
 				});

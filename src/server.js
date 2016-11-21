@@ -50,11 +50,11 @@ io.on('connection', function(socket){
 			var errorMessage = "";
 			//console.log(db.collection("users").find({'email': data.email}).count());
 			if(data.username == "") {
-				errorMessage = "Saisir le nom d'utilisateur est obligatoire !";
+				errorMessage = "Saisir un nom d'utilisateur est obligatoire !";
 			} else if(data.email == "") {
-				errorMessage = "Saisir l'adresse mail est obligatoire !";
+				errorMessage = "Saisir une adresse mail est obligatoire !";
 			} else if(data.password == "") {
-				errorMessage = "Saisir le mot de passe est obligatoire !";
+				errorMessage = "Saisir un mot de passe est obligatoire !";
 			} else if(data.password =! data.confirmPassword) {
 				errorMessage = "Le mot de passe n'est pas identique !";
 			}
@@ -74,7 +74,7 @@ io.on('connection', function(socket){
 			
 			if(errorMessage == "") {
 				//Tentative d'insertion
-				var user = {"username": data.username, "email": data.email, "password": data.password, "birthday": data.birthday, "categories": data.categories};
+				var user = {"username": data.username, "email": data.email, "password": data.password, "sexe": data.sexe, "birthday": data.birthday, "categories": data.categories};
 				db.collection("users").insertOne(user, function(err, result) {
 					assert.equal(null, err);
 					console.log("Successfully added data to database");
