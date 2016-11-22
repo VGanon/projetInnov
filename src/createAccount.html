@@ -23,7 +23,10 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$('#categories').multiselect();
+				$('#categories').multiselect({
+					includeSelectAllOption: true,
+					buttonWidth: '310px'
+				});
 			});
 		</script>
 	</head>
@@ -160,27 +163,30 @@
 						
 						<div class="form-group">
 							<label for="categories" class="cols-sm-2 control-label">Catégories préférées</label>
-							<div class="col-sm-10">
-								<select id="categories" multiple="multiple">
-									<option value="action">Action</option>
-									<option value="aventure">Aventure</option>
-									<option value="animation">Animation</option>
-									<option value="comedie">Comédie</option>
-									<option value="crime">Crime</option>
-									<option value="documentaire">Documentaire</option>
-									<option value="dramatique">Dramatique</option>
-									<option value="famille">Famille</option>
-									<option value="fantastique">Fantastique</option>
-									<option value="historique">Historique</option>
-									<option value="horreur">Horreur</option>
-									<option value="musical">Musical</option>
-									<option value="mysterieux">Mystérieux</option>
-									<option value="romance">Romance</option>
-									<option value="science_fiction">Science-Fiction</option>
-									<option value="thriller">Thriller</option>
-									<option value="guerre">Guerre</option>
-									<option value="western">Western</option>
-								</select>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-film" aria-hidden="true"></i></span>
+									<select id="categories" style="width:500px" multiple="multiple">
+										<option value="action">Action</option>
+										<option value="aventure">Aventure</option>
+										<option value="animation">Animation</option>
+										<option value="comedie">Comédie</option>
+										<option value="crime">Crime</option>
+										<option value="documentaire">Documentaire</option>
+										<option value="dramatique">Dramatique</option>
+										<option value="famille">Famille</option>
+										<option value="fantastique">Fantastique</option>
+										<option value="historique">Historique</option>
+										<option value="horreur">Horreur</option>
+										<option value="musical">Musical</option>
+										<option value="mysterieux">Mystérieux</option>
+										<option value="romance">Romance</option>
+										<option value="science_fiction">Science-Fiction</option>
+										<option value="thriller">Thriller</option>
+										<option value="guerre">Guerre</option>
+										<option value="western">Western</option>
+									</select>
+								</div>
 							</div>
 						</div>
 
