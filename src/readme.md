@@ -1,6 +1,6 @@
 # Installation des modules
 npm install
-
+webpack --watch
 # ...
 Un petit test pour se faire aux technos.
 Il s'agit d'une page permettant de cr�er un utilisateur dans une bdd.

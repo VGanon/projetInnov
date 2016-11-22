@@ -1,8 +1,13 @@
+var webpack = require("webpack");
+
 module.exports = {
-  entry: './core/algorithm/Test.ts',
+  entry: {
+    algorithm: './core/algorithm/Test.ts',
+    display: './core/display/display.module.js'
+  },
   output: {
       path: './build',  
-      filename: 'bundle.js'
+      filename: '[name].bundle.js'
   },
   resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.
