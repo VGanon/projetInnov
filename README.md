@@ -42,7 +42,8 @@ Cet algo est le même que le général mais on se base sur un seul user.
 
 Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, cela équivaut à passer ce critère à 1. S'il ne l'a pas aimé, le critère est à 0. 
 
-Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV OU tableau JS, à voir après les tests selon la librairie retenue). Cette liste contient l'id du user ainsi que les critères qu'il a aimé (critère précédé de l'id du film).
+Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV). Cette liste contient l'id des users ainsi que les critères qu'ils ont aimé (critère précédé de l'id du film). Les utilisateurs peuvent être tous les utilisateurs (max de 10000 pour ne pas surcharger les calculs), seulement les amis de U1 ou seulement un seul ami de U1.
+<h3>Fichier CSV</h3>
 <table>
     <tr>
         <th>123</th>
@@ -63,11 +64,33 @@ Point 2.  On extrait les données de la table "NOTE" pour construire la liste su
         <td>2586_Ambiance</td>
         <td>2586_Rythme</td>   
     </tr>
+     <tr>
+        <th>125</th>
+        <td>14186_Scénario</td>
+        <td>14186_SFX</td>
+        <td>14186_Décors</td>
+        <td>2586_Décors</td>
+        <td>2586_Ambiance</td>
+        <td>2586_Rythme</td>  
+        <td>2586_Scénario</td>
+        <td>666_SFX</td>
+        <td>666_Scénario</td>
+    </tr>
 </table>
 
-Point 3 : On fait appel à l'algorithme de Apriori. Celui-ci nous renvoie des pseudos-dépendances fonctionnelles, du type "14186_Scénario --> 2586_Décors". Cela signifie que les gens qui aiment le scénario du film 14186 aiment les décors du film 2586. On classe les règles selon leur indice de confiance.
+Point 3 : On fait appel à l'algorithme de Apriori en indiquant une confiance et un support minimal. Celui-ci nous renvoie une liste de pseudos-dépendances fonctionnelles au format JSON, du type :
+"a {
+    "lhs" : "14186_Scénario",
+    "rhs" : "2586_Décors"
+} --> ". Cela signifie que la plupart des gens qui aiment le scénario du film 14186 aiment les décors du film 2586.
 
-Point 4 : Enfin, on regarde les films que U1 a aimé et on cherche des règles en relation avec ces films. 
-Exemple : U1 aime Terminator d'identifiant 5247. On regarde les règles (de la plus confiante à la moins confiante) qui contiennent à gauche un "5247". On regarde le film que ces rèles impliquent et on vérifie que U1 n'a pas déjà vu ce film. Dans ce cas, on l'ajoute aux recommandations.
+Point 4 : On calcule le "lift" de chaque règle retournée par l'algorithme. 
+Soit la règle R1 = "14186_Scénario --> 2586_Décors". 
+lift(R1) = P(14186_Scénario /\ 2586_Décors) / P(14186_Scénario) * P(2586_Décors).
+Si la valeur du lift est inférieure à 1, on ne garde pas la règle. On conserve les 100 meilleures règles (les règles qui ont le plus grand lift). 
+
+Point 5 : On effectue un filtrage sur cette liste de 100 meilleures règles selon la liste des films qu'a notés U1. "lhs" ne doit contenir que des critères relatifs à un film déjà noté par U1 et "rhs" ne doit contenir qu'un critère relatif à un film pas vu par U1 et différent de celui présent dans "lhs". 
+
+Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, après suppression des éventuels doublons.
 
 
