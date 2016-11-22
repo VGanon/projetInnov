@@ -88,4 +88,22 @@ io.on('connection', function(socket){
 		  db.close();
 		});
 	});
+	
+	socket.on('login', function(data){
+		var errorMessage = "";
+			//console.log(db.collection("users").find({'email': data.email}).count());
+			if(data.email == "" || data.password == "") {
+				errorMessage = "Email ou mot de passe incorrect !";
+			}
+		
+			if(errorMessage == "") {
+				//Tentative de connexion
+				io.emit("loggingIn", JSON.stringify(data));
+			} else {
+				io.emit("loginFailed", errorMessage);
+			}
+		
+	});
+
+	
 });

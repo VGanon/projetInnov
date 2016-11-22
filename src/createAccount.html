@@ -202,7 +202,6 @@
 			</div>
 		</div>
 
-		<p id="status"></p>
 
 		
 		<script>
@@ -230,11 +229,6 @@
 						"sexe": sexe, "birthday": birthday.val(), "categories": categories.val()};
 					console.log("Send data to server :\n", data);
 					socket.emit("createAccount", data);
-				});
-
-				//Reponse du serveur a la creation d'un compte
-				socket.on('accountCreated', function(data){
-					$("#status").html("Account successfully created<br />" + data);
 				});
 				
 				//Reponse du serveur a la creation d'un compte
