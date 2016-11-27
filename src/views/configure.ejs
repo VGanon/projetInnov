@@ -75,63 +75,86 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
-<!-- ------------------------------------------------------------ MAIN DIV ----------------------------------------------------- -->
+
+<!-- MAIN DIV ---------------------------------------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------------------------------------------------- -->
 
 <div class="container">
 
-<!-- ------------------------------------------------------------ INFORMATIONS GENERALES --------------------------------------- -->
-
-	<h2><span class="fa fa-user"></span> Informations générales </h2>
-
-	<div class="row">
-		<div class="col-sm-12">
-
-			<table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Nom d'utilisateur</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Sexe</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Date de naissance</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Adresse</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Email</td>
-                        <td><%= user.local.email %></td>
-                      </tr>
-                    </tbody>
-            </table>
-                  
-			<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
-		</div>
-	</div>
-
-
-<!-- ------------------------------------------------------------ FILMS NOTES --------------------------------------- -->
+<form class="form-horizontal">
+<fieldset>
 
 	<legend>
-		<h2><span class="fa fa-film"></span> Films notés </h2>
+		<h2><span class="fa fa-user"></span> Modifier le profil </h2>
 	</legend>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="well">
-				
-
-
-
-			</div>
-		</div>
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Nom d'utilisateur</label>  
+	  <div class="col-md-4">
+	    <label class="radio-inline"> <input type="radio" name="anynum" id="homme" value="homme" checked> Homme </label>
+	    <label class="radio-inline"> <input type="radio" name="anynum" id="femme" value="femme"> Femme </label>
+	  </div>
 	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Nom d'utilisateur</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Nom d'utilisateur" class="form-control input-md"> 
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Date de naissance</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Date de naissance" class="form-control input-md"> 
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Adresse</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Adresse" class="form-control input-md">
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Email</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Email" class="form-control input-md">
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Nouveau mot de passe</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Nouveau mot de passe" class="form-control input-md">
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Confirmer nouveau mot de passe</label>  
+	  <div class="col-md-4">
+	  	<input id="textinput" name="textinput" type="text" placeholder="Confirmer nouveau mot de passe" class="form-control input-md">
+	  </div>
+	</div>
+
+	<!-- Button -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="singlebutton"></label>
+	  <div class="col-md-4">
+	    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Enregistrer</button>
+	  </div>
+	</div>
+
+</fieldset>
+</form>
 
 </div>
 </body>
