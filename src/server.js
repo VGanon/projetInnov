@@ -1,109 +1,47 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
-var mongo = require('mongodb').MongoClient;
-var assert = require('assert');
-app.use(express.static(path.join(__dirname)));
+// server.js
 
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+// set up ======================================================================
+// get all the tools we need
+var express  = require('express');
+var app      = express();
+var http     = require('http').Server(app);
+var port     = process.env.PORT || 8080;
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash    = require('connect-flash');
 
-//Requete GET => envoi de "login.html"
-app.get('/', function(req, res){
-  	res.sendFile(__dirname + '/login.html');
+var configDB = require('./config/database.js');
+
+// configuration ===============================================================
+mongoose.connect(configDB.url); // connect to our database
+
+require('./config/passport')(passport); // pass passport for configuration
+
+app.use('/js', express.static('./js'));
+app.use('/css', express.static('./css'));
+app.use('/core', express.static('./core'));
+app.use('/node_modules', express.static('./node_modules'));
+
+app.configure(function() {
+
+	// set up our express application
+	app.use(express.logger('dev')); // log every request to the console
+	app.use(express.cookieParser()); // read cookies (needed for auth)
+	app.use(express.bodyParser()); // get information from html forms
+
+	app.set('view engine', 'html'); // set up html for templating
+
+	// required for passport
+	app.use(express.session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+	app.use(passport.initialize());
+	app.use(passport.session()); // persistent login sessions
+	app.use(flash()); // use connect-flash for flash messages stored in session
+
 });
 
-/*app.get('/getUpcomingMovies', function(req, res){
-  	res.sendFile(__dirname + '/core/APIRequests/upcomingMovies.html');
-});*/
+// routes ======================================================================
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.get('/login', function(req, res){
-  	res.sendFile(__dirname + '/login.html');
-});
-
-app.get('/subscribe', function(req, res){
-  	res.sendFile(__dirname + '/createAccount.html');
-});
-
-app.get('/index', function(req, res){
-  	res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/home', function(req, res){
-  	res.sendFile(__dirname + '/home.html');
-});
-
-//Actif sur le port 3000
-http.listen(3000, function(){
-  	console.log('listening on *:3000');
-});
-
-//Code du serveur
-io.on('connection', function(socket){
-	socket.on('createAccount', function(data){
-		//Connexion a la bdd
-		mongo.connect('mongodb://localhost:27017/test', function(err, db) {
-			assert.equal(null, err);
-			var errorMessage = "";
-			//console.log(db.collection("users").find({'email': data.email}).count());
-			if(data.username == "") {
-				errorMessage = "Saisir un nom d'utilisateur est obligatoire !";
-			} else if(data.email == "") {
-				errorMessage = "Saisir une adresse mail est obligatoire !";
-			} else if(data.password == "") {
-				errorMessage = "Saisir un mot de passe est obligatoire !";
-			} else if(data.password =! data.confirmPassword) {
-				errorMessage = "Le mot de passe n'est pas identique !";
-			}
-			
-			/*db.collection("users").find({'email': data.email}).count().then(function(numItems) {
-				console.log(numItems);
-				errorMessage = "Il existe déjà un compte avec cette adresse mail !";
-				io.emit("accountCreationFailed", errorMessage);
-			})
-			
-			db.collection("users").find({'username': data.username}).count().then(function(numItems) {
-				console.log(numItems);
-				errorMessage = "Le nom d'utilisateur existe déjà !";
-				io.emit("accountCreationFailed", errorMessage);
-				
-			})*/
-			
-			if(errorMessage == "") {
-				//Tentative d'insertion
-				var user = {"username": data.username, "email": data.email, "password": data.password, "sexe": data.sexe, "birthday": data.birthday, "categories": data.categories};
-				db.collection("users").insertOne(user, function(err, result) {
-					assert.equal(null, err);
-					console.log("Successfully added data to database");
-					//Envoi d'une reponse OKAY au client
-					io.emit("accountCreated", JSON.stringify(data));
-				});
-			} else {
-				io.emit("accountCreationFailed", errorMessage);
-			}
-			
-		  db.close();
-		});
-	});
-	
-	socket.on('login', function(data){
-		var errorMessage = "";
-			//console.log(db.collection("users").find({'email': data.email}).count());
-			if(data.email == "" || data.password == "") {
-				errorMessage = "Email ou mot de passe incorrect !";
-			}
-		
-			if(errorMessage == "") {
-				//Tentative de connexion
-				io.emit("loggingIn", JSON.stringify(data));
-			} else {
-				io.emit("loginFailed", errorMessage);
-			}
-		
-	});
-
-	
-});
+// launch ======================================================================
+app.listen(port);
+console.log('Listening on port : ' + port);

@@ -1,0 +1,106 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Profil</title>
+	<!-- Imports -->
+	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+	<script src="/core/APIRequests/apirequests.js"></script>
+	<script src="/node_modules/angular/angular.js"></script>
+	<script src="/js/home.js"></script>
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+</head>
+<body>
+
+<!-- Barre menu ---------------------------------------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/home">MoviesBestChoice</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="/home">Accueil</a></li>
+						<li class="active"><a href="/profile">Profil</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Films recommandés  <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Films recommandés par MoviesBestChoice</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Films recommandés par amis</a></li>
+								<li><a href="#">Films recommandés par un ami</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Films recommandés par catégorie</a></li>
+							</ul>
+						</li>
+					</ul>
+					
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
+					</ul>
+
+					<form class="navbar-form" role="search">
+						<div class="input-group" style="padding-left:150px;">
+							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Chercher des films, des acteurs, ..." ng-model="inputText" onkeydown="if(event.keyCode === 13) $('#search').click()" />
+							<span class="input-group-btn">
+								<button id="search" type="submit" class="btn btn-default" style="height:34px" ng-click="ctrl.search(inputText)">
+									<span class="glyphicon glyphicon-search">
+										<span class="sr-only">Rechercher</span>
+									</span>
+								</button>
+							</span>
+						</div>
+					</form>
+					
+					
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
+		<!-- ------------------------------------------------------------ MAIN DIV --------------------------------------- -->
+
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-user"></span> Profile Page</h1>
+	</div>
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Local</h3>
+
+					<p>
+						<strong>id</strong>: <%= user._id %><br>
+						<strong>email</strong>: <%= user.local.email %><br>
+						<strong>password</strong>: <%= user.local.password %>
+					</p>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+</body>
+</html>

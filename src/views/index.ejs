@@ -1,21 +1,20 @@
-<html ng-app="movieRecommendationCategorie" ng-controller="Controller as ctrl">
+<html ng-app="movieRecommendationApp" ng-controller="Controller as ctrl">
 	<head>
 		<meta charset="UTF-8">
-		<title>Accueil</title>
+		<title>MoviesBestChoice</title>
 		<!-- Imports -->
-		<link rel="stylesheet" href="index.css" type="text/css">
-		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-		<script src="node_modules/jquery/dist/jquery.min.js"></script>
-		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
-		<script src="core/APIRequests/apirequests.js"></script>
-		<script src="node_modules/angular/angular.js"></script>
-		<script src="home.js"></script>
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+		<script src="/core/APIRequests/apirequests.js"></script>
+		<script src="/node_modules/angular/angular.js"></script>
+		<script src="/js/index.js"></script>
 	</head>
-	
 	<body>
-	
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<!-- Barre de menu -->
+		<nav id="topbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -25,31 +24,17 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/home">MoviesBestChoice</a>
+					<a class="navbar-brand" href="/" ng-click="ctrl.showPopularMovies()">MoviesBestChoice</a>
 				</div>
-
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/home">Accueil</a></li>
-						<li><a href="/profil">Profil</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Films recommandés  <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Films recommandés par MoviesBestChoice</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Films recommandés par amis</a></li>
-								<li><a href="#">Films recommandés par un ami</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Films recommandés par catégorie</a></li>
-							</ul>
-						</li>
+						<li class="active"><a href="/">Accueil</a></li>
 					</ul>
-					
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/index"><span class="glyphicon glyphicon-log-in"></span> Sé déconnecter</a></li>
+						<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+						<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 					</ul>
-
 					<form class="navbar-form" role="search">
 						<div class="input-group" style="padding-left:200px;">
 							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Chercher des films, des acteurs, ..." ng-model="inputText" onkeydown="if(event.keyCode === 13) $('#search').click()" />
@@ -62,8 +47,6 @@
 							</span>
 						</div>
 					</form>
-					
-					
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
@@ -72,10 +55,12 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>MoviesBestChoice</h1>
-				<p>Recommandations pour vous...</p>
+				<p>Trouvez les meilleurs films pour vous, selon la liste de vos amis & les différentes catégories de films...</p>
+				<p><a class="btn btn-primary btn-lg" href="/signup" role="button">Inscrivez-vous!</a></p>
 			</div>
 		</div>
-		
+
+
 		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
 
 		<div id="main" class="container">
@@ -113,16 +98,16 @@
 						{{actor.name}}
 					</a>  
 				</span>
-				
+				<!-- TMP TEST : bouton pour afficher les films recommandes -->
+				<button ng-click="ctrl.showRecommendedMovies()">TEST : Films recommandés</button>
 			</div>
 
-			
+			<footer>
+				<hr />
+				<p>© Copyright 2016</p>
+			</footer>
 		</div>
-		
-		
 
 		
 	</body>
 </html>
-
-

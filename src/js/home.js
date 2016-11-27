@@ -124,7 +124,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		
 		var filteredResults =  JSON.parse(getPopularMovies()).results
 		.filter(function (i,n){
-			return $.inArray(27, i.genre_ids) > -1; // 27 correspond à Horreur
+			return $.inArray(28, i.genre_ids) > -1; // 27 correspond à Horreur
 		});
 		
 		
