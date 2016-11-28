@@ -6,3 +6,6 @@ src/node_modules/*
 #######################
 *.sublime-project
 *.sublime-workspace
+
+# Tmp folder
+./tmp
