@@ -86,6 +86,15 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+	
+	
+	// =====================================
+	// MOVIE ===============================
+	// =====================================
+	app.get('/movie/:id', function(req, res){
+		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/');
+		else res.render('movie.ejs', {id: req.params.id});
+	});
 };
 
 // route middleware to make sure

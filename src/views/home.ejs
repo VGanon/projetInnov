@@ -98,7 +98,7 @@
 			<div id="content">
 				<!-- Iteration sur les films -->
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
-					<a class="btn btn-primary btn-lg">
+					<a class="btn btn-primary btn-lg" href="./movie/{{movie.id}}">
 						<img style="width:250px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
 					</a>
 					<h3>
@@ -110,7 +110,7 @@
 					<h4>{{ctrl.adjustDate(movie.release_date)}}</h4>
 					<p>{{ctrl.getMovieGenres(movie.genre_ids)}}</p>
 					<p>{{ctrl.adjustOverview(movie.overview)}}</p>
-					<a class="btn btn-primary btn-lg" role="button">Voir plus »</a>
+					<a class="btn btn-primary btn-lg" role="button" href="./movie/{{movie.id}}">Voir plus »</a>
 				</div>
 				<!-- Iteration sur les acteurs -->
 				<span ng-repeat="actor in ctrl.actors" ng-show="ctrl.actors">
