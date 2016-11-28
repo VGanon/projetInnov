@@ -41,6 +41,13 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
+        // if username exists
+        User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
+            if(user) {
+                return done(null, false, req.flash('signupMessage', 'Le nom d\'utilisateur est déjà utilisé !'));
+            }
+        });
+
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
         User.findOne({ 'local.email' :  email }, function(err, user) {
@@ -53,6 +60,11 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('signupMessage', 'Cette adresse email est déjà utilisée !'));
             } else {
 
+                // if password is not equal to confirmpassword
+                if (password !== req.body.confirmpassword) {
+                    return done(null, false, req.flash('signupMessage', 'Confirmation de mot de passe incorrecte !'));
+                }
+
 				// if there is no user with that email
                 // create the user
                 var newUser            = new User();
@@ -60,6 +72,8 @@ module.exports = function(passport) {
                 // set the user's local credentials
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
+                newUser.local.username = req.body.username;
+                newUser.local.categories = req.body.categories;
 
 				// save the user
                 newUser.save(function(err) {

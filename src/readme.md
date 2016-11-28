@@ -1,23 +1,20 @@
 # Installation des modules
 npm install
 webpack --watch
-# ...
-Un petit test pour se faire aux technos.
-Il s'agit d'une page permettant de cr�er un utilisateur dans une bdd.
-C'est tout b�te mais comme �a m'aide, je me dis que �a pourrait pt�te vous aider aussi. ^^
 
-Technos utilis�es :
+# Technologies utilisées :
 - Node.js
 - MongoDB
 - Express
 - Socket.io
+- Bootstrap
 
-Pr�requis pour le faire tourner :
-- Node.js install�
-- Une bdd locale mongodb
+# Prérequis :
+- Node.js installé
+- MongoDB installé
 
-Ensuite il suffit de :
-- Lancer votre bdd mongo locale de test
-- Lancer un terminal et se placer dans le r�pertoire /test
+# Utilisation
+- Lancer la bdd mongo locale avec la commande suivante : mongod
+- Lancer un terminal et se placer dans le répertoire /test
 - Lancer le serveur node avec cette commande : node server.js
-- Puis dans votre navigateur allez ici : localhost:3000
+- Puis dans le navigateur allez ici : http://localhost:8080

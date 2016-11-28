@@ -90,9 +90,9 @@
                     <tbody>
                       <tr>
                         <td>Nom d'utilisateur</td>
-                        <td>-</td>
+                        <td><%= user.local.username %></td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <td>Sexe</td>
                         <td>-</td>
                       </tr>
@@ -103,10 +103,14 @@
                       <tr>
                         <td>Adresse</td>
                         <td>-</td>
-                      </tr>
+                      </tr>-->
                       <tr>
                         <td>Email</td>
                         <td><%= user.local.email %></td>
+                      </tr>
+                      <tr>
+                        <td>Catégories préférées</td>
+                        <td><%= user.local.categories %></td>
                       </tr>
                     </tbody>
             </table>

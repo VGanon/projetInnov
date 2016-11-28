@@ -4,7 +4,24 @@
 <head>
 	<title>Inscription</title>
 	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="/node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
 	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/node_modules/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+	<script type="text/javascript" src="node_modules/moment/min/moment.min.js"></script>
+
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$('#categories').multiselect({
+					buttonWidth: "100%",
+					nonSelectedText: 'Seléctioner vos catégories préférées',
+					enableFiltering: true,
+   					enableCaseInsensitiveFiltering: true,
+				});
+			});
+	</script>
+
 	<style>
 		body 		{ padding-top:80px; }
 	</style>
@@ -12,8 +29,9 @@
 <body>
 
 
-<!-- Barre menu ---------------------------------------------------------------------------------------------------------- -->
+<!------------------------------------------------------- Barre menu ----------------------------------------------------- -->
 <!-- --------------------------------------------------------------------------------------------------------------------- -->
+
 
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -45,7 +63,7 @@
 		</nav>
 		
 
-<!-- Content    ---------------------------------------------------------------------------------------------------------- -->
+<!-----------------------------------------------------  Content   ------------------------------------------------------- -->
 <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
 <div class="container">
@@ -62,6 +80,10 @@
 	<!-- LOGIN FORM -->
 	<form action="/signup" method="post">
 		<div class="form-group">
+			<label>Nom d'utilisateur</label>
+			<input type="text" class="form-control" name="username">
+		</div>
+		<div class="form-group">
 			<label>Email</label>
 			<input type="text" class="form-control" name="email">
 		</div>
@@ -69,13 +91,41 @@
 			<label>Mot de passe</label>
 			<input type="password" class="form-control" name="password">
 		</div>
+		<div class="form-group">
+			<label>Confirmer mot de passe</label>
+			<input type="password" class="form-control" name="confirmpassword">
+		</div>
+		<div class="form-group">
+			<label>Catégories préférées</label><br>
+				<select id="categories" class="col-sm-6 col-sm-offset-3" multiple="multiple">
+					<option value="action">Action</option>
+					<option value="aventure">Aventure</option>
+					<option value="animation">Animation</option>
+					<option value="comedie">Comédie</option>
+					<option value="crime">Crime</option>
+					<option value="documentaire">Documentaire</option>
+					<option value="dramatique">Dramatique</option>
+					<option value="famille">Famille</option>
+					<option value="fantastique">Fantastique</option>
+					<option value="historique">Historique</option>
+					<option value="horreur">Horreur</option>
+					<option value="musical">Musical</option>
+					<option value="mysterieux">Mystérieux</option>
+					<option value="romance">Romance</option>
+					<option value="science_fiction">Science-Fiction</option>
+					<option value="thriller">Thriller</option>
+					<option value="guerre">Guerre</option>
+					<option value="western">Western</option>
+				</select>
+		</div>
+
 
 		<button type="submit" class="btn btn-primary btn-lg">S'inscrire</button>
 	</form>
 
 	<hr>
 
-	<p>Si vous avez un compte, <a href="/login">connectez-vous</a></p>
+	<p>Si vous avez un compte, <a href="/login">Connectez-vous</a></p>
 
 </div>
 
