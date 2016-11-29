@@ -79,6 +79,11 @@
 
 <div class="container">
 
+	<!-- show any messages that come back with authentication -->
+	<% if (message.length > 0) { %>
+		<div class="alert alert-success"><%= message %></div>
+	<% } %>
+
 <!-- ------------------------------------------------------------ INFORMATIONS GENERALES --------------------------------------- -->
 
 	<h2><span class="fa fa-user"></span> Informations générales </h2>

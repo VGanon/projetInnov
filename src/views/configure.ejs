@@ -16,6 +16,7 @@
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
+
 </head>
 <body>
 
@@ -82,7 +83,12 @@
 
 <div class="container">
 
-<form class="form-horizontal">
+	<!-- show any messages that come back with authentication -->
+	<% if (message && message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
+
+<form method="post" class="form-horizontal">
 <fieldset>
 
 	<legend>
@@ -101,7 +107,7 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Nom d'utilisateur</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="textinput" type="text" placeholder="Nom d'utilisateur" class="form-control input-md"> 
+	  	<input id="textinput" name="username" type="text" placeholder="Nom d'utilisateur" class="form-control input-md"> 
 	  </div>
 	</div>
 <!--
@@ -122,14 +128,14 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Email</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="textinput" type="text" placeholder="Email" class="form-control input-md">
+	  	<input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">
 	  </div>
 	</div>
 
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Nouveau mot de passe</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="textinput" type="text" placeholder="Nouveau mot de passe" class="form-control input-md">
+	  	<input id="textinput" name="newPassword" type="text" placeholder="Nouveau mot de passe" class="form-control input-md">
 	  </div>
 	</div>
 
@@ -137,7 +143,7 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Confirmer nouveau mot de passe</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="textinput" type="text" placeholder="Confirmer nouveau mot de passe" class="form-control input-md">
+	  	<input id="textinput" name="confirmNewPassword" type="text" placeholder="Confirmer nouveau mot de passe" class="form-control input-md">
 	  </div>
 	</div>
 

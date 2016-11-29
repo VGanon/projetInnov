@@ -1,3 +1,6 @@
+// load up the user model
+var User = require('./models/user');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -63,7 +66,8 @@ module.exports = function(app, passport) {
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {
-			user : req.user // get the user out of session and pass to template
+			user: req.user, // get the user out of session and pass to template
+			message: ""
 		});
 	});
 
@@ -76,9 +80,55 @@ module.exports = function(app, passport) {
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/configure', isLoggedIn, function(req, res) {
 		res.render('configure.ejs', {
-			user : req.user // get the user out of session and pass to template
+			user : req.user, // get the user out of session and pass to template
+			message: null
 		});
 	});
+
+	//User update
+	app.post('/configure', isLoggedIn, function(req, res) {
+		//Errors
+		if(!req.body.username || !req.body.email || !req.body.newPassword || !req.body.confirmNewPassword){
+			message = 'Veuillez remplir tous les champs';
+			res.render('configure.ejs', {
+				user: req.user, // get the user out of session and pass to template
+				message: 'Veuillez remplir tous les champs'
+			});
+		} else if(req.body.newPassword !== req.body.confirmNewPassword){
+			res.render('configure.ejs', {
+				user: req.user, // get the user out of session and pass to template
+				message: 'Les nouveaux mots de passe ne correspondent pas'
+			});
+		} 
+
+		//No errors
+		else {
+			//Update data in base
+			User.findOne({'_id': req.user._id}, function(err, user){
+				if(err) return done(err);
+				//Update
+				user.local = {
+					'username': req.body.username,
+					'password': user.generateHash(req.body.password),
+					'email': req.body.email
+				};
+				//Save
+				user.save(function(){
+					//Relog mandatory to reload from base
+					req.login(user, function(err) {
+				        if (err) return next(err);
+
+				        res.render('profile.ejs', {
+							user: req.user, 
+							message: 'Vos informations ont été modifiées'
+						});
+				    });
+				});
+			});
+		}
+	});
+
+
 
 	// =====================================
 	// LOGOUT ==============================
