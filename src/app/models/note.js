@@ -5,9 +5,9 @@ var mongoose = require('mongoose');
 var noteSchema = mongoose.Schema({
 	
 	local			: {
-		id_user 	: int,
-		id_movie	: int,
-		criteres	: {"Scénario": int, "Jeu d’acteurs": int, "Réalisation": int, "Bande son": int, "Ambiance": int, "Lumière": int, "Montage": int, "Dialogues": int, "Décors": int, "Costumes": int, "Narration": int, "Rythme": int, "SFX" :int}
+		id_user 	: String,
+		id_movie	: String,
+		criteres	: {"Scénario": Boolean, "Jeu d’acteurs": Boolean, "Réalisation": Boolean, "Bande son": Boolean, "Ambiance": Boolean, "Lumière": Boolean, "Montage": Boolean, "Dialogues": Boolean, "Décors": Boolean, "Costumes": Boolean, "Narration": Boolean, "Rythme": Boolean, "SFX" :Boolean}
 	}
 	
 });
