@@ -8,6 +8,9 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/testAlgo', function(req,res) {
+	  res.render('algo.ejs');
+	});
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -87,8 +90,8 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
-	
-	
+
+
 	// =====================================
 	// MOVIE ===============================
 	// =====================================
