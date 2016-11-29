@@ -93,7 +93,7 @@ module.exports = function(app, passport) {
 	// MOVIE ===============================
 	// =====================================
 	app.get('/movie/:id', isLoggedInToLogin, function(req, res){
-		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/');
+		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/home');
 		else res.render('movie.ejs', {id: req.params.id});
 	});
 };
