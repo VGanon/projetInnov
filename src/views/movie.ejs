@@ -1,0 +1,248 @@
+<!-- views/movie.ejs -->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title id='pageTitle'>MoviesBestChoice</title>
+		<!-- Imports -->
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+		<script src="/core/APIRequests/apirequests.js"></script>
+		<script src="/node_modules/angular/angular.js"></script>
+		<script src="/js/index.js"></script>
+	</head>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">MoviesBestChoice</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/">Accueil</a></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/createAccount.html"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+					<li><a href="/login.html"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+				</ul>
+
+				<form class="navbar-form" role="search">
+					<div class="input-group" style="padding-left:200px;">
+						<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Recherche des films">
+						<span class="input-group-btn">
+								<button type="submit" class="btn btn-default" style="height:34px">
+									<span class="glyphicon glyphicon-search">
+										<span class="sr-only">Rechercher des films</span>
+						</span>
+						</button>
+						</span>
+					</div>
+				</form>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+
+	</nav>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>MoviesBestChoice</h1>
+			<p>Trouve les meilleurs films pour vous, selon la liste de vos amis & les différents catégories de films ...</p>
+			<p><a class="btn btn-primary btn-lg" href="/createAccount.html" role="button">Inscrivez-vous!</a></p>
+		</div>
+	</div>
+
+
+
+	<div class="container">
+		<div class="row main">
+			<div class="panel-heading">
+				<div class="panel-title text-center">
+					<h1 id="title"></h1>
+					<hr />
+				</div>
+			</div>
+		</div>
+
+		<div id="movie"></div>
+
+		<% if (true) { %>
+		<form id="critere_form">
+			Scénario :
+			<li><input type='radio' name='scenario' id='1_scenario' value="1"/> <label for='1_scenario'>J'ai aimé</label></li>
+			<li><input type='radio' name='scenario' id='NULL_scenario' value=null checked/> <label for='NULL_scenario'>Neutre</label></li>
+			<li><input type='radio' name='scenario' id='0_scenario' value="0"/> <label for='0_scenario'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Jeu d'acteur :
+			<li><input type='radio' name='actorPerformance' id='1_actorPerformance' value="1"/> <label for='1_actorPerformance'>J'ai aimé</label></li>
+			<li><input type='radio' name='actorPerformance' id='NULL_actorPerformance' value=null checked/> <label for='NULL_actorPerformance'>Neutre</label></li>
+			<li><input type='radio' name='actorPerformance' id='0_actorPerformance' value="0"/> <label for='0_actorPerformance'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Mise en scène :
+			<li><input type='radio' name='directing' id='1_directing' value="1"/> <label for='1_directing'>J'ai aimé</label></li>
+			<li><input type='radio' name='directing' id='NULL_directing' value=null checked/> <label for='NULL_directing'>Neutre</label></li>
+			<li><input type='radio' name='directing' id='0_directing' value="0"/> <label for='0_directing'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Bande son :
+			<li><input type='radio' name='OST' id='1_OST' value="1"/> <label for='1_OST'>J'ai aimé</label></li>
+			<li><input type='radio' name='OST' id='NULL_OST' value=null checked/> <label for='NULL_OST'>Neutre</label></li>
+			<li><input type='radio' name='OST' id='0_OST' value="0"/> <label for='0_OST'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Ambiance :
+			<li><input type='radio' name='ambiance' id='1_ambiance' value="1"/> <label for='1_ambiance'>J'ai aimé</label></li>
+			<li><input type='radio' name='ambiance' id='NULL_ambiance' value=null checked/> <label for='NULL_ambiance'>Neutre</label></li>
+			<li><input type='radio' name='ambiance' id='0_ambiance' value="0"/> <label for='0_ambiance'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Lumière :
+			<li><input type='radio' name='photography' id='1_photography' value="1"/> <label for='1_photography'>J'ai aimé</label></li>
+			<li><input type='radio' name='photography' id='NULL_photography' value=null checked/> <label for='NULL_photography'>Neutre</label></li>
+			<li><input type='radio' name='photography' id='0_photography' value="0"/> <label for='0_photography'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Montage :
+			<li><input type='radio' name='editing' id='1_editing' value="1"/> <label for='1_editing'>J'ai aimé</label></li>
+			<li><input type='radio' name='editing' id='NULL_editing' value=null checked/> <label for='NULL_editing'>Neutre</label></li>
+			<li><input type='radio' name='editing' id='0_editing' value="0"/> <label for='0_editing'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Dialogues :
+			<li><input type='radio' name='dialogue' id='1_dialogue' value="1"/> <label for='1_dialogue'>J'ai aimé</label></li>
+			<li><input type='radio' name='dialogue' id='NULL_dialogue' value=null checked/> <label for='NULL_dialogue'>Neutre</label></li>
+			<li><input type='radio' name='dialogue' id='0_dialogue' value="0"/> <label for='0_dialogue'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Décors :
+			<li><input type='radio' name='set' id='1_set' value="1"/> <label for='1_set'>J'ai aimé</label></li>
+			<li><input type='radio' name='set' id='NULL_set' value=null checked/> <label for='NULL_set'>Neutre</label></li>
+			<li><input type='radio' name='set' id='0_set' value="0"/> <label for='0_set'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Costumes :
+			<li><input type='radio' name='costume' id='1_costume' value="1"/> <label for='1_costume'>J'ai aimé</label></li>
+			<li><input type='radio' name='costume' id='NULL_costume' value=null checked/> <label for='NULL_costume'>Neutre</label></li>
+			<li><input type='radio' name='costume' id='0_costume' value="0"/> <label for='0_costume'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Narration :
+			<li><input type='radio' name='narration' id='1_narration' value="1"/> <label for='1_narration'>J'ai aimé</label></li>
+			<li><input type='radio' name='narration' id='NULL_narration' value=null checked/> <label for='NULL_narration'>Neutre</label></li>
+			<li><input type='radio' name='narration' id='0_narration' value="0"/> <label for='0_narration'>Je n'ai pas aimé</label><br /><br /></li>
+
+			Rythme :
+			<li><input type='radio' name='rythm' id='1_rythm' value="1"/> <label for='1_rythm'>J'ai aimé</label></li>
+			<li><input type='radio' name='rythm' id='NULL_rythm' value=null checked/> <label for='NULL_rythm'>Neutre</label></li>
+			<li><input type='radio' name='rythm' id='0_rythm' value="0"/> <label for='0_rythm'>Je n'ai pas aimé</label><br /><br /></li>
+
+			SFX :
+			<li><input type='radio' name='SFX' id='1_SFX' value="1"/> <label for='1_SFX'>J'ai aimé</label></li>
+			<li><input type='radio' name='SFX' id='NULL_SFX' value=null checked/> <label for='NULL_SFX'>Neutre</label></li>
+			<li><input type='radio' name='SFX' id='0_SFX' value="0"/> <label for='0_SFX'>Je n'ai pas aimé</label><br /><br /></li>
+
+			<input type="submit" value="Valider">
+		</form>
+		<% }
+		else
+		{ %>
+		<p><a href="/login">Connectez vous pour pouvoir noter des films</a></p>
+		<% } %>
+
+		<footer>
+			<hr>
+			<p>© Copyright 2016</p>
+		</footer>
+
+	</div>
+
+
+
+
+	<!-- Imports -->
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+	<script src="/core/APIRequests/apirequests.js"></script>
+
+	<!-- Mise en place dynamique de la page -->
+	<script type="text/javascript">
+
+		var film = JSON.parse(getMovieById(<%= id %>));
+
+		console.log(film);
+
+		document.getElementById('title').textContent = film.title;
+		document.getElementById('pageTitle').textContent = film.title;
+
+		movie.style.minHeight = '450px';
+
+		var poster = document.createElement('IMG');
+		poster.setAttribute('id', 'poster');
+		poster.setAttribute('align', 'middle');
+		poster.setAttribute('src', "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + film.poster_path);
+		poster.setAttribute('style', 'float:left', 'height:400px');
+		poster.style.paddingRight = '20px';
+		movie.appendChild(poster);
+
+		var releaseDate = document.createElement('div');
+		releaseDate.setAttribute('id', 'releaseDate');
+		releaseDate.textContent = 'Date de sortie : ' + film.release_date;
+		releaseDate.style.marginBottom = '10px';
+		movie.appendChild(releaseDate);
+
+		var overview = document.createElement('div');
+		overview.setAttribute('id', 'overview');
+		overview.textContent = 'Synopsis : ' + film.overview;
+		movie.appendChild(overview);
+	</script>
+
+	<script>
+
+		var form = document.getElementById("critere_form");
+		var scenar = document.getElementById("1_scenario");
+
+		scenar.addEventListener("focus", function() {
+			console.log("Coucou");
+		});
+
+		console.log("Nombre d'éléments : " + form.elements.name);
+
+		form.addEventListener("submit", function (e) {
+
+			var critere = {
+				scenario: form.elements.scenario.value,
+				actorPerformance: form.elements.actorPerformance.value,
+				directing: form.elements.directing.value,
+				OST: form.elements.OST.value,
+				ambiance: form.elements.ambiance.value,
+				photography: form.elements.photography.value,
+				editing: form.elements.editing.value,
+				dialogue: form.elements.dialogue.value,
+				set: form.elements.set.value,
+				costume: form.elements.costume.value,
+				narration: form.elements.narration.value,
+				rythm: form.elements.rythm.value,
+				SFX: form.elements.SFX.value
+			};
+			console.log(critere);
+			e.preventDefault();
+		});
+
+	</script>
+
+
+
+</body>
+
+</html>
