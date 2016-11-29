@@ -40,6 +40,8 @@ Cet algo est le même que le général mais on se base sur un seul user.
 
 ## Algo de recommandation général. Filtrage de la liste des users et/ou de la liste des films possible :)
 
+### Remarque : utiliser l'algo dés l'inscription
+Amis : Suivre à la Twitter ? Comment follow quelqu'un
 Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, cela équivaut à passer ce critère à 1. S'il ne l'a pas aimé, le critère est à 0. 
 
 Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV). Cette liste contient l'id des users ainsi que les critères qu'ils ont aimé (critère précédé de l'id du film). Les utilisateurs peuvent être tous les utilisateurs, seulement les amis de U1 ou seulement un seul ami de U1.
