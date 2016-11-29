@@ -42,7 +42,6 @@ module.exports = function(app, passport) {
 	app.post('/signup', passport.authenticate('local-signup', {
 		successRedirect : '/home', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
-		badRequestMessage : 'Missing username or password.',
 		failureFlash : true // allow flash messages
 	}));
 
@@ -95,8 +94,8 @@ module.exports = function(app, passport) {
 	// =====================================
 	// MOVIE ===============================
 	// =====================================
-	app.get('/movie/:id', function(req, res){
-		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/');
+	app.get('/movie/:id', isLoggedInToLogin, function(req, res){
+		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/home');
 		else res.render('movie.ejs', {id: req.params.id});
 	});
 };
@@ -110,4 +109,14 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	res.redirect('/');
+}
+
+function isLoggedInToLogin(req, res, next) {
+
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated())
+		return next();
+
+	// if they aren't redirect them to the home page
+	res.redirect('/login');
 }
