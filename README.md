@@ -40,9 +40,11 @@ Cet algo est le même que le général mais on se base sur un seul user.
 
 ## Algo de recommandation général. Filtrage de la liste des users et/ou de la liste des films possible :)
 
+### Remarque : utiliser l'algo dés l'inscription
+Amis : Suivre à la Twitter ? Comment follow quelqu'un
 Point 1.  Utilisateur U1 note un ensemble de films. Chaque film possède plusieurs critères (acteurs, effets spéciaux, etc). Si l'utilisateur a aimé un critère dans ce film, cela équivaut à passer ce critère à 1. S'il ne l'a pas aimé, le critère est à 0. 
 
-Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV). Cette liste contient l'id des users ainsi que les critères qu'ils ont aimé (critère précédé de l'id du film). Les utilisateurs peuvent être tous les utilisateurs (max de 10000 pour ne pas surcharger les calculs), seulement les amis de U1 ou seulement un seul ami de U1.
+Point 2.  On extrait les données de la table "NOTE" pour construire la liste suivante (au format CSV). Cette liste contient l'id des users ainsi que les critères qu'ils ont aimé (critère précédé de l'id du film). Les utilisateurs peuvent être tous les utilisateurs, seulement les amis de U1 ou seulement un seul ami de U1.
 <h3>Fichier CSV</h3>
 <table>
     <tr>
@@ -87,9 +89,9 @@ Point 3 : On fait appel à l'algorithme de Apriori en indiquant une confiance et
 Point 4 : On calcule le "lift" de chaque règle retournée par l'algorithme. 
 Soit la règle R1 = "14186_Scénario --> 2586_Décors". 
 lift(R1) = P(14186_Scénario /\ 2586_Décors) / P(14186_Scénario) * P(2586_Décors).
-Si la valeur du lift est inférieure à 1, on ne garde pas la règle. On conserve les 100 meilleures règles (les règles qui ont le plus grand lift). 
+Si la valeur du lift est inférieure à 1, on ne garde pas la règle. On conserve les meilleures règles (les règles qui ont le plus grand lift). 
 
-Point 5 : On effectue un filtrage sur cette liste de 100 meilleures règles selon la liste des films qu'a notés U1. "lhs" ne doit contenir que des critères relatifs à un film déjà noté par U1 et "rhs" ne doit contenir qu'un critère relatif à un film pas vu par U1 et différent de celui présent dans "lhs". 
+Point 5 : On effectue un filtrage sur cette liste de meilleures règles selon la liste des films qu'a notés U1. "lhs" ne doit contenir que des critères relatifs à un film déjà noté par U1 et "rhs" ne doit contenir qu'un critère relatif à un film pas vu par U1 et différent de celui présent dans "lhs". 
 
 Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, après suppression des éventuels doublons.
 
