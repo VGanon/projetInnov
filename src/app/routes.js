@@ -8,6 +8,9 @@ module.exports = function(app, passport) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
+	app.get('/testAlgo', function(req,res) {
+	  res.render('algo.ejs');
+	});
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -39,7 +42,6 @@ module.exports = function(app, passport) {
 	app.post('/signup', passport.authenticate('local-signup', {
 		successRedirect : '/home', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
-		badRequestMessage : 'Missing username or password.',
 		failureFlash : true // allow flash messages
 	}));
 
@@ -87,8 +89,8 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
-	
-	
+
+
 	// =====================================
 	// MOVIE ===============================
 	// =====================================
