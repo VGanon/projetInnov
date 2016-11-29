@@ -92,7 +92,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// MOVIE ===============================
 	// =====================================
-	app.get('/movie/:id', function(req, res){
+	app.get('/movie/:id', isLoggedInToLogin, function(req, res){
 		if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id) < 0) res.redirect('/');
 		else res.render('movie.ejs', {id: req.params.id});
 	});
@@ -107,4 +107,14 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	res.redirect('/');
+}
+
+function isLoggedInToLogin(req, res, next) {
+
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated())
+		return next();
+
+	// if they aren't redirect them to the home page
+	res.redirect('/login');
 }
