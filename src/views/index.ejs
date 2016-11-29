@@ -11,6 +11,9 @@
 		<script src="/core/APIRequests/apirequests.js"></script>
 		<script src="/node_modules/angular/angular.js"></script>
 		<script src="/js/index.js"></script>
+		<script src="build/display.bundle.js"></script>
+	  <!-- Algorithme de recommendation générale -->
+	  <script src="build/algorithm.bundle.js"></script>
 	</head>
 	<body>
 		<!-- Barre de menu -->
@@ -99,7 +102,12 @@
 					</a>  
 				</span>
 				<!-- TMP TEST : bouton pour afficher les films recommandes -->
-				<button ng-click="ctrl.showRecommendedMovies()">TEST : Films recommandés</button>
+				<button ng-click="ctrl.seeRecommendedMovies()">TEST : Films recommandés</button>
+				<div class="container-fluid" ng-show="ctrl.isShowRecommendedMoviesButtonClicked() == true">
+					<div class="row" ng-repeat="ratedMovie in stub">
+			      <div htd-rated-movie-card></div>
+			    </div>
+				</div>
 			</div>
 
 			<footer>

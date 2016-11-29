@@ -1,4 +1,9 @@
-angular.module('movieRecommendationApp', []).controller('Controller', function() {
+angular.module('movieRecommendationApp', [])
+	.controller('Controller', badenController)
+	.directive('htdRatedMovieCard', htdRatedMovieCard)
+	.factory('htdAlgorithmRGv1', htdAlgorithmRGv1);
+
+function badenController() {
 	/* Donnees dynamiques de l'application (les update impliquera un update du html) */
 	this.pageTitle = "";
 	this.movies = [];
@@ -9,6 +14,10 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 	/* Map id/name des genres de films (voir fonction getMovieGenres) */
 	this.movieGenres = {};
 	JSON.parse(getGenres()).genres.forEach( ({id, name}) => this.movieGenres[id] = name );
+	this.isShowRecommendedMoviesButtonClicked = false;
+	this.seeRecommendedMovies = function() {
+		isShowRecommendedMoviesButtonClicked = true;
+	}
 
 	/* TMP : en attendant l'algo de recommandation */
 	this.generateMovieDescription = function(title, poster_path, release_date, genre_ids, overview){
@@ -130,4 +139,44 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 
 	//Page d'accueil : films populaires
 	this.showPopularMovies();
-});
+
+  // Stub car pas d'accès au backend en ce moment
+  this.stub = [
+    {
+      rater: {
+        name: "Bastien"
+      },
+      title: "Harry Porter 1"
+    },
+    {
+      rater: {
+        name: "Bastien's brother"
+      },
+      title: "Harry Porter 10"
+    },
+    {
+      rater: {
+        name: "Bastien's sister"
+      },
+      title: "Harry Porter 100"
+    }
+  ];
+}
+
+
+function htdRatedMovieCard() {
+// Permet d'utiliser htdRatedMovieCard comme un attribut HTML.
+// templateUrl pointe vers la définition de sa vue.
+return {
+  restrict: 'A',
+  templateUrl: 'core/display/rated-movie-card.tpl.html'
+}
+
+function htdAlgorithmRGv1() {
+	return {
+		createRatedMovieFromMovie: function(rater: User, movie: Movie, score: number[]) {
+		  return new RatedMovie(movie.title, movie.genres, movie.criteria, rater, score);
+		},
+		launchAlgorithmRG: "stub";
+	}
+}
