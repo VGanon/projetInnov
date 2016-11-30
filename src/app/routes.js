@@ -107,14 +107,17 @@ module.exports = function(app, passport) {
 		else {
 			//Update data in base
 			User.findOne({'_id': req.user._id}, function(err, user){
+				// password = newPassword only if newPassword not empty
+				var pass = user.generateHash(req.body.newPassword);
 				if(err) return done(err);
 				//Update
 				if(!req.body.newPassword && !req.body.confirmNewPassword) {
-					req.body.newPassword = user.local.password;
+					pass = user.local.password;
+					console.log("2 : no new password : " + pass);
 				}
 				user.local = {
 					'username': req.body.username,
-					'password': user.generateHash(req.body.newPassword),
+					'password': pass,
 					'email': req.body.email,
 					'categories': req.body.categories
 				};

@@ -25,7 +25,11 @@
 				    dataarray[i] = dataarray[i].charAt(0).toUpperCase() + dataarray[i].slice(1);;
 				}
 				// Set the value
-				$("#categories").html(dataarray.join());
+				if (dataarray === undefined || dataarray.length == 0){
+					$("#categories").html('Aucune catégorie sélectionnée');
+				} else {
+					$("#categories").html(dataarray.join());
+				}
 
 			});
 	</script>

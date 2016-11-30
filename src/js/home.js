@@ -51,7 +51,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 
 	/* Update des donnees pour afficher les films recommendes
 	/* CONTENU TMP : en attendant l'algo de recommandation */
-	this.showRecommendedMovies = function(){
+/*	this.showRecommendedMovies = function(){
 		// ----- TMP 
 		var tmpMovies = [];
 		tmpMovies.push(this.generateMovieDescription("Django Unchained", "tmp/images/django_unchained.jpg", "2015-10-12", [28, 12, 16], 
@@ -100,6 +100,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 			null, null, true
 		);
 	};
+*/
 
 	/* Update des donnees pour afficher les resultats de recherche */
 	this.search = function(text){
