@@ -3,12 +3,16 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Profil</title>
+	<title>Modifier le profil</title>
 	<!-- Imports -->
-	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="/node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"> <!-- load fontawesome -->
 	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/node_modules/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+	<script type="text/javascript" src="node_modules/moment/min/moment.min.js"></script>
+
 	<script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
 	<script src="/core/APIRequests/apirequests.js"></script>
 	<script src="/node_modules/angular/angular.js"></script>
@@ -16,6 +20,28 @@
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
+	<script type="text/javascript">
+			$(document).ready(function() {
+				//Do it simple
+				var data="<%= user.local.categories%>";
+				//Make an array
+				var dataarray=data.split(",");
+				//Uppercase first letter of each category
+				for(var i= 0; i < dataarray.length; i++) {
+				    dataarray[i].charAt(0).toUpperCase() + dataarray[i].slice(1);;
+				}
+				// Set the value
+				$("#categories").val(dataarray);
+				$("#multiselectbox").multiselect("refresh");
+
+				$('#categories').multiselect({
+					buttonWidth: "100%",
+					nonSelectedText: "Aucune catégorie sélectionnée",
+					enableFiltering: true,
+   					enableCaseInsensitiveFiltering: true,
+				});
+			});
+	</script>
 
 </head>
 <body>
@@ -83,10 +109,7 @@
 
 <div class="container">
 
-	<!-- show any messages that come back with authentication -->
-	<% if (message && message.length > 0) { %>
-		<div class="alert alert-danger"><%= message %></div>
-	<% } %>
+	
 
 <form method="post" class="form-horizontal">
 <fieldset>
@@ -95,9 +118,14 @@
 		<h2><span class="fa fa-user"></span> Modifier le profil </h2>
 	</legend>
 
+	<!-- show any messages that come back with configuration -->
+	<% if (message && message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
+
 	<!--
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="textinput">Nom d'utilisateur</label>  
+	  <label class="col-md-4 control-label" for="textinput">Sexe</label>  
 	  <div class="col-md-4">
 	    <label class="radio-inline"> <input type="radio" name="anynum" id="homme" value="homme" checked> Homme </label>
 	    <label class="radio-inline"> <input type="radio" name="anynum" id="femme" value="femme"> Femme </label>
@@ -107,7 +135,7 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Nom d'utilisateur</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="username" type="text" placeholder="Nom d'utilisateur" class="form-control input-md"> 
+	  	<input id="textinput" name="username" type="text" placeholder="Nom d'utilisateur" class="form-control input-md" value=<%= user.local.username %>> 
 	  </div>
 	</div>
 <!--
@@ -128,24 +156,49 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Email</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">
+	  	<input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md" value=<%= user.local.email %>>
 	  </div>
 	</div>
 
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Nouveau mot de passe</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="newPassword" type="text" placeholder="Nouveau mot de passe" class="form-control input-md">
+	  	<input id="textinput" name="newPassword" type="password" placeholder="Nouveau mot de passe" class="form-control input-md">
 	  </div>
 	</div>
 
-	<!-- Text input-->
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Confirmer nouveau mot de passe</label>  
 	  <div class="col-md-4">
-	  	<input id="textinput" name="confirmNewPassword" type="text" placeholder="Confirmer nouveau mot de passe" class="form-control input-md">
+	  	<input id="textinput" name="confirmNewPassword" type="password" placeholder="Confirmer nouveau mot de passe" class="form-control input-md">
 	  </div>
 	</div>
+
+	<div class="form-group">
+			<label class="col-md-4 control-label" for="categories">Catégories préférées</label>
+			<div class="col-md-4">
+				<select id="categories" name="categories" class="col-sm-6 col-sm-offset-3" multiple="multiple">
+					<option value="action">Action</option>
+					<option value="aventure">Aventure</option>
+					<option value="animation">Animation</option>
+					<option value="comedie">Comédie</option>
+					<option value="crime">Crime</option>
+					<option value="documentaire">Documentaire</option>
+					<option value="dramatique">Dramatique</option>
+					<option value="famille">Famille</option>
+					<option value="fantastique">Fantastique</option>
+					<option value="historique">Historique</option>
+					<option value="horreur">Horreur</option>
+					<option value="musical">Musical</option>
+					<option value="mysterieux">Mystérieux</option>
+					<option value="romance">Romance</option>
+					<option value="science_fiction">Science-Fiction</option>
+					<option value="thriller">Thriller</option>
+					<option value="guerre">Guerre</option>
+					<option value="western">Western</option>
+				</select>
+			</div>
+		</div>
 
 	<!-- Button -->
 	<div class="form-group">

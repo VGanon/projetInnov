@@ -16,6 +16,19 @@
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
+	<script type="text/javascript">
+			$(document).ready(function() {
+				var data="<%= user.local.categories%>";
+				//Make an array
+				var dataarray=data.split(",");
+				for(var i= 0; i < dataarray.length; i++) {
+				    dataarray[i] = dataarray[i].charAt(0).toUpperCase() + dataarray[i].slice(1);;
+				}
+				// Set the value
+				$("#categories").html(dataarray.join());
+
+			});
+	</script>
 </head>
 <body>
 
@@ -57,18 +70,6 @@
 						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
 					</ul>
 
-					<form class="navbar-form" role="search">
-						<div class="input-group" style="padding-left:150px;">
-							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Chercher des films, des acteurs, ..." ng-model="inputText" onkeydown="if(event.keyCode === 13) $('#search').click()" />
-							<span class="input-group-btn">
-								<button id="search" type="submit" class="btn btn-default" style="height:34px" ng-click="ctrl.search(inputText)">
-									<span class="glyphicon glyphicon-search">
-										<span class="sr-only">Rechercher</span>
-									</span>
-								</button>
-							</span>
-						</div>
-					</form>
 					
 					
 				</div><!-- /.navbar-collapse -->
@@ -115,7 +116,7 @@
                       </tr>
                       <tr>
                         <td>Catégories préférées</td>
-                        <td><%= user.categories %></td>
+                        <td id="categories"></td>
                       </tr>
                     </tbody>
             </table>

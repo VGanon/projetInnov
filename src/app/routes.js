@@ -90,16 +90,16 @@ module.exports = function(app, passport) {
 	//User update
 	app.post('/configure', isLoggedIn, function(req, res) {
 		//Errors
-		if(!req.body.username || !req.body.email || !req.body.newPassword || !req.body.confirmNewPassword){
-			message = 'Veuillez remplir tous les champs';
+		if(!req.body.username || !req.body.email){
+			message = 'Veuillez remplir les champs obligatoires !';
 			res.render('configure.ejs', {
 				user: req.user, // get the user out of session and pass to template
-				message: 'Veuillez remplir tous les champs'
+				message: 'Veuillez remplir les champs obligatoires !'
 			});
 		} else if(req.body.newPassword !== req.body.confirmNewPassword){
 			res.render('configure.ejs', {
 				user: req.user, // get the user out of session and pass to template
-				message: 'Les nouveaux mots de passe ne correspondent pas'
+				message: 'Les nouveaux mots de passe ne correspondent pas !'
 			});
 		} 
 
@@ -109,10 +109,14 @@ module.exports = function(app, passport) {
 			User.findOne({'_id': req.user._id}, function(err, user){
 				if(err) return done(err);
 				//Update
+				if(!req.body.newPassword && !req.body.confirmNewPassword) {
+					req.body.newPassword = user.local.password;
+				}
 				user.local = {
 					'username': req.body.username,
-					'password': user.generateHash(req.body.password),
-					'email': req.body.email
+					'password': user.generateHash(req.body.newPassword),
+					'email': req.body.email,
+					'categories': req.body.categories
 				};
 				//Save
 				user.save(function(){
