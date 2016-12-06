@@ -27,6 +27,7 @@ app.use('/js', express.static('./js'));
 app.use('/css', express.static('./css'));
 app.use('/core', express.static('./core'));
 app.use('/node_modules', express.static('./node_modules'));
+app.use('/img', express.static('./img'));
 
 app.configure(function() {
 
