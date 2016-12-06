@@ -12,10 +12,22 @@ div.movie img.poster {
 	height: 400px;
 }
 
-a.actor {
-	margin: 7px;
+.actor {
+	height: 500px;
+}
+
+.actor a{
+	margin-right: 10px;
+}
+
+.actor img {
+	width: 250px;
 }
 
 p {
 	text-align: justify;
+}
+
+.actors {
+	margin-bottom: 20px;
 }
