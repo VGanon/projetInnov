@@ -134,9 +134,14 @@ module.exports = function(app, passport) {
 					req.login(user, function(err) {
 				        if (err) return next(err);
 
-				        res.render('profile.ejs', {
-							user: req.user, 
-							message: 'Vos informations ont été modifiées'
+				        Note.find({'id_user': req.user._id}).lean().exec(function (err, note) {
+						    var movies = JSON.stringify(note);
+
+						    res.render('profile.ejs', {
+								user: req.user, // get the user out of session and pass to template
+								movies: movies,
+								message: ""
+							});
 						});
 				    });
 				});

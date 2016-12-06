@@ -122,16 +122,43 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 
 	/* Update des donnees pour afficher les films recommandés pour un utilisateur qui vient de s'inscrire */
 	this.showInitialRecommandedMovies = function(){
+
+		var user_categories = $("#user_categories").html();
+
+		var user_categories_array = user_categories.split(",");
+		for(var s = 0; s < user_categories_array.length; s++){
+		    user_categories_array[s] = user_categories_array[s].toUpperCase();
+		}
+
+		var resultMovies = {
+		    results: []
+		};
 		
-		var filteredResults =  JSON.parse(getPopularMovies()).results
-		.filter(function (i,n){
-			return $.inArray(28, i.genre_ids) > -1;
-		});
+		var popularMovies =  JSON.parse(getPopularMovies()).results;
+
+		//pour chaque film de popularMovies
+		for(var i in popularMovies)
+		{
+			var genresMovie = popularMovies[i].genre_ids;
+			// Pour chaque categorie du film
+			for(var j in genresMovie)
+			{
+				// get genre name from genre_id
+				var genre_name = this.movieGenres[genresMovie[j]];
+
+				// si genre in user_categories
+				if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
+				{
+					var movie = popularMovies[i];
+					resultMovies.results.push(movie);
+				}
+			}
+		}
 		
 		
 		this.updateData(
 			"Films recommandés pour vous", 
-			filteredResults
+			resultMovies.results
 		);
 	};
 	
