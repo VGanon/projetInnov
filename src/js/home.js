@@ -125,7 +125,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		
 		var filteredResults =  JSON.parse(getPopularMovies()).results
 		.filter(function (i,n){
-			return $.inArray(28, i.genre_ids) > -1; // 27 correspond à Horreur
+			return $.inArray(28, i.genre_ids) > -1;
 		});
 		
 		
@@ -134,7 +134,12 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 			filteredResults
 		);
 	};
-
+	
+	// parse genres.json
+	$.getJSON("./core/apiRequests/genres.json", function(json) {
+	    var categories = json;
+	    //console.log(json.genres[0].id); => 28
+	});
 
 	//Page d'accueil : films recommandés selon catégories choisies
 	this.showInitialRecommandedMovies();

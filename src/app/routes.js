@@ -1,5 +1,6 @@
 // load up the user model
 var User = require('./models/user');
+var Note = require('./models/Note');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -67,10 +68,17 @@ module.exports = function(app, passport) {
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user: req.user, // get the user out of session and pass to template
-			message: ""
+
+		Note.find({'id_user': req.user._id}).lean().exec(function (err, note) {
+		    var movies = JSON.stringify(note);
+
+		    res.render('profile.ejs', {
+				user: req.user, // get the user out of session and pass to template
+				movies: movies,
+				message: ""
+			});
 		});
+		
 	});
 
 
@@ -99,7 +107,7 @@ module.exports = function(app, passport) {
 		} else if(req.body.newPassword !== req.body.confirmNewPassword){
 			res.render('configure.ejs', {
 				user: req.user, // get the user out of session and pass to template
-				message: 'Les nouveaux mots de passe ne correspondent pas !'
+				message: 'La confirmation du nouveau mot de passe est incorrecte !'
 			});
 		} 
 
@@ -113,7 +121,6 @@ module.exports = function(app, passport) {
 				//Update
 				if(!req.body.newPassword && !req.body.confirmNewPassword) {
 					pass = user.local.password;
-					console.log("2 : no new password : " + pass);
 				}
 				user.local = {
 					'username': req.body.username,

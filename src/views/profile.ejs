@@ -1,18 +1,19 @@
 <!-- views/profile.ejs -->
 <!doctype html>
-<html>
+<html ng-app="ratedMovies" ng-controller="Controller as ctrl">
 <head>
 	<meta charset="UTF-8">
 	<title>Profil</title>
 	<!-- Imports -->
 	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/profile.css">
 	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
 	<script src="/core/APIRequests/apirequests.js"></script>
 	<script src="/node_modules/angular/angular.js"></script>
-	<script src="/js/home.js"></script>
+	<script src="/js/profile.js"></script>
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
@@ -137,13 +138,23 @@
 	</legend>
 
 	<div class="row">
-		<div class="col-sm-12">
-			<div class="well">
+		<div class="col-sm-12 well">
+
+				<h2 style="display:none;" id="movies"><%= movies %></h2>
 				
+				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-2">
+					<div class="btn center-block">
+						<a href="./movie/{{movie.id}}">
+							<img style="width:100px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+						</a>
+					</div>
+					<a class="center-block" href="./movie/{{movie.id}}">
+						<h5 class="text-center">{{movie.title}}</h5>
+					</a>
+				</div>
 
 
 
-			</div>
 		</div>
 	</div>
 

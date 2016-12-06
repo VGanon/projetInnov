@@ -41,6 +41,10 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
+        if(!req.body.email) {
+            return done(null, false, req.flash('signupMessage', 'Veuillez saisir votre email et mot de passe!'));
+        }
+
         // if username exists
         User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
             if(user) {
@@ -83,9 +87,6 @@ module.exports = function(passport) {
             }
 
         });
-
-		
-
     }));
 
     // =========================================================================

@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "angular": "^1.5.8",
+    "apriori": "latest",
     "bcrypt-nodejs": "latest",
     "bootstrap": "^3.3.7",
     "bootstrap-datetimepicker": "latest",
@@ -24,8 +25,8 @@
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
-    "socket.io": "latest",
-    "apriori": "latest"
+    "requirejs": "^2.3.2",
+    "socket.io": "latest"
   },
   "license": "ISC",
   "devDependencies": {

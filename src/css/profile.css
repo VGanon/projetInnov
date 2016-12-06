@@ -1,0 +1,17 @@
+#topbar input {
+	width: 250px;
+}
+
+div.movie {
+	height: 700px;
+	margin-bottom: 20px;
+}
+
+div.movie {
+	float: left;
+	height: 220px;
+}
+
+p {
+	text-align: justify;
+}
