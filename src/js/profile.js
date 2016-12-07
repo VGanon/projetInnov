@@ -34,7 +34,7 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 			ratedMovies.results.push(JSON.parse(movie));
 		}
 
-		if(resultMovies.results !== 'undefined' && resultMovies.results.length !== 0) {
+		if(ratedMovies.results !== 'undefined' && ratedMovies.results.length !== 0) {
 			$("#message").hide();
 			this.updateData(
 				ratedMovies.results

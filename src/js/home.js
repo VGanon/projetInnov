@@ -140,7 +140,6 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		if(user_categories === 'undefined' || user_categories.length === 0) {
 			resultMovies.results = popularMovies;
 		} else {
-
 			//pour chaque film de popularMovies
 			for(var i in popularMovies)
 			{
@@ -161,7 +160,9 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 			}
 		}
 
+
 		if(resultMovies.results !== 'undefined' && resultMovies.results.length !== 0) {
+			
 			this.updateData(
 				"Films recommandés pour vous", 
 				resultMovies.results
