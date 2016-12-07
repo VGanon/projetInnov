@@ -19,6 +19,7 @@
 	</style>
 	<script type="text/javascript">
 			$(document).ready(function() {
+
 				var data="<%= user.local.categories%>";
 				//Make an array
 				var dataarray=data.split(",");
@@ -26,7 +27,7 @@
 				    dataarray[i] = dataarray[i].charAt(0).toUpperCase() + dataarray[i].slice(1);;
 				}
 				// Set the value
-				if (dataarray === undefined || dataarray.length == 0){
+				if ("<%= user.local.categories%>" === 'undefined' || dataarray.length === 0){
 					$("#categories").html('Aucune catégorie sélectionnée');
 				} else {
 					$("#categories").html(dataarray.join());
@@ -141,6 +142,8 @@
 		<div class="col-sm-12 well">
 
 				<h2 style="display:none;" id="movies"><%= movies %></h2>
+
+				<h8 id="message">Aucun film noté !</h5>
 				
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-2">
 					<div class="btn center-block">

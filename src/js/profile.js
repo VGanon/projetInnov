@@ -24,8 +24,6 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 		var ratedMovies = {
 		    results: []
 		};
-
-		document.getElementById("movies");
 		
 		// Recuperer les films de la bdd notes where id_user = connected user (format json)
 		var movies = JSON.parse($("#movies").html());
@@ -36,9 +34,14 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 			ratedMovies.results.push(JSON.parse(movie));
 		}
 
-	    this.updateData(
-			ratedMovies.results
-		);
+		if(resultMovies.results !== 'undefined' && resultMovies.results.length !== 0) {
+			$("#message").hide();
+			this.updateData(
+				ratedMovies.results
+			);
+		} else {
+			$("#message").show();
+		}
 		
 	};
 

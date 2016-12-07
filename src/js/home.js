@@ -136,37 +136,45 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		
 		var popularMovies =  JSON.parse(getPopularMovies()).results;
 
-		//pour chaque film de popularMovies
-		for(var i in popularMovies)
-		{
-			var genresMovie = popularMovies[i].genre_ids;
-			// Pour chaque categorie du film
-			for(var j in genresMovie)
-			{
-				// get genre name from genre_id
-				var genre_name = this.movieGenres[genresMovie[j]];
+		// si aucune catégorie préférée => afficer tous les films
+		if(user_categories === 'undefined' || user_categories.length === 0) {
+			resultMovies.results = popularMovies;
+		} else {
 
-				// si genre in user_categories
-				if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
+			//pour chaque film de popularMovies
+			for(var i in popularMovies)
+			{
+				var genresMovie = popularMovies[i].genre_ids;
+				// Pour chaque categorie du film
+				for(var j in genresMovie)
 				{
-					var movie = popularMovies[i];
-					resultMovies.results.push(movie);
+					// get genre name from genre_id
+					var genre_name = this.movieGenres[genresMovie[j]];
+
+					// si genre in user_categories
+					if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
+					{
+						var movie = popularMovies[i];
+						resultMovies.results.push(movie);
+					}
 				}
 			}
 		}
+
+		if(resultMovies.results !== 'undefined' && resultMovies.results.length !== 0) {
+			this.updateData(
+				"Films recommandés pour vous", 
+				resultMovies.results
+			);
+		} else {
+			this.updateData(
+				"Aucun film recommandés pour vous", 
+				resultMovies.results
+			);
+		}
 		
 		
-		this.updateData(
-			"Films recommandés pour vous", 
-			resultMovies.results
-		);
 	};
-	
-	// parse genres.json
-	$.getJSON("./core/apiRequests/genres.json", function(json) {
-	    var categories = json;
-	    //console.log(json.genres[0].id); => 28
-	});
 
 	//Page d'accueil : films recommandés selon catégories choisies
 	this.showInitialRecommandedMovies();
