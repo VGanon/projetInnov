@@ -6,6 +6,12 @@ var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var User       		= require('../app/models/user');
 
+// function to check if an email is valid
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
@@ -41,8 +47,8 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
-        if(!req.body.email) {
-            return done(null, false, req.flash('signupMessage', 'Veuillez saisir votre email et mot de passe!'));
+        if(req.body.email === 'undefined') {
+            return done(null, false, req.flash('signupMessage', 'Veuillez saisir votre email et mot de passe !'));
         }
 
         // if username exists
@@ -58,10 +64,12 @@ module.exports = function(passport) {
 
                     // check to see if theres already a user with that email
                     if (user) {
-                        return done(null, false, req.flash('signupMessage', 'Cette adresse email est déjà utilisée !'));
+                        return done(null, false, req.flash('signupMessage', 'L\' adresse email est déjà utilisée !'));
+                    } else if(!validateEmail(email)) {
+                        return done(null, false, req.flash('signupMessage', 'L\' adresse email est invalide !'));
                     } else if (password !== req.body.confirmpassword) {
                         // if password is not equal to confirmpassword
-                            return done(null, false, req.flash('signupMessage', 'Confirmation de mot de passe incorrecte !'));
+                            return done(null, false, req.flash('signupMessage', 'La confirmation de mot de passe est incorrecte !'));
                     } else {                
 
                         // if no problems

@@ -2,6 +2,12 @@
 var User = require('./models/user');
 var Note = require('./models/Note');
 
+// function to check if an email is valid
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -111,40 +117,85 @@ module.exports = function(app, passport) {
 			});
 		} 
 
-		//No errors
 		else {
-			//Update data in base
+			
 			User.findOne({'_id': req.user._id}, function(err, user){
 				// password = newPassword only if newPassword not empty
 				var pass = user.generateHash(req.body.newPassword);
 				if(err) return done(err);
-				//Update
+				
 				if(!req.body.newPassword && !req.body.confirmNewPassword) {
 					pass = user.local.password;
 				}
-				user.local = {
-					'username': req.body.username,
-					'password': pass,
-					'email': req.body.email,
-					'categories': req.body.categories
-				};
-				//Save
-				user.save(function(){
-					//Relog mandatory to reload from base
-					req.login(user, function(err) {
-				        if (err) return next(err);
 
-				        Note.find({'id_user': req.user._id}).lean().exec(function (err, note) {
-						    var movies = JSON.stringify(note);
 
-						    res.render('profile.ejs', {
-								user: req.user, // get the user out of session and pass to template
-								movies: movies,
-								message: ""
-							});
+
+				User.findOne({'local.username': req.body.username}, function(err, username){
+					//  if new username exists already (but not current user)
+					if(username && (req.body.username !== req.user.local.username)) {
+						res.render('configure.ejs', {
+							user: req.user,
+							message: 'Le nom d\'utilisateur est déjà utilisé !'
 						});
-				    });
+
+		                
+
+					} else {
+
+						// if email format is invalid
+						if(!validateEmail(req.body.email)) {
+							res.render('configure.ejs', {
+								user: req.user,
+								message: 'L\' adresse email est invalide !'
+							});
+						} else {
+
+							User.findOne({'local.email': req.body.email}, function(err, email){
+								// if email exists
+								if(email  && (req.body.email !== req.user.local.email)) {
+									res.render('configure.ejs', {
+										user: req.user,
+										message: 'L\' adresse email est déjà utilisée !'
+									});
+								} else {
+
+									// No errors => update
+									user.local = {
+										'username': req.body.username,
+										'password': pass,
+										'email': req.body.email,
+										'categories': req.body.categories
+									};
+									// Save
+									user.save(function(){
+										//Relog mandatory to reload from base
+										req.login(user, function(err) {
+									        if (err) return next(err);
+
+									        Note.find({'id_user': req.user._id}).lean().exec(function (err, note) {
+											    var movies = JSON.stringify(note);
+
+											    res.render('profile.ejs', {
+													user: req.user, // get the user out of session and pass to template
+													movies: movies,
+													message: 'Les informations de l\'utilisateur ont été modifiées avec succès !'
+												});
+											});
+									    });
+									});
+								}
+
+							});
+
+						}
+
+
+
+					}
+
 				});
+
+
 			});
 		}
 	});
