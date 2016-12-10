@@ -139,21 +139,35 @@ module.exports = function(app, passport) {
 						});
 
 					} else if(req.body.username.length > 10) {
+						// if username invalid
 						res.render('configure.ejs', {
 							user: req.user,
 							message: 'Le nom d\'utilisateur ne doit pas dépasser 10 caractères !'
 						});
 		                
 
-					} else {
-
+					} else if(!validateEmail(req.body.email)) {
 						// if email format is invalid
-						if(!validateEmail(req.body.email)) {
-							res.render('configure.ejs', {
-								user: req.user,
-								message: 'L\' adresse email est invalide !'
-							});
-						} else {
+						res.render('configure.ejs', {
+							user: req.user,
+							message: 'L\' adresse email est invalide !'
+						});
+
+					} else if(req.body.newPassword && req.body.newPassword.length < 8) {
+						// if password is invalid
+						res.render('configure.ejs', {
+							user: req.user,
+							message: 'Le mot de passe doit contenir au moins 8 caractères !'
+						});
+					
+					} else if(req.body.newPassword && (!req.body.newPassword.match(/[a-z]/) || !req.body.newPassword.match(/[A-Z]/) || !req.body.newPassword.match(/\d/))) {
+						// if password is invalid
+						res.render('configure.ejs', {
+							user: req.user,
+							message: 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre miniscule et un chiffre !'
+						});
+
+					} else {
 
 							User.findOne({'local.email': req.body.email}, function(err, email){
 								// if email exists
@@ -192,11 +206,8 @@ module.exports = function(app, passport) {
 
 							});
 
-						}
-
-
-
 					}
+
 
 				});
 

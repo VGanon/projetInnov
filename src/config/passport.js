@@ -55,7 +55,7 @@ module.exports = function(passport) {
         User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
             if(user) {
                 return done(null, false, req.flash('signupMessage', 'Le nom d\'utilisateur est déjà utilisé !'));
-            } else if(ureq.body.username.length > 10) {
+            } else if(req.body.username.length > 10) {
                 return done(null, false, req.flash('signupMessage', 'Le nom d\'utilisateur ne doit pas dépasser 10 caractères !'));
             } else {
                 // if email exists
@@ -71,8 +71,16 @@ module.exports = function(passport) {
                         return done(null, false, req.flash('signupMessage', 'L\' adresse email est invalide !'));
                     } else if (password !== req.body.confirmpassword) {
                         // if password is not equal to confirmpassword
-                            return done(null, false, req.flash('signupMessage', 'La confirmation de mot de passe est incorrecte !'));
-                    } else {                
+                        return done(null, false, req.flash('signupMessage', 'La confirmation de mot de passe est incorrecte !'));
+
+                        // password requirements
+                    } else if (password.length < 8) {
+                        return done(null, false, req.flash('signupMessage', 'Le mot de passe doit contenir au moins 8 caractères !'));
+                    } else if (!password.match(/[a-z]/) || !password.match(/[A-Z]/) || !password.match(/\d/)) {
+                        return done(null, false, req.flash('signupMessage', 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre miniscule et un chiffre !'));
+
+
+                    } else {
 
                         // if no problems
                         // create the user
