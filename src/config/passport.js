@@ -55,6 +55,8 @@ module.exports = function(passport) {
         User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
             if(user) {
                 return done(null, false, req.flash('signupMessage', 'Le nom d\'utilisateur est déjà utilisé !'));
+            } else if(ureq.body.username.length > 10) {
+                return done(null, false, req.flash('signupMessage', 'Le nom d\'utilisateur ne doit pas dépasser 10 caractères !'));
             } else {
                 // if email exists
                 User.findOne({ 'local.email' :  email }, function(err, user) {

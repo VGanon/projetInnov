@@ -138,6 +138,11 @@ module.exports = function(app, passport) {
 							message: 'Le nom d\'utilisateur est déjà utilisé !'
 						});
 
+					} else if(req.body.username.length > 10) {
+						res.render('configure.ejs', {
+							user: req.user,
+							message: 'Le nom d\'utilisateur ne doit pas dépasser 10 caractères !'
+						});
 		                
 
 					} else {
