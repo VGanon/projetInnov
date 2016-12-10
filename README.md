@@ -19,7 +19,7 @@
 
 # Utilisation
 - Lancer la bdd mongo locale avec la commande suivante : mongod
-- Lancer un terminal et se placer dans le répertoire /test
+- Lancer un terminal et se placer dans le répertoire src
 - Lancer le serveur node avec cette commande : node server.js
 - Puis dans le navigateur allez ici : http://localhost:8080
 
