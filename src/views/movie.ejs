@@ -58,21 +58,15 @@
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.local.username %>  <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/configure"><span class="glyphicon glyphicon-user"></span>Modifier le profil</a></li>
+								<li class="divider"></li>
+								<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
+							</ul>
+						</li>
 					</ul>
-
-					<form class="navbar-form" role="search">
-						<div class="input-group" style="padding-left:150px;">
-							<input type="text" class="form-control pull-right" style="width: 250px; " placeholder="Chercher des films, des acteurs, ..." ng-model="inputText" onkeydown="if(event.keyCode === 13) $('#search').click()" />
-							<span class="input-group-btn">
-								<button id="search" type="submit" class="btn btn-default" style="height:34px" ng-click="ctrl.search(inputText)">
-									<span class="glyphicon glyphicon-search">
-										<span class="sr-only">Rechercher</span>
-									</span>
-								</button>
-							</span>
-						</div>
-					</form>
 					
 					
 				</div><!-- /.navbar-collapse -->
