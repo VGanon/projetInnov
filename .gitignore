@@ -2,10 +2,11 @@
 src/node_modules/
 src/node_modules/*
 
-# sublime text config #
+# IDE configs #
 #######################
 *.sublime-project
 *.sublime-workspace
+.idea
 
 # Tmp folder
 ./tmp
