@@ -4,7 +4,7 @@
 - `npm install -g karma`
 - `npm install -g karma-cli`
 - `npm install -g jasmine-core`
-- facultatif : webpack --watch
+- facultatif : `webpack --watch`
 
 # Technologies utilisées
 - Node.js
@@ -18,10 +18,10 @@
 - MongoDB installé
 
 # Utilisation
-- Lancer la bdd mongo locale avec la commande suivante : mongod
+- Lancer la bdd mongo locale avec la commande suivante : `mongod`
 - Lancer un terminal et se placer dans le répertoire src
-- Lancer le serveur node avec cette commande : node server.js
-- Puis dans le navigateur allez ici : http://localhost:8080
+- Lancer le serveur node avec cette commande : `node server.js`
+- Puis dans le navigateur allez ici : [http://localhost:8080](http://localhost:8080)
 
 # Algo première version
 
@@ -119,3 +119,12 @@ Si la valeur du lift est inférieure à 1, on ne garde pas la règle. On conserv
 Point 5 : On effectue un filtrage sur cette liste de meilleures règles selon la liste des films qu'a notés U1. "lhs" ne doit contenir que des critères relatifs à un film déjà noté par U1 et "rhs" ne doit contenir qu'un critère relatif à un film pas vu par U1 et différent de celui présent dans "lhs". 
 
 Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, après suppression des éventuels doublons.
+
+# Collaborateurs
+Aden Baptiste
+Belhacel Thomas
+Hoang Tuan-Dung
+Jezequel Yannick
+Quettier Alexandre
+Romdhane Amira
+Vion Benjamin
