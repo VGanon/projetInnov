@@ -8,6 +8,12 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+// function to check if a password is valid
+function validatePassword(password) {
+    var re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$/;
+    return re.test(password);
+}
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -152,19 +158,12 @@ module.exports = function(app, passport) {
 							user: req.user,
 							message: 'L\' adresse email est invalide !'
 						});
-
-					} else if(req.body.newPassword && req.body.newPassword.length < 8) {
-						// if password is invalid
-						res.render('configure.ejs', {
-							user: req.user,
-							message: 'Le mot de passe doit contenir au moins 8 caractères !'
-						});
 					
-					} else if(req.body.newPassword && (!req.body.newPassword.match(/[a-z]/) || !req.body.newPassword.match(/[A-Z]/) || !req.body.newPassword.match(/\d/))) {
+					} else if(req.body.newPassword && !validatePassword(req.body.newPassword)) {
 						// if password is invalid
 						res.render('configure.ejs', {
 							user: req.user,
-							message: 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre miniscule et un chiffre !'
+							message: 'Le mot de passe doit contenir au moins 8 caractères, au moins une lettre majuscule, une lettre miniscule et un chiffre !'
 						});
 
 					} else {
