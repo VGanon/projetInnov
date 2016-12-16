@@ -18,10 +18,10 @@
 - MongoDB installé
 
 # Utilisation
-- Lancer la bdd mongo locale avec la commande suivante : `mongod`
-- Lancer un terminal et se placer dans le répertoire src
-- Lancer le serveur node avec cette commande : `node server.js`
-- Puis dans le navigateur allez ici : [http://localhost:8080](http://localhost:8080)
+1. Lancer la bdd mongo locale avec la commande suivante : `mongod`
+2. Lancer un terminal et se placer dans le répertoire src
+3. Lancer le serveur node avec cette commande : `node server.js`
+4. Puis dans le navigateur allez ici : [http://localhost:8080](http://localhost:8080)
 
 # Algo première version
 
@@ -121,10 +121,10 @@ Point 5 : On effectue un filtrage sur cette liste de meilleures règles selon la
 Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, après suppression des éventuels doublons.
 
 # Collaborateurs
-Aden Baptiste
-Belhacel Thomas
-Hoang Tuan-Dung
-Jezequel Yannick
-Quettier Alexandre
-Romdhane Amira
-Vion Benjamin
+- Aden Baptiste
+- Belhacel Thomas
+- Hoang Tuan-Dung
+- Jezequel Yannick
+- Quettier Alexandre
+- Romdhane Amira
+- Vion Benjamin
