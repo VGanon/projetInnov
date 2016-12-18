@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<title>MoviesBestChoice</title>
 		<!-- Imports -->
+		<link rel="shortcut icon" href="/img/icon.png">
 		<link rel="stylesheet" href="/css/index.css">
 		<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 		<script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -19,6 +20,7 @@
 		<nav id="topbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
+
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
@@ -81,7 +83,8 @@
 				<!-- Iteration sur les films -->
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
 					<a class="btn btn-primary btn-lg" href="./movie/{{movie.id}}">
-						<img style="width:250px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+						<img style="width:250px;" ng-if="movie.poster_path !== null" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+						<img style="width:250px;" ng-if="movie.poster_path === null" ng-src="/img/default_movie_poster.jpg" class="poster" />
 					</a>
 					<h3>
 						<span ng-show="ctrl.enableRanking">
