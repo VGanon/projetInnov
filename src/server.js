@@ -14,6 +14,7 @@ var flash    = require('connect-flash');
 var apriori = require('apriori');
 var io = require('socket.io')(http);
 var configDB = require('./config/database.js');
+var fs = require('fs');
 
 http.listen(port, "127.0.0.1");
 // configuration ===============================================================
@@ -56,18 +57,6 @@ console.log('Listening on port : ' + port);
 //var noteSchema = ;
 io.on('connection', function(socket){
 
-  socket.on('getNotes', function(data){
-		console.log(data);
-    if(data === "all"){
-      mongoose.connect('mongodb://localhost:27017/moviesbestchoice', function(err) {
-				if (err) { throw err; }
-				/*var NoteModel = mongoose.model('note', commentaireArticleSchema);
-        db.collection('note').find({}).sort({user_id : 1}).toArray(function(err, res){
-          socket.emit('getNotes', res);
-        });*/
-      });
-    }
-  });
   socket.on('buildCSV', function(data){
     fs.writeFile("./tmp/data.csv", data, 'utf8', function(err) {
     if(err) {
