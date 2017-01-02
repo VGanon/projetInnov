@@ -62,15 +62,17 @@ io.on('connection', function(socket){
     if(err) {
         return console.log(err);
     }
-    /*fs.readFile('./tmp/data.csv', 'utf8', function (err, csv) {
+    fs.readFile('./tmp/data.csv', 'utf8', function (err, csv) {
+			// Point 3 : On fait appel à l'algorithme de Apriori en indiquant une confiance et un support minimal. Celui-ci nous renvoie une liste de pseudos-dépendances fonctionnelles au format
+			//  JSON, du type : "a { "lhs" : "14186_Scénario", "rhs" : "2586_Décors" } --> ". Cela signifie que la plupart des gens qui aiment le scénario du film 14186 aiment les décors du
+			//  film 2586.
         var transactions = apriori.ArrayUtils.readCSVToArray(csv);
-        var aprioriAlgo = new apriori.Algorithm(0.05, 0.05,false);
+        var aprioriAlgo = new apriori.Algorithm(1, 1,false);
         var result = aprioriAlgo.analyze(transactions);
-        console.log(transactions);
         socket.emit("aprioriResults", result.associationRules);
-    });*/
+    });
 
   });
-  new apriori.Algorithm(1, 1, true).showAnalysisResultFromFile('./tmp/data.csv');
+  //new apriori.Algorithm(1, 1, true).showAnalysisResultFromFile('./tmp/data.csv');
   });
 });

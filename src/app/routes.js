@@ -28,7 +28,8 @@ module.exports = function(app, passport) {
     Note.find(null).sort([['id_user', 'ascending']]).exec(function (err,notes) {
       var notes = JSON.stringify(notes);
       res.render('algo.ejs', {
-        notes: notes
+        notes: notes,
+        userId: req.user._id
       });
     });
   });

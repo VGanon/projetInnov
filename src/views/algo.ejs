@@ -16,6 +16,7 @@
 
 	<body>
 		<h2 style="display:none;" id="notes"><%= notes %></h2>
+		<h2 style="display:none;" id="userID"><%= userId %></h2>
 
 <!------------------------------------------------------- Barre menu ----------------------------------------------------- -->
 <!-- --------------------------------------------------------------------------------------------------------------------- -->
@@ -41,7 +42,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Films recommandés  <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Films recommandés par MoviesBestChoice</a></li>
+								<li><a href="/testAlgo">Films recommandés par MoviesBestChoice</a></li>
 								<li class="divider"></li>
 								<li><a href="#">Films recommandés par amis</a></li>
 								<li><a href="#">Films recommandés par un ami</a></li>
@@ -77,7 +78,6 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>MoviesBestChoice</h1>
-				<p>CSV Content</p>
 			</div>
 		</div>
 
@@ -87,10 +87,14 @@
 
 
 			<!-- Contenu dynamique de la page -->
-			<div id="csvContent">
-
-			</div>
-
+			<h2>1) Fichier data.csv</h2>
+			<div id="csvContent"></div>
+			<h2>2) Les premiers résultats de l'algorithme apriori</h2>
+			<div id="aprioriResults"></div>
+			<h2>3) Filtrage après calcul du lift</h2>
+			<div id="liftResults"></div>
+			<h2>4) Résultats finaux après filtrage</h2>
+			<div id="finalResults"></div>
 			<footer>
 				<hr />
 				<p>© Copyright 2016</p>
