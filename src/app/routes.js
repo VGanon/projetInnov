@@ -236,8 +236,12 @@ module.exports = function(app, passport) {
   // MOVIE ===============================
   // =====================================
   app.get('/movie/:id', isLoggedInToLogin, function(req, res){
+    console.log('TEST');
     if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id, 10) < 0) res.redirect('/home');
-    else res.render('movie.ejs', {id: req.params.id});
+    else res.render('movie.ejs', {
+    	user : req.user, // get the user out of session and pass to template
+    	id: req.params.id
+    });
   });
 };
 
