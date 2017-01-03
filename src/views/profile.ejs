@@ -63,7 +63,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Films recommandés  <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Films recommandés par MoviesBestChoice</a></li>
+								<li><a href="/testAlgo">Films recommandés par MoviesBestChoice</a></li>
 								<li class="divider"></li>
 								<li><a href="#">Films recommandés par amis</a></li>
 								<li><a href="#">Films recommandés par un ami</a></li>
@@ -72,7 +72,7 @@
 							</ul>
 						</li>
 					</ul>
-					
+
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.local.username %>  <b class="caret"></b></a>
@@ -84,8 +84,8 @@
 						</li>
 					</ul>
 
-					
-					
+
+
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
@@ -134,7 +134,7 @@
                       </tr>
                     </tbody>
             </table>
-                  
+
 			<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
 		</div>
 	</div>
@@ -152,7 +152,7 @@
 				<h2 style="display:none;" id="movies"><%= movies %></h2>
 
 				<h5 id="message">Aucun film noté !</h5>
-				
+
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-2">
 					<div class="btn center-block">
 						<a href="./movie/{{movie.id}}">
