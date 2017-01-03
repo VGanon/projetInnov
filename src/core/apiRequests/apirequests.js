@@ -39,6 +39,14 @@ function getMovieById(id){
 }
 
 /**
+* Retourne les films joués par un acteur
+*/
+function getMovieCredits(id){
+  var url = "http://api.themoviedb.org/3/person/" + id + "/movie_credits?api_key=" + api_key + "&language=fr";
+  return get(url);
+}
+
+/**
 * Retourne tous les genres de film existants sur TMDB.
 */
 function getGenres(){
