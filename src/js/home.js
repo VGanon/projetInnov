@@ -4,6 +4,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	this.movies = [];
 	this.actors = [];
 	this.friends = [];
+	this.pageImg = null;
 	this.nbMoviesShown = 9;
 	this.enableRanking = false;
 	/* Map id/name des genres de films (voir fonction getMovieGenres) */
@@ -24,7 +25,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	/* @param genreIds Tableau d'id de genres d'un film
 	* @return String contenant les noms des genres correspondant aux ids des films en parametres, separes par des virgules */
 	this.getMovieGenres = function(genreIds){
-		return genreIds.map(id => this.movieGenres[id]).join(", ");
+		return genreIds ? genreIds.map(id => this.movieGenres[id]).join(", ") : "";
 	};
 
 	/* @param date String de date au format '2016-05-24'
@@ -36,16 +37,18 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	/* @param overview String de resume d'un film
 	* @return String de resume d'un film tronquee si necessaire (max 200 caracteres) */
 	this.adjustOverview = function(overview){
-		return (overview.length > 200) ? overview.slice(0, 200) + "..." : overview;
+		var ret = overview ? overview : "";
+		return (ret.length > 200) ? ret.slice(0, 200) + "..." : ret;
 	};
 
 	/* Fonction GENERALE d'update des donnees, utilisee par les autres fonctions d'update */
-	this.updateData = function(pageTitle, movies, actors, friends, enableRanking){
+	this.updateData = function(pageTitle, movies, actors, friends, enableRanking, pageImg){
 		this.pageTitle = pageTitle;
 		this.movies = movies;
 		this.actors = actors;
 		this.friends = friends;
 		this.enableRanking = enableRanking;
+		this.pageImg = pageImg;
 		this.nbMoviesShown = 9;
 	};
 
@@ -113,10 +116,12 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	};
 
 	/* Update des donnees pour afficher les films avec un acteur en particulier */
-	this.searchByActor = function(actor, movies){
+	this.searchByActor = function(actor){
+		console.log("salut", JSON.parse(getMovieCredits(actor.id)), actor.profile_path);
 		this.updateData(
-			"Films populaires avec " + actor, 
-			movies
+			"Films avec " + actor.name, 
+			JSON.parse(getMovieCredits(actor.id)).cast, null, null, null, 
+			actor.profile_path
 		);
 	};
 
