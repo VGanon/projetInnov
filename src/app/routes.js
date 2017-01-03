@@ -1,6 +1,6 @@
 // load up the user model
 var User = require('./models/user');
-var Note = require('./models/Note');
+var Note = require('./models/note');
 
 // function to check if an email is valid
 function validateEmail(email) {
