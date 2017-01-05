@@ -39,17 +39,7 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/home">Accueil</a></li>
 						<li><a href="/profile">Profil</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Films recommandés  <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="/testAlgo">Films recommandés par MoviesBestChoice</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Films recommandés par amis</a></li>
-								<li><a href="#">Films recommandés par un ami</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Films recommandés par catégorie</a></li>
-							</ul>
-						</li>
+						<li><a href="/testAlgo">Films recommandés pour vous</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -96,6 +86,7 @@
 			<div class="row main-header">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
+	               		<img ng-show="ctrl.pageImg" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ctrl.pageImg}}" />
 	               		<h1 class="title">{{ctrl.pageTitle}}</h1>
 	               		<hr />
 	               	</div>
@@ -110,7 +101,7 @@
 				<div class="actors" ng-show="ctrl.actors">
 					<!-- Iteration sur les acteurs -->
 					<div ng-repeat="actor in ctrl.actors" class="actor col-md-4">
-						<a class="btn btn-primary btn-lg" href="#" ng-click="ctrl.searchByActor(actor.name, actor.known_for)">
+						<a class="btn btn-primary btn-lg" href="#" ng-click="ctrl.searchByActor(actor)">
 							<img ng-src="{{actor.profile_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + actor.profile_path : 'img/default_profile.jpg'}}" class="poster" />
 						</a>
 						<h3>{{actor.name}}</h3>
