@@ -236,13 +236,71 @@ module.exports = function(app, passport) {
   // MOVIE ===============================
   // =====================================
   app.get('/movie/:id', isLoggedInToLogin, function(req, res){
-    console.log('TEST');
     if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id, 10) < 0) res.redirect('/home');
-    else res.render('movie.ejs', {
-    	user : req.user, // get the user out of session and pass to template
-    	id: req.params.id
-    });
+    else {
+		res.render('movie.ejs', {
+			user : req.user, // get the user out of session and pass to template
+			id: req.params.id,
+		});
+	}
   });
+
+  app.post('/movie/:id', isLoggedInToLogin, function(req, res){
+
+		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes)
+		{
+			if(notes)
+			{
+				notes.local.criteres = {
+					"Scénario"		: JSON.parse(req.body.scenario),
+					"JeuActeurs"	: JSON.parse(req.body.actorPerformance),
+					"Réalisation"	: JSON.parse(req.body.directing),
+					"BandeSon"		: JSON.parse(req.body.ost),
+					"Ambiance"		: JSON.parse(req.body.ambiance),
+					"Lumière"		: JSON.parse(req.body.photography),
+					"Montage"		: JSON.parse(req.body.editing),
+					"Dialogues"		: JSON.parse(req.body.dialogues),
+					"Décors"		: JSON.parse(req.body.set),
+					"Costumes"		: JSON.parse(req.body.costumes),
+					"Narration"		: JSON.parse(req.body.narration),
+					"Rythme"		: JSON.parse(req.body.rythm),
+					"SFX"			: JSON.parse(req.body.sfx)
+				};
+				notes.save(function(err) {
+					if (err) console.log("Erreur : " + err);
+				});
+			}
+			else {
+				var notes = new Note();
+
+				notes.local.id_user = req.user._id;
+				notes.local.id_movie = req.params.id;
+				notes.local.criteres = {
+					"Scénario"		: JSON.parse(req.body.scenario),
+					"JeuActeurs"	: JSON.parse(req.body.actorPerformance),
+					"Réalisation"	: JSON.parse(req.body.directing),
+					"BandeSon"		: JSON.parse(req.body.ost),
+					"Ambiance"		: JSON.parse(req.body.ambiance),
+					"Lumière"		: JSON.parse(req.body.photography),
+					"Montage"		: JSON.parse(req.body.editing),
+					"Dialogues"		: JSON.parse(req.body.dialogues),
+					"Décors"		: JSON.parse(req.body.set),
+					"Costumes"		: JSON.parse(req.body.costumes),
+					"Narration"		: JSON.parse(req.body.narration),
+					"Rythme"		: JSON.parse(req.body.rythm),
+					"SFX"			: JSON.parse(req.body.sfx)
+				};
+				notes.save(function(err) {
+					if (err) console.log("Erreur : " + err);
+				});
+			}
+		});
+
+	  	res.render('movie.ejs', {
+			user : req.user, // get the user out of session and pass to template
+      		id: req.params.id
+		});
+	});
 };
 
 // route middleware to make sure
