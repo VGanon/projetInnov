@@ -8,19 +8,19 @@ var noteSchema = mongoose.Schema({
 		id_user 	: String,
 		id_movie	: String,
 		criteres	: {
-			"Scénario": Boolean,
-			"JeuActeurs": Boolean,
-			"Réalisation": Boolean,
-			"BandeSon": Boolean,
-			"Ambiance": Boolean,
-			"Lumière": Boolean,
-			"Montage": Boolean,
-			"Dialogues": Boolean,
-			"Décors": Boolean,
-			"Costumes": Boolean,
-			"Narration": Boolean,
-			"Rythme": Boolean,
-			"SFX": Boolean
+			"scenario"		: Boolean,
+			"jeu_acteurs"	: Boolean,
+			"realisation"	: Boolean,
+			"bande_son"		: Boolean,
+			"ambiance"		: Boolean,
+			"lumiere"		: Boolean,
+			"montage"		: Boolean,
+			"dialogues"		: Boolean,
+			"decors"		: Boolean,
+			"costumes"		: Boolean,
+			"narration"		: Boolean,
+			"rythme"		: Boolean,
+			"sfx"			: Boolean
 		}
 	}
 

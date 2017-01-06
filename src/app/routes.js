@@ -238,9 +238,22 @@ module.exports = function(app, passport) {
   app.get('/movie/:id', isLoggedInToLogin, function(req, res){
     if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id, 10) < 0) res.redirect('/home');
     else {
-		res.render('movie.ejs', {
-			user : req.user, // get the user out of session and pass to template
-			id: req.params.id,
+		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes){
+			if (notes){
+				console.log(notes.local.criteres);
+				res.render('movie.ejs', {
+					user : req.user, // get the user out of session and pass to template
+					id: req.params.id,
+					criteres: JSON.stringify(notes.local.criteres)
+			});
+			}
+			else {
+				res.render('movie.ejs', {
+					user : req.user, // get the user out of session and pass to template
+					id: req.params.id,
+					criteres: "null"
+				});
+			}
 		});
 	}
   });
@@ -249,22 +262,39 @@ module.exports = function(app, passport) {
 
 		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes)
 		{
+			var note;
 			if(notes)
 			{
+				note = {
+					"scenario"		: JSON.parse(req.body.scenario),
+					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+					"realisation"	: JSON.parse(req.body.realisation),
+					"bande_son"		: JSON.parse(req.body.bande_son),
+					"ambiance"		: JSON.parse(req.body.ambiance),
+					"lumiere"		: JSON.parse(req.body.lumiere),
+					"montage"		: JSON.parse(req.body.montage),
+					"dialogues"		: JSON.parse(req.body.dialogues),
+					"decors"		: JSON.parse(req.body.decors),
+					"costumes"		: JSON.parse(req.body.costumes),
+					"narration"		: JSON.parse(req.body.narration),
+					"rythme"		: JSON.parse(req.body.rythme),
+					"sfx"			: JSON.parse(req.body.sfx)
+				};
+				console.log(note);
 				notes.local.criteres = {
-					"Scénario"		: JSON.parse(req.body.scenario),
-					"JeuActeurs"	: JSON.parse(req.body.actorPerformance),
-					"Réalisation"	: JSON.parse(req.body.directing),
-					"BandeSon"		: JSON.parse(req.body.ost),
-					"Ambiance"		: JSON.parse(req.body.ambiance),
-					"Lumière"		: JSON.parse(req.body.photography),
-					"Montage"		: JSON.parse(req.body.editing),
-					"Dialogues"		: JSON.parse(req.body.dialogues),
-					"Décors"		: JSON.parse(req.body.set),
-					"Costumes"		: JSON.parse(req.body.costumes),
-					"Narration"		: JSON.parse(req.body.narration),
-					"Rythme"		: JSON.parse(req.body.rythm),
-					"SFX"			: JSON.parse(req.body.sfx)
+					"scenario"		: JSON.parse(req.body.scenario),
+					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+					"realisation"	: JSON.parse(req.body.realisation),
+					"bande_son"		: JSON.parse(req.body.bande_son),
+					"ambiance"		: JSON.parse(req.body.ambiance),
+					"lumiere"		: JSON.parse(req.body.lumiere),
+					"montage"		: JSON.parse(req.body.montage),
+					"dialogues"		: JSON.parse(req.body.dialogues),
+					"decors"		: JSON.parse(req.body.decors),
+					"costumes"		: JSON.parse(req.body.costumes),
+					"narration"		: JSON.parse(req.body.narration),
+					"rythme"		: JSON.parse(req.body.rythme),
+					"sfx"			: JSON.parse(req.body.sfx)
 				};
 				notes.save(function(err) {
 					if (err) console.log("Erreur : " + err);
@@ -276,19 +306,19 @@ module.exports = function(app, passport) {
 				notes.local.id_user = req.user._id;
 				notes.local.id_movie = req.params.id;
 				notes.local.criteres = {
-					"Scénario"		: JSON.parse(req.body.scenario),
-					"JeuActeurs"	: JSON.parse(req.body.actorPerformance),
-					"Réalisation"	: JSON.parse(req.body.directing),
-					"BandeSon"		: JSON.parse(req.body.ost),
-					"Ambiance"		: JSON.parse(req.body.ambiance),
-					"Lumière"		: JSON.parse(req.body.photography),
-					"Montage"		: JSON.parse(req.body.editing),
-					"Dialogues"		: JSON.parse(req.body.dialogues),
-					"Décors"		: JSON.parse(req.body.set),
-					"Costumes"		: JSON.parse(req.body.costumes),
-					"Narration"		: JSON.parse(req.body.narration),
-					"Rythme"		: JSON.parse(req.body.rythm),
-					"SFX"			: JSON.parse(req.body.sfx)
+					"scenario"		: JSON.parse(req.body.scenario),
+					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+					"realisation"	: JSON.parse(req.body.realisation),
+					"bande_son"		: JSON.parse(req.body.bande_son),
+					"ambiance"		: JSON.parse(req.body.ambiance),
+					"lumiere"		: JSON.parse(req.body.lumiere),
+					"montage"		: JSON.parse(req.body.montage),
+					"dialogues"		: JSON.parse(req.body.dialogues),
+					"decors"		: JSON.parse(req.body.decors),
+					"costumes"		: JSON.parse(req.body.costumes),
+					"narration"		: JSON.parse(req.body.narration),
+					"rythme"		: JSON.parse(req.body.rythme),
+					"sfx"			: JSON.parse(req.body.sfx)
 				};
 				notes.save(function(err) {
 					if (err) console.log("Erreur : " + err);
@@ -296,10 +326,7 @@ module.exports = function(app, passport) {
 			}
 		});
 
-	  	res.render('movie.ejs', {
-			user : req.user, // get the user out of session and pass to template
-      		id: req.params.id
-		});
+		res.redirect("/movie/" + req.params.id);
 	});
 };
 
