@@ -80,6 +80,18 @@
 
 			<!-- Contenu dynamique de la page -->
 			<div id="content">
+				<a class="btn btn-primary btn-lg" href=".">
+					<script>
+					ctrl.showPopularMovies();
+					</script>
+					Films Populaires	
+				</a>
+				<a class="btn btn-primary btn-lg" href=".">
+					<script>
+					ctrl.showUpcomingMovies();
+					</script>
+					Bientôt à l'affiche	
+				</a>
 				<!-- Iteration sur les films -->
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
 					<a class="btn btn-primary btn-lg" href="./movie/{{movie.id}}">
