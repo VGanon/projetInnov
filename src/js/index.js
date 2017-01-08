@@ -134,7 +134,6 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 		)
 	}
 
-
 	//Page d'accueil : films populaires
 	this.showPopularMovies();
 });

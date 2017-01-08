@@ -66,6 +66,14 @@
 
 
 		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
+		<div id="moviesButtons" style="text-align: center">
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showPopularMovies()">
+				Films Populaires	
+			</a>
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showUpcomingMovies()">
+				Bientôt à l'affiche	
+			</a>
+		</div>
 
 		<div id="main" class="container">
 			<!-- Titre dynamique du corps de page -->
@@ -80,18 +88,6 @@
 
 			<!-- Contenu dynamique de la page -->
 			<div id="content">
-				<a class="btn btn-primary btn-lg" href=".">
-					<script>
-					ctrl.showPopularMovies();
-					</script>
-					Films Populaires	
-				</a>
-				<a class="btn btn-primary btn-lg" href=".">
-					<script>
-					ctrl.showUpcomingMovies();
-					</script>
-					Bientôt à l'affiche	
-				</a>
 				<!-- Iteration sur les films -->
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
 					<a class="btn btn-primary btn-lg" href="./movie/{{movie.id}}">
@@ -115,14 +111,9 @@
 						{{actor.name}}
 					</a>  
 				</span>
-
-				<!-- TMP TEST : bouton pour afficher les films recommandes -->
-				<button ng-click="ctrl.showRecommendedMovies()">TEST : Films recommandés</button>
 			</div>
 
 
-		</div>
-
-		
+		</div>		
 	</body>
 </html>
