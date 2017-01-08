@@ -25,7 +25,7 @@ module.exports = function(app, passport) {
   });
 
   app.get('/testAlgo', function(req,res) {
-    Note.find(null).sort([['id_user', 'ascending']]).exec(function (err,notes) {
+    Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err,notes) {
       var notes = JSON.stringify(notes);
       res.render('algo.ejs', {
         notes: notes,

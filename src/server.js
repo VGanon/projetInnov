@@ -67,7 +67,7 @@ io.on('connection', function(socket){
 			//  JSON, du type : "a { "lhs" : "14186_Scénario", "rhs" : "2586_Décors" } --> ". Cela signifie que la plupart des gens qui aiment le scénario du film 14186 aiment les décors du
 			//  film 2586.
         var transactions = apriori.ArrayUtils.readCSVToArray(csv);
-        var aprioriAlgo = new apriori.Algorithm(1, 1,false);
+        var aprioriAlgo = new apriori.Algorithm(0.1, 0.5,false);
         var result = aprioriAlgo.analyze(transactions);
         socket.emit("aprioriResults", result.associationRules);
     });
