@@ -86,8 +86,7 @@ module.exports = function(app, passport) {
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, function(req, res) {
-
-    Note.find({'id_user': req.user._id}).lean().exec(function (err, note) {
+    Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
       var movies = JSON.stringify(note);
 
       res.render('profile.ejs', {
@@ -236,13 +235,80 @@ module.exports = function(app, passport) {
   // MOVIE ===============================
   // =====================================
   app.get('/movie/:id', isLoggedInToLogin, function(req, res){
-    console.log('TEST');
     if (isNaN(parseInt(req.params.id, 10)) || parseInt(req.params.id, 10) < 0) res.redirect('/home');
-    else res.render('movie.ejs', {
-    	user : req.user, // get the user out of session and pass to template
-    	id: req.params.id
-    });
+    else {
+		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes){
+			if (notes){
+				res.render('movie.ejs', {
+					user : req.user, // get the user out of session and pass to template
+					id: req.params.id,
+					criteres: JSON.stringify(notes.local.criteres)
+			});
+			}
+			else {
+				res.render('movie.ejs', {
+					user : req.user, // get the user out of session and pass to template
+					id: req.params.id,
+					criteres: "null"
+				});
+			}
+		});
+	}
   });
+
+  app.post('/movie/:id', isLoggedInToLogin, function(req, res){
+
+		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes)
+		{
+			var note;
+			if(notes)
+			{
+				notes.local.criteres = {
+					"scenario"		: JSON.parse(req.body.scenario),
+					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+					"realisation"	: JSON.parse(req.body.realisation),
+					"bande_son"		: JSON.parse(req.body.bande_son),
+					"ambiance"		: JSON.parse(req.body.ambiance),
+					"lumiere"		: JSON.parse(req.body.lumiere),
+					"montage"		: JSON.parse(req.body.montage),
+					"dialogues"		: JSON.parse(req.body.dialogues),
+					"decors"		: JSON.parse(req.body.decors),
+					"costumes"		: JSON.parse(req.body.costumes),
+					"narration"		: JSON.parse(req.body.narration),
+					"rythme"		: JSON.parse(req.body.rythme),
+					"sfx"			: JSON.parse(req.body.sfx)
+				};
+				notes.save(function(err) {
+					if (err) console.log("Erreur : " + err);
+				});
+			}
+			else {
+				var notes = new Note();
+
+				notes.local.id_user = req.user._id;
+				notes.local.id_movie = req.params.id;
+				notes.local.criteres = {
+					"scenario"		: JSON.parse(req.body.scenario),
+					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+					"realisation"	: JSON.parse(req.body.realisation),
+					"bande_son"		: JSON.parse(req.body.bande_son),
+					"ambiance"		: JSON.parse(req.body.ambiance),
+					"lumiere"		: JSON.parse(req.body.lumiere),
+					"montage"		: JSON.parse(req.body.montage),
+					"dialogues"		: JSON.parse(req.body.dialogues),
+					"decors"		: JSON.parse(req.body.decors),
+					"costumes"		: JSON.parse(req.body.costumes),
+					"narration"		: JSON.parse(req.body.narration),
+					"rythme"		: JSON.parse(req.body.rythme),
+					"sfx"			: JSON.parse(req.body.sfx)
+				};
+				notes.save(function(err) {
+					if (err) console.log("Erreur : " + err);
+				});
+			}
+		});
+		res.redirect("/movie/" + req.params.id);
+	});
 };
 
 // route middleware to make sure

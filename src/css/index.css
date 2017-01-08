@@ -31,3 +31,7 @@ p {
 .actors {
 	margin-bottom: 20px;
 }
+
+div.panel-heading > div > img {
+	width: 150px;
+}

@@ -71,7 +71,7 @@ module.exports = function(passport) {
                         // if there are any errors, return the error
                         if (err) {
                             return done(err);
-                        
+
                         // check to see if theres already a user with that email
                         } else if (user) {
                             return done(null, false, req.flash('signupMessage', 'L\' adresse email est déjà utilisée !'));
@@ -108,10 +108,10 @@ module.exports = function(passport) {
 
                     }); // end user.findOne username
                 } // end else
-                
+
             }); // end user.findOne  email
         } // end else
-        
+
     })); // end function
 
     // =========================================================================
