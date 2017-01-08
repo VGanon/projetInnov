@@ -434,6 +434,12 @@
 
 	<!-- Mise en place dynamique de la page -->
 	<script type="text/javascript">
+		this.movieGenres = {};
+		JSON.parse(getGenres()).genres.forEach( ({id, name}) => this.movieGenres[id] = name );
+
+		this.getMovieGenres = function(genreIds){
+			return genreIds.map(id => this.movieGenres[id]).join(", ");
+		};	
 
 		var film = JSON.parse(getMovieById(<%= id %>));
 
@@ -461,7 +467,18 @@
 		var overview = document.createElement('div');
 		overview.setAttribute('id', 'overview');
 		overview.textContent = 'Synopsis : ' + film.overview;
+		overview.style.marginBottom = '10px';
 		movie.appendChild(overview);
+
+		var genres = document.createElement('div');
+		genres.setAttribute('id', 'genres');
+
+		var s = [];
+		for(var i in film.genres) {
+			s.push(film.genres[i].id);
+		}
+		genres.textContent = 'Genres : ' + getMovieGenres(s);
+		movie.appendChild(genres);
 
 		// Affichage des notes
 		var criteres = <%- criteres %>;
