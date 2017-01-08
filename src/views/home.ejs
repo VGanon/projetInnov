@@ -71,15 +71,17 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
-		<!-- Bandeau header -->
-		<div class="jumbotron">
-			<div class="container">
-				<h1>MoviesBestChoice</h1>
-				<p>Recommandations pour vous...</p>
-			</div>
-		</div>
-
 		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
+
+		</br></br></br>
+		<div id="moviesButtons" style="text-align: center">
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByCategories()">
+				Films recommandés par catégories préférées
+			</a>
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByAlgorithm()">
+				Films recommandés par algorithme
+			</a>
+		</div>
 
 		<div id="main" class="container">
 			<!-- Titre dynamique du corps de page -->
