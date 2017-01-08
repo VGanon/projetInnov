@@ -107,6 +107,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 					{
 						var movie = popularMovies[i];
 						resultMovies.results.push(movie);
+						break;
 					}
 				}
 			}
