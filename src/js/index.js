@@ -127,6 +127,12 @@ angular.module('movieRecommendationApp', []).controller('Controller', function()
 		);
 	};
 
+	this.showUpcomingMovies = function() {
+		this.updateData(
+			"Film bientôt à l'affiche",
+			JSON.parse(getUpcomingMovies()).results
+		)
+	}
 
 	//Page d'accueil : films populaires
 	this.showPopularMovies();

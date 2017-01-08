@@ -27,10 +27,9 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 		
 		// Recuperer les films de la bdd notes where id_user = connected user (format json)
 		var movies = JSON.parse($("#movies").html());
-
 		for(var i in movies)
 		{
-			var movie = getMovieById(movies[i].id_movie);
+			var movie = getMovieById(movies[i].local.id_movie);
 			ratedMovies.results.push(JSON.parse(movie));
 		}
 

@@ -11,7 +11,7 @@
 		<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
-		<script src="/core/APIRequests/apirequests.js"></script>
+		<script src="/core/apiRequests/apirequests.js"></script>
 		<script src="/node_modules/angular/angular.js"></script>
 		<script src="/js/index.js"></script>
 	</head>
@@ -66,6 +66,14 @@
 
 
 		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
+		<div id="moviesButtons" style="text-align: center">
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showPopularMovies()">
+				Films Populaires	
+			</a>
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showUpcomingMovies()">
+				Bientôt à l'affiche	
+			</a>
+		</div>
 
 		<div id="main" class="container">
 			<!-- Titre dynamique du corps de page -->
@@ -103,14 +111,9 @@
 						{{actor.name}}
 					</a>  
 				</span>
-
-				<!-- TMP TEST : bouton pour afficher les films recommandes -->
-				<button ng-click="ctrl.showRecommendedMovies()">TEST : Films recommandés</button>
 			</div>
 
 
-		</div>
-
-		
+		</div>		
 	</body>
 </html>
