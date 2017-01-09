@@ -24,15 +24,6 @@ module.exports = function(app, passport) {
     res.render('index.ejs'); // load the index.ejs file
   });
 
-  app.get('/testAlgo', function(req,res) {
-    Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err,notes) {
-      var notes = JSON.stringify(notes);
-      res.render('algo.ejs', {
-        notes: notes,
-        userId: req.user_id
-      });
-    });
-  });
   // =====================================
   // LOGIN ===============================
   // =====================================
@@ -74,8 +65,13 @@ module.exports = function(app, passport) {
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/home', isLoggedIn, function(req, res) {
-    res.render('home.ejs', {
-      user : req.user // get the user out of session and pass to template
+    Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err,notes) {
+      var notes = JSON.stringify(notes);
+      res.render('home.ejs', {
+        notes: notes,
+        userId: req.user._id,
+        user : req.user // get the user out of session and pass to template
+      });
     });
   });
 

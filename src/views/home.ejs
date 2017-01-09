@@ -13,6 +13,8 @@
 		<script src="/core/apiRequests/apirequests.js"></script>
 		<script src="/node_modules/angular/angular.js"></script>
 		<script src="/js/home.js"></script>
+		<script src="/js/algo.js"></script>
+		<script src="/core/algorithm/Algorithmv3.js"></script>
 	</head>
 
 	<body>
@@ -79,7 +81,7 @@
 				Films recommandés par catégories préférées
 			</a>
 			<!-- <a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByAlgorithm()"> -->
-			<a class="btn btn-primary btn-lg" href="./testAlgo">
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByNotes()">
 				Films recommandés par algorithme
 			</a>
 		</div>
@@ -98,6 +100,8 @@
 
 
 			<h2 style="display:none;" id="user_categories"><%= user.local.categories %></h2>
+			<h2 style="display:none;" id="notes"><%= notes %></h2>
+			<h2 style="display:none;" id="userID"><%= userId %></h2>
 
 			<!-- Contenu dynamique de la page -->
 			<div id="content">

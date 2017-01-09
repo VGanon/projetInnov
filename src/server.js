@@ -7,7 +7,7 @@ var app      = express();
 
 var http     = require('http').createServer(app);
 
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 2222;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -19,7 +19,7 @@ var fs = require('fs');
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 //Code du serveur
-
+http.listen(port, "127.0.0.1");
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -52,26 +52,3 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // launch ======================================================================
 app.listen(port);
 console.log('Listening on port : ' + port);
-
-//var noteSchema = ;
-io.on('connection', function(socket){
-
-  socket.on('buildCSV', function(data){
-    fs.writeFile("./aprioriDatas/data.csv", data, 'utf8', function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    fs.readFile('./aprioriDatas/data.csv', 'utf8', function (err, csv) {
-			// Point 3 : On fait appel à l'algorithme de Apriori en indiquant une confiance et un support minimal. Celui-ci nous renvoie une liste de pseudos-dépendances fonctionnelles au format
-			//  JSON, du type : "a { "lhs" : "14186_Scénario", "rhs" : "2586_Décors" } --> ". Cela signifie que la plupart des gens qui aiment le scénario du film 14186 aiment les décors du
-			//  film 2586.
-        var transactions = apriori.ArrayUtils.readCSVToArray(csv);
-        var aprioriAlgo = new apriori.Algorithm(0.25, 0.005,false);
-        var result = aprioriAlgo.analyze(transactions);
-        socket.emit("aprioriResults", result.associationRules);
-    });
-
-  });
-  //new apriori.Algorithm(1, 1, true).showAnalysisResultFromFile('./tmp/data.csv');
-  });
-});

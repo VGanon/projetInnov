@@ -55,8 +55,8 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	/* Update des donnees pour afficher les resultats de recherche */
 	this.search = function(text){
 		this.updateData(
-			"Résultat de la recherche", 
-			JSON.parse(getMovieByTitle(text)).results, 
+			"Résultat de la recherche",
+			JSON.parse(getMovieByTitle(text)).results,
 			JSON.parse(getPeople(text)).results/*,
 			JSON.parse(getFriends(text))*/
 		);
@@ -66,11 +66,39 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	this.searchByActor = function(actor){
 		console.log("salut", JSON.parse(getMovieCredits(actor.id)), actor.profile_path);
 		this.updateData(
-			"Films avec " + actor.name, 
-			JSON.parse(getMovieCredits(actor.id)).cast, null, null, null, 
+			"Films avec " + actor.name,
+			JSON.parse(getMovieCredits(actor.id)).cast, null, null, null,
 			actor.profile_path
 		);
 	};
+
+	this.searchById = function(id){
+		this.updateData(
+			"Résultat de la recherche",
+			JSON.parse(getMovieById(text)).results
+		);
+	}
+	this.showRecommandedMoviesByNotes = function(){
+	  var notes = JSON.parse($("#notes").html());
+	  var userID = $("#userID").html();
+		var finalMovies = getRecommandations(notes, userID);
+	  if(finalMovies.length == 0){
+			this.showRecommandedMoviesByCategories();
+		}
+		else{
+			var resultMovies = {
+					results: []
+			};
+			for(var i = 0; i < finalMovies.length; i++){
+				var movie = JSON.parse(getMovieById(finalMovies[i]));
+				resultMovies.results.push(movie);
+			}
+			this.updateData(
+				"Films recommandés par algorithme",
+				resultMovies.results
+			);
+		}
+	}
 
 	/* Update des donnees pour afficher les films recommandés par les catégories préférées de l'utilisateur */
 	this.showRecommandedMoviesByCategories = function(){
@@ -85,7 +113,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		var resultMovies = {
 		    results: []
 		};
-		
+
 		var popularMovies =  JSON.parse(getPopularMovies()).results;
 
 		// si aucune catégorie préférée => afficer tous les films
@@ -115,19 +143,18 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 
 
 		if(resultMovies.results !== 'undefined' && resultMovies.results.length !== 0) {
-			
 			this.updateData(
-				"Films recommandés par catégories préférées", 
+				"Films recommandés par catégories préférées",
 				resultMovies.results
 			);
 		} else {
 			this.updateData(
-				"Aucun film recommandés pour vous", 
+				"Aucun film recommandés pour vous",
 				resultMovies.results
 			);
 		}
-		
-		
+
+
 	};
 
 	//Page d'accueil : films recommandés selon catégories choisies
