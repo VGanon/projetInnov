@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
       var notes = JSON.stringify(notes);
       res.render('algo.ejs', {
         notes: notes,
-        userId: req.user._id
+        userId: req.user_id
       });
     });
   });

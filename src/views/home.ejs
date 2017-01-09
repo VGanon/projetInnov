@@ -71,15 +71,18 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
-		<!-- Bandeau header -->
-		<div class="jumbotron">
-			<div class="container">
-				<h1>MoviesBestChoice</h1>
-				<p>Recommandations pour vous...</p>
-			</div>
-		</div>
-
 		<!-- ------------------------------------------------------------ MAIN DIV ------------------------------------------------------------------- -->
+
+		</br></br></br>
+		<div id="moviesButtons" style="text-align: center">
+			<a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByCategories()">
+				Films recommandés par catégories préférées
+			</a>
+			<!-- <a class="btn btn-primary btn-lg" ng-click="ctrl.showRecommandedMoviesByAlgorithm()"> -->
+			<a class="btn btn-primary btn-lg" href="./testAlgo">
+				Films recommandés par algorithme
+			</a>
+		</div>
 
 		<div id="main" class="container">
 			<!-- Titre dynamique du corps de page -->
@@ -132,6 +135,12 @@
 
 
 
-
+		<hr/>
+		<footer class="footer">
+			<div class="container">
+				<p class="text-muted">Les données sur les films sont extraites de The Movie Database, en accord avec les conditions d'utilisation de leurs API. https://www.themoviedb.org/documentation/api</p>
+				<p class="text-muted" style="text-align: center">Code source du site disponible ici : <a>https://github.com/VGanon/projetInnov<a></p>
+			</div>
+    	</footer>
 	</body>
 </html>
