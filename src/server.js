@@ -58,16 +58,16 @@ console.log('Listening on port : ' + port);
 io.on('connection', function(socket){
 
   socket.on('buildCSV', function(data){
-    fs.writeFile("./tmp/data.csv", data, 'utf8', function(err) {
+    fs.writeFile("./aprioriDatas/data.csv", data, 'utf8', function(err) {
     if(err) {
         return console.log(err);
     }
-    fs.readFile('./tmp/data.csv', 'utf8', function (err, csv) {
+    fs.readFile('./aprioriDatas/data.csv', 'utf8', function (err, csv) {
 			// Point 3 : On fait appel à l'algorithme de Apriori en indiquant une confiance et un support minimal. Celui-ci nous renvoie une liste de pseudos-dépendances fonctionnelles au format
 			//  JSON, du type : "a { "lhs" : "14186_Scénario", "rhs" : "2586_Décors" } --> ". Cela signifie que la plupart des gens qui aiment le scénario du film 14186 aiment les décors du
 			//  film 2586.
         var transactions = apriori.ArrayUtils.readCSVToArray(csv);
-        var aprioriAlgo = new apriori.Algorithm(0.1, 0.5,false);
+        var aprioriAlgo = new apriori.Algorithm(0.25, 0.005,false);
         var result = aprioriAlgo.analyze(transactions);
         socket.emit("aprioriResults", result.associationRules);
     });

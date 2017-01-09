@@ -2,6 +2,7 @@ var socket = io.connect("http://127.0.0.1:8080");
 var userID = "";
 var ratedMovies = [];
 function getRecommandations(notes, userID){
+  console.log("USER ID : " + userID);
   userID = userID;
   buildCSV(notes);
 }
@@ -65,8 +66,6 @@ function liftRules(results) {
   var finalResults = checkAndSort(goodRules);
   console.log("4) Résultats finaux après filtrage");
   console.log(JSON.stringify(finalResults));
-
-  $("#recommandations")
 }
 
 function lift(lhs, rhs){
