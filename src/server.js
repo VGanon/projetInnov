@@ -16,7 +16,6 @@ var io = require('socket.io')(http);
 var configDB = require('./config/database.js');
 var fs = require('fs');
 
-http.listen(port, "127.0.0.1");
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 //Code du serveur
