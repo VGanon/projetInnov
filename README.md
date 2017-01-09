@@ -120,6 +120,15 @@ Point 5 : On effectue un filtrage sur cette liste de meilleures règles selon la
 
 Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, après suppression des éventuels doublons.
 
+# Algo troisième version
+
+1) On récupère les notes de tous les users pour tous les films.
+2) On crée une map [Critère/Nombre d'apparitions] rangée selon le nombre d'apparitions/nombre de fois ou le film a été noté
+3) On regarde le critère que le user aime le plus dans ses films (exemple : le scénario)
+4) On clear la map pour ne garder que les critères "XXX_Scénario" et les films pas vus par l'user
+5) On ajoute tous les films (en évitant la redondance) dans les recommandations. 
+6) Si on a un nombre de recommandations insuffisant, on reprend à l'étape 3 avec le deuxième meilleur critère et ainsi de suite (jusqu'au parcours des 13).
+
 # Collaborateurs
 - Aden Baptiste
 - Belhacel Thomas
