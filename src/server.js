@@ -7,7 +7,7 @@ var app      = express();
 
 var http     = require('http').createServer(app);
 
-var port     = process.env.PORT || 2222;
+var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -18,8 +18,6 @@ var fs = require('fs');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
-//Code du serveur
-http.listen(port, "127.0.0.1");
 
 require('./config/passport')(passport); // pass passport for configuration
 
