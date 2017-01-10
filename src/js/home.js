@@ -50,21 +50,33 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		this.enableRanking = enableRanking;
 		this.pageImg = pageImg;
 		this.nbMoviesShown = 9;
+		console.log("pageTitle : ", pageTitle);
+		console.log("movies : ", movies);
+		console.log("actors : ", actors);
+		console.log("friends : ", friends);
 	};
 
 	/* Update des donnees pour afficher les resultats de recherche */
 	this.search = function(text){
-		this.updateData(
-			"Résultat de la recherche",
-			JSON.parse(getMovieByTitle(text)).results,
-			JSON.parse(getPeople(text)).results/*,
-			JSON.parse(getFriends(text))*/
-		);
+		var movies = JSON.parse(getMovieByTitle(text)).results;
+		var actors = JSON.parse(getPeople(text)).results;
+		//Requete ajax pour recup users
+		$.ajax({
+			method: 'GET',
+			async: false,
+			url: 'getUsersByName',
+			data: {'username': text},
+			success: function(users){
+				this.updateData(
+					"Résultat de la recherche",
+					movies, actors, users
+				);
+			}.bind(this)
+		});
 	};
 
 	/* Update des donnees pour afficher les films avec un acteur en particulier */
 	this.searchByActor = function(actor){
-		console.log("salut", JSON.parse(getMovieCredits(actor.id)), actor.profile_path);
 		this.updateData(
 			"Films avec " + actor.name,
 			JSON.parse(getMovieCredits(actor.id)).cast, null, null, null,
