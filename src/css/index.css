@@ -7,7 +7,7 @@ div.movie {
 	margin-bottom: 20px;
 }
 
-div.movie img.poster {
+div img.poster {
 	float: left;
 	height: 400px;
 }
