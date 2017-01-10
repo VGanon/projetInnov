@@ -75,23 +75,47 @@ module.exports = function(app, passport) {
     });
   });
 
+  //@return Array of users whose names are matching with the parameter
+  app.get('/getUsersByName', function(req, res){
+    User.find({'local.username': new RegExp(req.query.username, 'i')}, function(err, users){
+      //if(err) return handleError(err);
+      res.send(users);
+    });
+  });
+
 
   // =====================================
   // PROFILE SECTION =========================
   // =====================================
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
-  app.get('/profile', isLoggedIn, function(req, res) {
+  // UPDATE : user = the one connected, profile = the one we show
+  app.get('/profile/(:userId)?', isLoggedIn, function(req, res) {
     Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
+      if(err) return done(err);
       var movies = JSON.stringify(note);
+      
+      //Get the profile to show
+      if(req.params.userId){
+        User.findById(req.params.userId, function(error, profile){
+          //if(error) return done(error);
 
-      res.render('profile.ejs', {
-        user: req.user, // get the user out of session and pass to template
-        movies: movies,
-        message: ""
-      });
+          res.render('profile.ejs', {
+            user: req.user, // get the user out of session and pass to template
+            profile: profile,
+            movies: movies,
+            message: ""
+          });
+        });
+      } else{
+        res.render('profile.ejs', {
+          user: req.user, // get the user out of session and pass to template
+          profile: req.user,
+          movies: movies,
+          message: ""
+        });
+      }
     });
-
   });
 
 

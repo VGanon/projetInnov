@@ -11,10 +11,11 @@ var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
-var apriori = require('apriori');
+//var apriori = require('apriori');
 var io = require('socket.io')(http);
 var configDB = require('./config/database.js');
 var fs = require('fs');
+var User = require('./app/models/user');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database

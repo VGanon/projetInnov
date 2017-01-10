@@ -21,14 +21,14 @@
 	<script type="text/javascript">
 			$(document).ready(function() {
 
-				var data="<%= user.local.categories%>";
+				var data="<%= profile.local.categories%>";
 				//Make an array
 				var dataarray=data.split(",");
 				for(var i= 0; i < dataarray.length; i++) {
 				    dataarray[i] = dataarray[i].charAt(0).toUpperCase() + dataarray[i].slice(1);;
 				}
 				// Set the value
-				if ("<%= user.local.categories%>" === 'undefined' || dataarray.length === 0){
+				if ("<%= profile.local.categories%>" === 'undefined' || dataarray.length === 0){
 					$("#categories").html('Aucune catégorie sélectionnée');
 				} else {
 					$("#categories").html(dataarray.join());
@@ -59,7 +59,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li><a href="/home">Accueil</a></li>
-						<li class="active"><a href="/profile">Profil</a></li>
+						<li <% if(profile._id.equals(user._id)){ %> class="active" <% } %>><a href="/profile">Profil</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -99,7 +99,7 @@
                     <tbody>
                       <tr>
                         <td>Nom d'utilisateur</td>
-                        <td><%= user.local.username %></td>
+                        <td><%= profile.local.username %></td>
                       </tr>
                       <!-- <tr>
                         <td>Sexe</td>
@@ -113,10 +113,12 @@
                         <td>Adresse</td>
                         <td>-</td>
                       </tr>-->
+                      <% if(profile._id.equals(user._id)){ %>
                       <tr>
                         <td>Email</td>
-                        <td><%= user.local.email %></td>
+                        <td><%= profile.local.email %></td>
                       </tr>
+                      <% } %>
                       <tr>
                         <td>Catégories préférées</td>
                         <td id="categories"></td>
@@ -124,7 +126,9 @@
                     </tbody>
             </table>
 
-			<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
+            <% if(profile._id.equals(user._id)){ %>
+				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
+			<% } %>
 		</div>
 	</div>
 
