@@ -8,6 +8,7 @@ form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+	align-items: center;
 }
 
 h2 {
@@ -31,6 +32,9 @@ h2 {
 .loadcheck span {
 	float: left;
 }
+.loadcheck label {
+	cursor: pointer;
+}
 
 .load {
 	display: block;
@@ -39,7 +43,7 @@ h2 {
 	margin: 20px 5px;
 	border-radius: 10px;
 	transition: .5s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .loadMid {
@@ -49,7 +53,7 @@ h2 {
 	margin: 19px 5px;
 	border-radius: 10px;
 	transition: .5s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 	background: #1279be;
 }
 

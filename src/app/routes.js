@@ -252,59 +252,66 @@ module.exports = function(app, passport) {
 	}
   });
 
-  app.post('/movie/:id', isLoggedInToLogin, function(req, res){
+app.post('/movie/:id', isLoggedInToLogin, function(req, res){
 
-		Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes)
+	Note.findOne({'local.id_user' : req.user._id, 'local.id_movie' : req.params.id}, function(err, notes)
+	{
+		var criteres = {
+			"scenario"		: JSON.parse(req.body.scenario),
+			"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
+			"realisation"	: JSON.parse(req.body.realisation),
+			"bande_son"		: JSON.parse(req.body.bande_son),
+			"ambiance"		: JSON.parse(req.body.ambiance),
+			"lumiere"		: JSON.parse(req.body.lumiere),
+			"montage"		: JSON.parse(req.body.montage),
+			"dialogues"		: JSON.parse(req.body.dialogues),
+			"decors"		: JSON.parse(req.body.decors),
+			"costumes"		: JSON.parse(req.body.costumes),
+			"narration"		: JSON.parse(req.body.narration),
+			"rythme"		: JSON.parse(req.body.rythme),
+			"sfx"			: JSON.parse(req.body.sfx)
+		};
+
+		// Vérification des critères null ou non
+		var criteresVide = true;
+		for (i in criteres)
 		{
-			var note;
-			if(notes)
+			if (criteres[i] === true || criteres[i] === false)
 			{
-				notes.local.criteres = {
-					"scenario"		: JSON.parse(req.body.scenario),
-					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
-					"realisation"	: JSON.parse(req.body.realisation),
-					"bande_son"		: JSON.parse(req.body.bande_son),
-					"ambiance"		: JSON.parse(req.body.ambiance),
-					"lumiere"		: JSON.parse(req.body.lumiere),
-					"montage"		: JSON.parse(req.body.montage),
-					"dialogues"		: JSON.parse(req.body.dialogues),
-					"decors"		: JSON.parse(req.body.decors),
-					"costumes"		: JSON.parse(req.body.costumes),
-					"narration"		: JSON.parse(req.body.narration),
-					"rythme"		: JSON.parse(req.body.rythme),
-					"sfx"			: JSON.parse(req.body.sfx)
-				};
-				notes.save(function(err) {
-					if (err) console.log("Erreur : " + err);
-				});
+				criteresVide = false;
+				break;
 			}
-			else {
-				var notes = new Note();
+		}
 
-				notes.local.id_user = req.user._id;
-				notes.local.id_movie = req.params.id;
-				notes.local.criteres = {
-					"scenario"		: JSON.parse(req.body.scenario),
-					"jeu_acteurs"	: JSON.parse(req.body.jeu_acteurs),
-					"realisation"	: JSON.parse(req.body.realisation),
-					"bande_son"		: JSON.parse(req.body.bande_son),
-					"ambiance"		: JSON.parse(req.body.ambiance),
-					"lumiere"		: JSON.parse(req.body.lumiere),
-					"montage"		: JSON.parse(req.body.montage),
-					"dialogues"		: JSON.parse(req.body.dialogues),
-					"decors"		: JSON.parse(req.body.decors),
-					"costumes"		: JSON.parse(req.body.costumes),
-					"narration"		: JSON.parse(req.body.narration),
-					"rythme"		: JSON.parse(req.body.rythme),
-					"sfx"			: JSON.parse(req.body.sfx)
-				};
-				notes.save(function(err) {
-					if (err) console.log("Erreur : " + err);
-				});
-			}
-		});
-		res.redirect("/movie/" + req.params.id);
+		if(notes && criteresVide === false)	// Si il y a déjà une note en base et que au moins un des critères est non null alors on met à jour
+		{
+			notes.local.criteres = criteres;
+			notes.save(function(err) {
+				if (err) console.log("Erreur : " + err);
+			});
+		}
+		else if (notes && criteresVide === true)	// Sinon si il y a déjà une note en base et que tous les nouveaux critères sont null alors on supprime la note
+		{
+			notes.remove(function(err) {
+				if (err) console.log("Erreur : " + err);
+			});
+		}
+		else if (criteresVide === false)	// Si il n'y a pas de note en base et que au moins un des nouveaux critères est non null alors on ajoute la note
+		{
+			var notes = new Note();
+
+			notes.local.id_user = req.user._id;
+			notes.local.id_movie = req.params.id;
+			notes.local.criteres = notes.local.criteres = criteres;
+
+			notes.save(function(err) {
+				if (err) console.log("Erreur : " + err);
+			});
+		}
 	});
+
+	res.redirect("/movie/" + req.params.id);
+});
 };
 
 // route middleware to make sure
