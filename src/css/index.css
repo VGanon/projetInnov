@@ -35,3 +35,11 @@ p {
 div.panel-heading > div > img {
 	width: 150px;
 }
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 120%;
+  width: auto;
+}
