@@ -122,10 +122,10 @@ Point 6 : Les films situés dans la partie "rhs" sont recommandables pour U1, ap
 
 # Algo troisième version
 
-1) On récupère les notes de tous les users pour tous les films.
-2) On crée une map [Critère/Nombre d'apparitions] rangée selon le nombre d'apparitions/nombre de fois ou le film a été noté
+1) On récupère toutes les notes avec le format (IDFILM_CRITERE) exemple : 211_Scénario
+2) On crée une map [Critère - Nombre d'apparitions] rangée selon le nombre d'apparitions divisé par le nombre de fois ou le film a été noté
 3) On regarde le critère que le user aime le plus dans ses films (exemple : le scénario)
-4) On clear la map pour ne garder que les critères "XXX_Scénario" et les films pas vus par l'user
+4) On filtre la map pour ne garder que les critères "XXX_Scénario" et les films pas vus par l'user
 5) On ajoute tous les films (en évitant la redondance) dans les recommandations. 
 6) Si on a un nombre de recommandations insuffisant, on reprend à l'étape 3 avec le deuxième meilleur critère et ainsi de suite (jusqu'au parcours des 13).
 
