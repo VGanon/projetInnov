@@ -114,12 +114,12 @@
 						<h3>{{actor.name}}</h3>
 					</div>
 				</div>
-				<div ng-show="ctrl.movies && ctrl.movies.length" style="float: left;">
+				<div class="movies" ng-show="ctrl.movies && ctrl.movies.length" style="float: left;">
 					<h2>Films</h2>
 					<!-- Iteration sur les films -->
 					<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-4">
 						<a class="btn btn-primary btn-lg" href="/movie/{{movie.id}}">
-							<img style="width:250px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+							<img style="width:250px;" ng-src="{{movie.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : 'img/default_movie_poster.jpg'}}" class="poster" />
 						</a>
 						<h3>
 							<span ng-show="ctrl.enableRanking">

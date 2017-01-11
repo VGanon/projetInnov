@@ -150,7 +150,7 @@
 				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-2">
 					<div class="btn center-block">
 						<a href="./movie/{{movie.id}}">
-							<img style="width:100px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+							<img style="width:100px;" ng-src="{{movie.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : '../img/default_movie_poster.jpg'}}" class="poster" />
 						</a>
 					</div>
 					<a class="center-block" href="./movie/{{movie.id}}">

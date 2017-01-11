@@ -31,7 +31,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	/* @param date String de date au format '2016-05-24'
 	* @return String de date au format '24/05/2016' */
 	this.adjustDate = function(date){
-		return new Date(date).toLocaleString().split(" ")[0];
+		return date ? new Date(date).toLocaleString().split(" ")[0] : "";
 	};
 
 	/* @param overview String de resume d'un film

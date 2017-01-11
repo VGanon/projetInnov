@@ -91,7 +91,9 @@ module.exports = function(app, passport) {
   // we will use route middleware to verify this (the isLoggedIn function)
   // UPDATE : user = the one connected, profile = the one we show
   app.get('/profile/(:userId)?', isLoggedIn, function(req, res) {
-    Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
+    var userId = (req.params.userId) ? req.params.userId : req.user._id;
+
+    Note.find({'local.id_user': userId}).lean().exec(function (err, note) {
       if(err) return done(err);
       var movies = JSON.stringify(note);
       
