@@ -91,13 +91,15 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		);
 	}
 	this.showRecommandedMoviesByNotes = function(){
-	  var notes = JSON.parse($("#notes").html());
-	  var userID = $("#userID").html();
+	    var notes = JSON.parse($("#notes").html());
+	    var userID = $("#userID").html();
 		var finalMovies = getRecommandations(notes, userID);
-	  if(finalMovies.length == 0){
-			this.showRecommandedMoviesByCategories();
-		}
-		else{
+	    if(finalMovies.length == 0){
+			this.updateData(
+			"Aucun film recommandé par l'algorithme",
+			null
+		);
+		} else {
 			var resultMovies = {
 					results: []
 			};
