@@ -128,26 +128,46 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 
 		var popularMovies =  JSON.parse(getPopularMovies()).results;
 
-		// si aucune catégorie préférée => afficer tous les films
+		// si aucune catégorie préférée => afficher tous les films
 		if(user_categories === 'undefined' || user_categories.length === 0) {
 			resultMovies.results = popularMovies;
 		} else {
-			//pour chaque film de popularMovies
+			// récupérer les films notés par l'utilisateur
+			var ratedMovies = JSON.parse($("#ratedMovies").html());
+			//console.log("ratedMovies = " + getMovieById(ratedMovies[0].local.id_movie));
+
+			// pour chaque film de popularMovies
 			for(var i in popularMovies)
 			{
-				var genresMovie = popularMovies[i].genre_ids;
-				// Pour chaque categorie du film
-				for(var j in genresMovie)
-				{
-					// get genre name from genre_id
-					var genre_name = this.movieGenres[genresMovie[j]];
+				var alreadyRated = false;
 
-					// si genre in user_categories
-					if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
-					{
-						var movie = popularMovies[i];
-						resultMovies.results.push(movie);
+				
+				for(var j in ratedMovies) {
+    				// si le film n'est pas noté par l'utilisateur on l'affiche
+
+					if(popularMovies[i].id == ratedMovies[j].local.id_movie) {
+						console.log("Hide -> Film deja noté : " + popularMovies[i].title);
+						alreadyRated = true;
 						break;
+					}
+				}
+
+				if(!alreadyRated) {
+
+					var genresMovie = popularMovies[i].genre_ids;
+					// Pour chaque categorie du film
+					for(var j in genresMovie)
+					{
+						// get genre name from genre_id
+						var genre_name = this.movieGenres[genresMovie[j]];
+
+						// si genre in user_categories
+						if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
+						{
+							var movie = popularMovies[i];
+							resultMovies.results.push(movie);
+							break;
+						}
 					}
 				}
 			}

@@ -67,10 +67,14 @@ module.exports = function(app, passport) {
   app.get('/home', isLoggedIn, function(req, res) {
     Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err,notes) {
       var notes = JSON.stringify(notes);
-      res.render('home.ejs', {
-        notes: notes,
-        userId: req.user._id,
-        user : req.user // get the user out of session and pass to template
+      Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
+        var ratedMovies = JSON.stringify(note);
+        res.render('home.ejs', {
+          ratedMovies: ratedMovies,
+          notes: notes,
+          userId: req.user._id,
+          user : req.user // get the user out of session and pass to template
+        });
       });
     });
   });
