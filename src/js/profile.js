@@ -14,7 +14,6 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 
 	this.updateData = function(movies){
 		this.movies = movies;
-		this.nbMoviesShown = 10;
 	};
 	
 
