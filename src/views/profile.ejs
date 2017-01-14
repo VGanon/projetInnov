@@ -119,24 +119,37 @@
                         <td>Email</td>
                         <td><%= profile.local.email %></td>
                       </tr>
+											<% } %>
 											<tr>
-											  <td>Mes amis</td>
-												<td>TODO</td>
-											</tr>
-                      <% } %>
-                      <tr>
                         <td>Catégories préférées</td>
                         <td id="categories"></td>
                       </tr>
+				<tr>
+					<td>Mes amis</td>
+					<% for(var i=0; i<3; i++) { %>
+					  <td>TODO</td>
+					<% } %>
+				</tr>
+                      
                     </tbody>
             </table>
+      
 
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
 			<% } %>
+			  <% if(!profile._id.equals(user._id)) { %>
+				<button type="button" class="btn btn-ok btn-md pull-right" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
+				<% } %>
 
-			<button type="button" class="btn btn-primary btn-lg" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
 		</div>
+	</div>
+
+	<div class="row">
+    <span>Amis</span>
+		<% for(var i=0; i<3; i++) { %>
+		  <p>TODO</p>
+		<% } %>
 	</div>
 
 
