@@ -14,6 +14,9 @@ function getRecommandations(notes, userid){
   finalMovies = [];
   randomRecommandation = [];
   var array = buildArray(notes, userID);
+  if(ratedMovies.length == 0){
+    return randomRecommandation;
+  }
   console.log("1) Array");
   console.log(array);
   var map = buildMap(array);

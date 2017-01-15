@@ -96,7 +96,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		var finalMovies = getRecommandations(notes, userID);
 	    if(finalMovies.length == 0){
 			this.updateData(
-			"Aucun film recommandé par l'algorithme",
+			"Nous ne pouvons vous recommander de films pour l'instant. Noter des films peut résoudre ce problème ;)",
 			null
 		);
 		} else {
