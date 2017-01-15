@@ -5,7 +5,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	this.actors = [];
 	this.friends = [];
 	this.pageImg = null;
-	this.nbMoviesShown = 9;
+	this.nbMoviesShown = 15;
 	this.enableRanking = false;
 	/* Map id/name des genres de films (voir fonction getMovieGenres) */
 	this.movieGenres = {};
@@ -49,7 +49,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		this.friends = friends;
 		this.enableRanking = enableRanking;
 		this.pageImg = pageImg;
-		this.nbMoviesShown = 9;
+		this.nbMoviesShown = 15;
 		console.log("pageTitle : ", pageTitle);
 		console.log("movies : ", movies);
 		console.log("actors : ", actors);
@@ -143,7 +143,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 			{
 				var alreadyRated = false;
 
-				
+
 				for(var j in ratedMovies) {
     				// si le film n'est pas noté par l'utilisateur on l'affiche
 
