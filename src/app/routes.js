@@ -100,7 +100,7 @@ module.exports = function(app, passport) {
     Note.find({'local.id_user': userId}).lean().exec(function (err, note) {
       if(err) return done(err);
       var movies = JSON.stringify(note);
-      
+
       //Get the profile to show
       if(req.params.userId){
         User.findById(req.params.userId, function(error, profile){
@@ -269,7 +269,7 @@ module.exports = function(app, passport) {
 					user : req.user, // get the user out of session and pass to template
 					id: req.params.id,
 					criteres: JSON.stringify(notes.local.criteres)
-			});
+				});
 			}
 			else {
 				res.render('movie.ejs', {
