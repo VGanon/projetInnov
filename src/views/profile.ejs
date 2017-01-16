@@ -131,8 +131,10 @@
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
 			<% } %>
+			  
+				<!-- button only shows up when the viewer isn't viewing his/her own profile -->
 			  <% if(!profile._id.equals(user._id)) { %>
-				<button type="button" class="btn btn-ok btn-md pull-right" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
+				<button type="button" class="btn btn-md pull-right btn-danger" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
 				<% } %>
 
 		</div>
