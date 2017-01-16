@@ -425,7 +425,9 @@
 				</span>
 
 			</form>
+			<button id='dislikeButton' class="btn btn-lg btn-danger">Je n'aime rien</button>
 			<button form="critere_form" type="reset" class="btn btn-lg btn-primary">Reset</button>
+			<button id="likeButton" class="btn btn-lg btn-success">J'aime tout</button><br/><br/>
 			<button form="critere_form" type="submit" class="btn btn-lg btn-primary">Valider</button>
 		</section>
 
@@ -494,6 +496,25 @@
 				}
 			}
 		}
+
+		document.getElementById("likeButton").onclick = function()
+		{
+			var inputs = document.getElementsByClassName("trueInput");
+
+			for (var i = 0; i < inputs.length; i++)
+			{
+				inputs[i].checked = true;
+			}
+		};
+		document.getElementById("dislikeButton").onclick = function()
+		{
+			var inputs = document.getElementsByClassName("falseInput");
+
+			for (var i = 0; i < inputs.length; i++)
+			{
+				inputs[i].checked = true;
+			}
+		};
 	</script>
 
 	<hr/>

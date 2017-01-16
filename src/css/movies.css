@@ -15,6 +15,10 @@ form {
 	text-align: center;
 }
 
+#likeButton, #dislikeButton{
+	width: 150px;
+}
+
 .critere h5 {
 	margin-bottom: 0px;
 	text-align: center;
