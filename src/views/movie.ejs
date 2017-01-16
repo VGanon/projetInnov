@@ -113,7 +113,7 @@
 				</span>
 
 				<span class="critere">
-					<h5>Performance acteurs</h5>
+					<h5>Jeu d'acteurs/Doublage</h5>
 					<input type="radio" name="jeu_acteurs" class="falseInput" id="jeu_acteurs_false" value="false">
 					<input type="radio" name="jeu_acteurs" class="nullInput" id="jeu_acteurs_null" value="null" checked>
 					<input type="radio" name="jeu_acteurs" class="trueInput" id="jeu_acteurs_true" value="true">
@@ -399,7 +399,7 @@
 				</span>
 
 				<span class="critere">
-					<h5>SFX</h5>
+					<h5>Effets spéciaux</h5>
 					<input type="radio" name="sfx" class="falseInput" id="sfx_false" value="false">
 					<input type="radio" name="sfx" class="nullInput" id="sfx_null" value="null" checked>
 					<input type="radio" name="sfx" class="trueInput" id="sfx_true" value="true">
@@ -425,6 +425,9 @@
 				</span>
 
 			</form>
+			<button id='dislikeButton' class="btn btn-lg btn-danger">Je n'aime rien</button>
+			<button form="critere_form" type="reset" class="btn btn-lg btn-primary">Reset</button>
+			<button id="likeButton" class="btn btn-lg btn-success">J'aime tout</button><br/><br/>
 			<button form="critere_form" type="submit" class="btn btn-lg btn-primary">Valider</button>
 		</section>
 
@@ -493,6 +496,25 @@
 				}
 			}
 		}
+
+		document.getElementById("likeButton").onclick = function()
+		{
+			var inputs = document.getElementsByClassName("trueInput");
+
+			for (var i = 0; i < inputs.length; i++)
+			{
+				inputs[i].checked = true;
+			}
+		};
+		document.getElementById("dislikeButton").onclick = function()
+		{
+			var inputs = document.getElementsByClassName("falseInput");
+
+			for (var i = 0; i < inputs.length; i++)
+			{
+				inputs[i].checked = true;
+			}
+		};
 	</script>
 
 	<hr/>
