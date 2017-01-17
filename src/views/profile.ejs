@@ -130,25 +130,42 @@
 
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
-			<% } %>
-			  
-				<!-- button only shows up when the viewer isn't viewing his/her own profile -->
-			  <% if(!profile._id.equals(user._id)) { %>
+			<% } else /*if(condition not friends)*/ {%>
 				<button type="button" class="btn btn-md pull-right btn-danger" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
-				<% } %>
+			<% } %>
 
 		</div>
 	</div>
 
+	<!-- ------------------------------------------------------ AMIS ------------------------------------------------------- -->
+	<!-- Copier coller de la partie 'FILMS NOTES'. C'est tres sale, je le fais a contre-coeur T_T -->
+
+	<legend>
+		<h2><span class="fa fa-users"></span> Amis</h2>
+	</legend>
+
 	<div class="row">
-    <span>Amis</span>
-		<% for(var i=0; i<3; i++) { %>
-		  <p>TODO</p>
-		<% } %>
+		<div class="col-sm-12 well">
+			<h2 style="display:none;" id="friends"><%= profile.local.friends %></h2>
+
+			<h5 id="message-friends">Aucun ami !</h5>
+
+			<div ng-repeat="friend in ctrl.friends" class="movie col-md-2">
+				<div class="btn center-block">
+					<a href="/profile/{{friend._id}}">
+						<img style="width:100px;" ng-src="{{friend.local.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + friend.local.poster_path : '../img/default_profile.jpg'}}" class="poster" />
+					</a>
+				</div>
+				<a class="center-block" href="/profile/{{friend._id}}">
+					<h5 class="text-center">{{friend.local.username}}</h5>
+				</a>
+			</div>
+		</div>
 	</div>
 
 
-<!-- ------------------------------------------------------------ FILMS NOTES --------------------------------------- -->
+
+	<!-- --------------------------------------------------- FILMS NOTES --------------------------------------------------- -->
 
 	<legend>
 		<h2><span class="fa fa-film"></span> Films notés </h2>
@@ -156,26 +173,23 @@
 
 	<div class="row">
 		<div class="col-sm-12 well">
+			<h2 style="display:none;" id="movies"><%= movies %></h2>
 
-				<h2 style="display:none;" id="movies"><%= movies %></h2>
+			<h5 id="message">Aucun film noté !</h5>
 
-				<h5 id="message">Aucun film noté !</h5>
-
-				<div ng-repeat="movie in ctrl.movies" class="movie col-md-2">
-					<div class="btn center-block">
-						<a href="/movie/{{movie.id}}">
-							<img style="width:100px;" ng-src="{{movie.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : '../img/default_movie_poster.jpg'}}" class="poster" />
-						</a>
-					</div>
-					<a class="center-block" href="/movie/{{movie.id}}">
-						<h5 class="text-center">{{movie.title}}</h5>
+			<div ng-repeat="movie in ctrl.movies" class="movie col-md-2">
+				<div class="btn center-block">
+					<a href="/movie/{{movie.id}}">
+						<img style="width:100px;" ng-src="{{movie.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : '../img/default_movie_poster.jpg'}}" class="poster" />
 					</a>
 				</div>
-
-
-
+				<a class="center-block" href="/movie/{{movie.id}}">
+					<h5 class="text-center">{{movie.title}}</h5>
+				</a>
+			</div>
 		</div>
 	</div>
+
 
 </div>
 

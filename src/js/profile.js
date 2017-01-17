@@ -19,7 +19,6 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 
 	/* Update des donnees pour afficher les films notés par l'utilisateur */
 	this.showRatedMovies = function(){
-
 		var ratedMovies = {
 		    results: []
 		};
@@ -43,7 +42,26 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 		
 	};
 
+	/* Update des donnees pour afficher les amis de l'utilisateur */
+	this.showFriends = function(){
+		var friends = null;
+		try{
+			friends = JSON.parse($("#friends").html());
+		} catch(e){
+			console.warn("Erreur de parsing des amis :\n", e);
+		}
+
+		if(friends && friends.length) {
+			$("#message-friends").hide();
+			this.friends = friends;
+		} else {
+			$("#message-friends").show();
+		}
+	};
+
 
 	// films notés du user
 	this.showRatedMovies();
+	// amis du user
+	this.showFriends();
 });
