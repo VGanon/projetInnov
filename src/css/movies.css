@@ -7,13 +7,18 @@ input[type="radio"] {
 form {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 	align-items: center;
 }
 
-h2 {
+#notation {
 	text-align: center;
 }
+
+#likeButton, #dislikeButton{
+	width: 150px;
+}
+
 .critere h5 {
 	margin-bottom: 0px;
 	text-align: center;

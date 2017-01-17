@@ -53,7 +53,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/" ng-click="ctrl.showPopularMovies()"><img src="./../img/icon_big.png" alt="Logo"></a>
+					<a class="navbar-brand" href="/home" ng-click="ctrl.showPopularMovies()"><img src="./../img/icon_big.png" alt="Logo"></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -119,18 +119,32 @@
                         <td>Email</td>
                         <td><%= profile.local.email %></td>
                       </tr>
-                      <% } %>
-                      <tr>
+											<% } %>
+											<tr>
                         <td>Catégories préférées</td>
                         <td id="categories"></td>
-                      </tr>
+                      </tr>                      
                     </tbody>
             </table>
+      
 
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
 			<% } %>
+			  
+				<!-- button only shows up when the viewer isn't viewing his/her own profile -->
+			  <% if(!profile._id.equals(user._id)) { %>
+				<button type="button" class="btn btn-md pull-right btn-danger" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
+				<% } %>
+
 		</div>
+	</div>
+
+	<div class="row">
+    <span>Amis</span>
+		<% for(var i=0; i<3; i++) { %>
+		  <p>TODO</p>
+		<% } %>
 	</div>
 
 
@@ -147,13 +161,13 @@
 
 				<h5 id="message">Aucun film noté !</h5>
 
-				<div ng-repeat="movie in ctrl.movies" ng-if="$index < ctrl.nbMoviesShown" class="movie col-md-2">
+				<div ng-repeat="movie in ctrl.movies" class="movie col-md-2">
 					<div class="btn center-block">
-						<a href="./movie/{{movie.id}}">
-							<img style="width:100px;" ng-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" class="poster" />
+						<a href="/movie/{{movie.id}}">
+							<img style="width:100px;" ng-src="{{movie.poster_path ? 'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : '../img/default_movie_poster.jpg'}}" class="poster" />
 						</a>
 					</div>
-					<a class="center-block" href="./movie/{{movie.id}}">
+					<a class="center-block" href="/movie/{{movie.id}}">
 						<h5 class="text-center">{{movie.title}}</h5>
 					</a>
 				</div>

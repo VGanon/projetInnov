@@ -1,39 +1,57 @@
-var socket = io.connect("http://127.0.0.1:2222");
 var userID = "";
 var ratedMovies = [];
 var ratedCrit = [];
 var sortedRatedCrit = [];
 var filmCount = new Object();
-
+var finalMovies = [];
+var randomRecommandation = [];
 function getRecommandations(notes, userid){
   userID = userid;
-  var array = buildArray(notes);
+  ratedMovies = [];
+  ratedCrit = [];
+  sortedRatedCrit = [];
+  filmCount = new Object();
+  finalMovies = [];
+  randomRecommandation = [];
+  var array = buildArray(notes, userID);
+  if(ratedMovies.length == 0){
+    return randomRecommandation;
+  }
   console.log("1) Array");
   console.log(array);
   var map = buildMap(array);
   console.log("2) Map");
   console.log(map);
-  var sortedCrit = computeScore(map);
   console.log("3) Calcul des scores");
-  console.log(sortedCrit);
+  var allCrit = computeScore(map);
+  console.log(allCrit);
   findBestCritOfUser();
   var bestCrit = sortedRatedCrit[0];
   console.log("4) Meilleur critère de " + userID + " : " + bestCrit);
-  var finalMovies = [];
   var i = 0;
-  while(finalMovies.length < 1 && i<13){
-    finalMovies = sortByBestCrit(bestCrit, sortedCrit);
+  var limit = 9;
+  while(finalMovies.length < limit && i<13){
+    console.log("Critère : " + bestCrit);
+    sortByBestCrit(bestCrit, allCrit);
     i++;
     bestCrit = sortedRatedCrit[i];
   }
-  console.log("5) Films à recommander (sans check)");
+  console.log("5) Films recommandables");
   console.log(finalMovies);
-  return finalMovies;
+  if(bestCrit == sortedRatedCrit[1]){
+    console.log("Random en cours");
+    randomize(limit);
+  }
+  else{
+    randomRecommandation = finalMovies;
+  }
+  console.log("6) Films à recommander");
+  console.log(randomRecommandation);
+  return randomRecommandation;
 }
 
 
-function buildArray(notes){
-  console.log(notes);
+function buildArray(notes, userID){
   var array = [];
 
   for(var i = 0; i < notes.length; i++){
@@ -75,14 +93,15 @@ function buildMap(array){
 }
 
 function computeScore(map){
-  var result = new Object();
+  var result = [];
   for(var key in map){
     var movieId = key.split('_')[0];
-    result[key] = (map[key] / filmCount[movieId]);
+    var score = (map[key] / filmCount[movieId]);
+    if(score >= 0.75){
+      result.push(key);
+    }
   }
-  var sortedKeys = Object.keys(result)
-  .sort(function(a,b) { return result[b] - result[a] });
-  return sortedKeys;
+  return result;
 }
 
 function findBestCritOfUser(){
@@ -101,17 +120,21 @@ function findBestCritOfUser(){
 }
 
 function sortByBestCrit(bestCrit, sortedCrit){
-
-  var finalMovies = [];
   for(var i = 0; i < sortedCrit.length; i++){
     if(sortedCrit[i].indexOf(bestCrit) != -1){
       var movieId = sortedCrit[i].split('_')[0];
-      console.log(movieId);
-      if($.inArray(movieId, ratedMovies) == -1){
+      if($.inArray(movieId, ratedMovies) == -1 && ($.inArray(movieId, finalMovies) == -1)){
         finalMovies.push(movieId);
       }
     }
   }
+}
 
-  return finalMovies;
+function randomize(limit){
+  while(randomRecommandation.length < limit){
+    var rand = finalMovies[Math.floor(Math.random() * finalMovies.length)];
+    if($.inArray(rand, randomRecommandation) == -1){
+      randomRecommandation.push(rand);
+    }
+  }
 }

@@ -67,10 +67,14 @@ module.exports = function(app, passport) {
   app.get('/home', isLoggedIn, function(req, res) {
     Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err,notes) {
       var notes = JSON.stringify(notes);
-      res.render('home.ejs', {
-        notes: notes,
-        userId: req.user._id,
-        user : req.user // get the user out of session and pass to template
+      Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
+        var ratedMovies = JSON.stringify(note);
+        res.render('home.ejs', {
+          ratedMovies: ratedMovies,
+          notes: notes,
+          userId: req.user._id,
+          user : req.user // get the user out of session and pass to template
+        });
       });
     });
   });
@@ -91,10 +95,12 @@ module.exports = function(app, passport) {
   // we will use route middleware to verify this (the isLoggedIn function)
   // UPDATE : user = the one connected, profile = the one we show
   app.get('/profile/(:userId)?', isLoggedIn, function(req, res) {
-    Note.find({'local.id_user': req.user._id}).lean().exec(function (err, note) {
+    var userId = (req.params.userId) ? req.params.userId : req.user._id;
+
+    Note.find({'local.id_user': userId}).lean().exec(function (err, note) {
       if(err) return done(err);
       var movies = JSON.stringify(note);
-      
+
       //Get the profile to show
       if(req.params.userId){
         User.findById(req.params.userId, function(error, profile){
@@ -263,7 +269,7 @@ module.exports = function(app, passport) {
 					user : req.user, // get the user out of session and pass to template
 					id: req.params.id,
 					criteres: JSON.stringify(notes.local.criteres)
-			});
+				});
 			}
 			else {
 				res.render('movie.ejs', {

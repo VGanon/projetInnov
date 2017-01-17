@@ -5,7 +5,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	this.actors = [];
 	this.friends = [];
 	this.pageImg = null;
-	this.nbMoviesShown = 9;
+	this.nbMoviesShown = 15;
 	this.enableRanking = false;
 	/* Map id/name des genres de films (voir fonction getMovieGenres) */
 	this.movieGenres = {};
@@ -31,7 +31,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 	/* @param date String de date au format '2016-05-24'
 	* @return String de date au format '24/05/2016' */
 	this.adjustDate = function(date){
-		return new Date(date).toLocaleString().split(" ")[0];
+		return date ? new Date(date).toLocaleString().split(" ")[0] : "";
 	};
 
 	/* @param overview String de resume d'un film
@@ -49,7 +49,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		this.friends = friends;
 		this.enableRanking = enableRanking;
 		this.pageImg = pageImg;
-		this.nbMoviesShown = 9;
+		this.nbMoviesShown = 15;
 		console.log("pageTitle : ", pageTitle);
 		console.log("movies : ", movies);
 		console.log("actors : ", actors);
@@ -91,13 +91,15 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		);
 	}
 	this.showRecommandedMoviesByNotes = function(){
-	  var notes = JSON.parse($("#notes").html());
-	  var userID = $("#userID").html();
+	    var notes = JSON.parse($("#notes").html());
+	    var userID = $("#userID").html();
 		var finalMovies = getRecommandations(notes, userID);
-	  if(finalMovies.length == 0){
-			this.showRecommandedMoviesByCategories();
-		}
-		else{
+	    if(finalMovies.length == 0){
+			this.updateData(
+			"Nous ne pouvons vous recommander de films pour l'instant. Noter des films peut résoudre ce problème ;)",
+			null
+		);
+		} else {
 			var resultMovies = {
 					results: []
 			};
@@ -128,26 +130,46 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 
 		var popularMovies =  JSON.parse(getPopularMovies()).results;
 
-		// si aucune catégorie préférée => afficer tous les films
+		// si aucune catégorie préférée => afficher tous les films
 		if(user_categories === 'undefined' || user_categories.length === 0) {
 			resultMovies.results = popularMovies;
 		} else {
-			//pour chaque film de popularMovies
+			// récupérer les films notés par l'utilisateur
+			var ratedMovies = JSON.parse($("#ratedMovies").html());
+			//console.log("ratedMovies = " + getMovieById(ratedMovies[0].local.id_movie));
+
+			// pour chaque film de popularMovies
 			for(var i in popularMovies)
 			{
-				var genresMovie = popularMovies[i].genre_ids;
-				// Pour chaque categorie du film
-				for(var j in genresMovie)
-				{
-					// get genre name from genre_id
-					var genre_name = this.movieGenres[genresMovie[j]];
+				var alreadyRated = false;
 
-					// si genre in user_categories
-					if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
-					{
-						var movie = popularMovies[i];
-						resultMovies.results.push(movie);
+
+				for(var j in ratedMovies) {
+    				// si le film n'est pas noté par l'utilisateur on l'affiche
+
+					if(popularMovies[i].id == ratedMovies[j].local.id_movie) {
+						console.log("Hide -> Film deja noté : " + popularMovies[i].title);
+						alreadyRated = true;
 						break;
+					}
+				}
+
+				if(!alreadyRated) {
+
+					var genresMovie = popularMovies[i].genre_ids;
+					// Pour chaque categorie du film
+					for(var j in genresMovie)
+					{
+						// get genre name from genre_id
+						var genre_name = this.movieGenres[genresMovie[j]];
+
+						// si genre in user_categories
+						if($.inArray(genre_name.toUpperCase(), user_categories_array) !== -1)
+						{
+							var movie = popularMovies[i];
+							resultMovies.results.push(movie);
+							break;
+						}
 					}
 				}
 			}
