@@ -24,7 +24,7 @@
 
 <body>
 
-<!------------------------------------------------------- Barre menu ----------------------------------------------------- -->
+<!-- ---------------------------------------------------- Barre menu ----------------------------------------------------- -->
 <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,354 +83,360 @@
 
 		<section id=notation>
 			<h2>Notation</h2>
+			<hr/>
+			<div id="formOK">
+				<form id="critere_form" action="/movie/<%= id %>" method="post">
 
-			<form id="critere_form" action="/movie/<%= id %>" method="post">
-
-				<span class="critere">
-					<h5>Scénario</h5>
-					<input type="radio" name="scenario" class="falseInput" id="scenario_false" value="false">
-					<input type="radio" name="scenario" class="nullInput" id="scenario_null" value="null" checked>
-					<input type="radio" name="scenario" class="trueInput" id="scenario_true" value="true">
-					<span class="loadcheck">
-						<label for="scenario_false" class="falseLabel" id="label_scenario_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="scenario_null" class="nullLabel" id="label_scenario_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="scenario_true" class="trueLabel" id="label_scenario_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Scénario</h5>
+						<input type="radio" name="scenario" class="falseInput" id="scenario_false" value="false">
+						<input type="radio" name="scenario" class="nullInput" id="scenario_null" value="null" checked>
+						<input type="radio" name="scenario" class="trueInput" id="scenario_true" value="true">
+						<span class="loadcheck">
+							<label for="scenario_false" class="falseLabel" id="label_scenario_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="scenario_null" class="nullLabel" id="label_scenario_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="scenario_true" class="trueLabel" id="label_scenario_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Jeu d'acteurs/Doublage</h5>
-					<input type="radio" name="jeu_acteurs" class="falseInput" id="jeu_acteurs_false" value="false">
-					<input type="radio" name="jeu_acteurs" class="nullInput" id="jeu_acteurs_null" value="null" checked>
-					<input type="radio" name="jeu_acteurs" class="trueInput" id="jeu_acteurs_true" value="true">
-					<span class="loadcheck">
-						<label for="jeu_acteurs_false" class="falseLabel" id="label_jeu_acteurs_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="jeu_acteurs_null" class="nullLabel" id="label_jeu_acteurs_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="jeu_acteurs_true" class="trueLabel" id="label_jeu_acteurs_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Jeu d'acteurs/Doublage</h5>
+						<input type="radio" name="jeu_acteurs" class="falseInput" id="jeu_acteurs_false" value="false">
+						<input type="radio" name="jeu_acteurs" class="nullInput" id="jeu_acteurs_null" value="null" checked>
+						<input type="radio" name="jeu_acteurs" class="trueInput" id="jeu_acteurs_true" value="true">
+						<span class="loadcheck">
+							<label for="jeu_acteurs_false" class="falseLabel" id="label_jeu_acteurs_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="jeu_acteurs_null" class="nullLabel" id="label_jeu_acteurs_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="jeu_acteurs_true" class="trueLabel" id="label_jeu_acteurs_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Mise en scène</h5>
-					<input type="radio" name="realisation" class="falseInput" id="realisation_false" value="false">
-					<input type="radio" name="realisation" class="nullInput" id="realisation_null" value="null" checked>
-					<input type="radio" name="realisation" class="trueInput" id="realisation_true" value="true">
-					<span class="loadcheck">
-						<label for="realisation_false" class="falseLabel" id="label_realisation_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="realisation_null" class="nullLabel" id="label_realisation_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="realisation_true" class="trueLabel" id="label_realisation_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Mise en scène</h5>
+						<input type="radio" name="realisation" class="falseInput" id="realisation_false" value="false">
+						<input type="radio" name="realisation" class="nullInput" id="realisation_null" value="null" checked>
+						<input type="radio" name="realisation" class="trueInput" id="realisation_true" value="true">
+						<span class="loadcheck">
+							<label for="realisation_false" class="falseLabel" id="label_realisation_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="realisation_null" class="nullLabel" id="label_realisation_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="realisation_true" class="trueLabel" id="label_realisation_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Bande son</h5>
-					<input type="radio" name="bande_son" class="falseInput" id="bande_son_false" value="false">
-					<input type="radio" name="bande_son" class="nullInput" id="bande_son_null" value="null" checked>
-					<input type="radio" name="bande_son" class="trueInput" id="bande_son_true" value="true">
-					<span class="loadcheck">
-						<label for="bande_son_false" class="falseLabel" id="label_bande_son_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="bande_son_null" class="nullLabel" id="label_bande_son_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="bande_son_true" class="trueLabel" id="label_bande_son_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Bande son</h5>
+						<input type="radio" name="bande_son" class="falseInput" id="bande_son_false" value="false">
+						<input type="radio" name="bande_son" class="nullInput" id="bande_son_null" value="null" checked>
+						<input type="radio" name="bande_son" class="trueInput" id="bande_son_true" value="true">
+						<span class="loadcheck">
+							<label for="bande_son_false" class="falseLabel" id="label_bande_son_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="bande_son_null" class="nullLabel" id="label_bande_son_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="bande_son_true" class="trueLabel" id="label_bande_son_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Ambiance</h5>
-					<input type="radio" name="ambiance" class="falseInput" id="ambiance_false" value="false">
-					<input type="radio" name="ambiance" class="nullInput" id="ambiance_null" value="null" checked>
-					<input type="radio" name="ambiance" class="trueInput" id="ambiance_true" value="true">
-					<span class="loadcheck">
-						<label for="ambiance_false" class="falseLabel" id="label_ambiance_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="ambiance_null" class="nullLabel" id="label_ambiance_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="ambiance_true" class="trueLabel" id="label_ambiance_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Ambiance</h5>
+						<input type="radio" name="ambiance" class="falseInput" id="ambiance_false" value="false">
+						<input type="radio" name="ambiance" class="nullInput" id="ambiance_null" value="null" checked>
+						<input type="radio" name="ambiance" class="trueInput" id="ambiance_true" value="true">
+						<span class="loadcheck">
+							<label for="ambiance_false" class="falseLabel" id="label_ambiance_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="ambiance_null" class="nullLabel" id="label_ambiance_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="ambiance_true" class="trueLabel" id="label_ambiance_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Lumière</h5>
-					<input type="radio" name="lumiere" class="falseInput" id="lumiere_false" value="false">
-					<input type="radio" name="lumiere" class="nullInput" id="lumiere_null" value="null" checked>
-					<input type="radio" name="lumiere" class="trueInput" id="lumiere_true" value="true">
-					<span class="loadcheck">
-						<label for="lumiere_false" class="falseLabel" id="label_lumiere_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="lumiere_null" class="nullLabel" id="label_lumiere_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="lumiere_true" class="trueLabel" id="label_lumiere_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Lumière</h5>
+						<input type="radio" name="lumiere" class="falseInput" id="lumiere_false" value="false">
+						<input type="radio" name="lumiere" class="nullInput" id="lumiere_null" value="null" checked>
+						<input type="radio" name="lumiere" class="trueInput" id="lumiere_true" value="true">
+						<span class="loadcheck">
+							<label for="lumiere_false" class="falseLabel" id="label_lumiere_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="lumiere_null" class="nullLabel" id="label_lumiere_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="lumiere_true" class="trueLabel" id="label_lumiere_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Montage</h5>
-					<input type="radio" name="montage" class="falseInput" id="montage_false" value="false">
-					<input type="radio" name="montage" class="nullInput" id="montage_null" value="null" checked>
-					<input type="radio" name="montage" class="trueInput" id="montage_true" value="true">
-					<span class="loadcheck">
-						<label for="montage_false" class="falseLabel" id="label_montage_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="montage_null" class="nullLabel" id="label_montage_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="montage_true" class="trueLabel" id="label_montage_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Montage</h5>
+						<input type="radio" name="montage" class="falseInput" id="montage_false" value="false">
+						<input type="radio" name="montage" class="nullInput" id="montage_null" value="null" checked>
+						<input type="radio" name="montage" class="trueInput" id="montage_true" value="true">
+						<span class="loadcheck">
+							<label for="montage_false" class="falseLabel" id="label_montage_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="montage_null" class="nullLabel" id="label_montage_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="montage_true" class="trueLabel" id="label_montage_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Dialogues</h5>
-					<input type="radio" name="dialogues" class="falseInput" id="dialogues_false" value="false">
-					<input type="radio" name="dialogues" class="nullInput" id="dialogues_null" value="null" checked>
-					<input type="radio" name="dialogues" class="trueInput" id="dialogues_true" value="true">
-					<span class="loadcheck">
-						<label for="dialogues_false" class="falseLabel" id="label_dialogues_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="dialogues_null" class="nullLabel" id="label_dialogues_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="dialogues_true" class="trueLabel" id="label_dialogues_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Dialogues</h5>
+						<input type="radio" name="dialogues" class="falseInput" id="dialogues_false" value="false">
+						<input type="radio" name="dialogues" class="nullInput" id="dialogues_null" value="null" checked>
+						<input type="radio" name="dialogues" class="trueInput" id="dialogues_true" value="true">
+						<span class="loadcheck">
+							<label for="dialogues_false" class="falseLabel" id="label_dialogues_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="dialogues_null" class="nullLabel" id="label_dialogues_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="dialogues_true" class="trueLabel" id="label_dialogues_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Décors</h5>
-					<input type="radio" name="decors" class="falseInput" id="decors_false" value="false">
-					<input type="radio" name="decors" class="nullInput" id="decors_null" value="null" checked>
-					<input type="radio" name="decors" class="trueInput" id="decors_true" value="true">
-					<span class="loadcheck">
-						<label for="decors_false" class="falseLabel" id="label_decors_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="decors_null" class="nullLabel" id="label_decors_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="decors_true" class="trueLabel" id="label_decors_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Décors</h5>
+						<input type="radio" name="decors" class="falseInput" id="decors_false" value="false">
+						<input type="radio" name="decors" class="nullInput" id="decors_null" value="null" checked>
+						<input type="radio" name="decors" class="trueInput" id="decors_true" value="true">
+						<span class="loadcheck">
+							<label for="decors_false" class="falseLabel" id="label_decors_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="decors_null" class="nullLabel" id="label_decors_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="decors_true" class="trueLabel" id="label_decors_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Costumes</h5>
-					<input type="radio" name="costumes" class="falseInput" id="costumes_false" value="false">
-					<input type="radio" name="costumes" class="nullInput" id="costumes_null" value="null" checked>
-					<input type="radio" name="costumes" class="trueInput" id="costumes_true" value="true">
-					<span class="loadcheck">
-						<label for="costumes_false" class="falseLabel" id="label_costumes_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="costumes_null" class="nullLabel" id="label_costumes_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="costumes_true" class="trueLabel" id="label_costumes_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Costumes</h5>
+						<input type="radio" name="costumes" class="falseInput" id="costumes_false" value="false">
+						<input type="radio" name="costumes" class="nullInput" id="costumes_null" value="null" checked>
+						<input type="radio" name="costumes" class="trueInput" id="costumes_true" value="true">
+						<span class="loadcheck">
+							<label for="costumes_false" class="falseLabel" id="label_costumes_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="costumes_null" class="nullLabel" id="label_costumes_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="costumes_true" class="trueLabel" id="label_costumes_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Narration</h5>
-					<input type="radio" name="narration" class="falseInput" id="narration_false" value="false">
-					<input type="radio" name="narration" class="nullInput" id="narration_null" value="null" checked>
-					<input type="radio" name="narration" class="trueInput" id="narration_true" value="true">
-					<span class="loadcheck">
-						<label for="narration_false" class="falseLabel" id="label_narration_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="narration_null" class="nullLabel" id="label_narration_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="narration_true" class="trueLabel" id="label_narration_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Narration</h5>
+						<input type="radio" name="narration" class="falseInput" id="narration_false" value="false">
+						<input type="radio" name="narration" class="nullInput" id="narration_null" value="null" checked>
+						<input type="radio" name="narration" class="trueInput" id="narration_true" value="true">
+						<span class="loadcheck">
+							<label for="narration_false" class="falseLabel" id="label_narration_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="narration_null" class="nullLabel" id="label_narration_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="narration_true" class="trueLabel" id="label_narration_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Rythme</h5>
-					<input type="radio" name="rythme" class="falseInput" id="rythme_false" value="false">
-					<input type="radio" name="rythme" class="nullInput" id="rythme_null" value="null" checked>
-					<input type="radio" name="rythme" class="trueInput" id="rythme_true" value="true">
-					<span class="loadcheck">
-						<label for="rythme_false" class="falseLabel" id="label_rythme_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="rythme_null" class="nullLabel" id="label_rythme_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="rythme_true" class="trueLabel" id="label_rythme_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Rythme</h5>
+						<input type="radio" name="rythme" class="falseInput" id="rythme_false" value="false">
+						<input type="radio" name="rythme" class="nullInput" id="rythme_null" value="null" checked>
+						<input type="radio" name="rythme" class="trueInput" id="rythme_true" value="true">
+						<span class="loadcheck">
+							<label for="rythme_false" class="falseLabel" id="label_rythme_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="rythme_null" class="nullLabel" id="label_rythme_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="rythme_true" class="trueLabel" id="label_rythme_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
 
-				<span class="critere">
-					<h5>Effets spéciaux</h5>
-					<input type="radio" name="sfx" class="falseInput" id="sfx_false" value="false">
-					<input type="radio" name="sfx" class="nullInput" id="sfx_null" value="null" checked>
-					<input type="radio" name="sfx" class="trueInput" id="sfx_true" value="true">
-					<span class="loadcheck">
-						<label for="sfx_false" class="falseLabel" id="label_sfx_false" title="Je n'aime pas">
-							<span class="entypo-cancel">&#10008;</span>
-						</label>
-				    <label for="sfx_null" class="nullLabel" id="label_sfx_null" title="neutre">
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="loadMid"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-						<span class="load"></span>
-				    </label>
-				    <label for="sfx_true" class="trueLabel" id="label_sfx_true" title="J'aime">
-						<span class="entypo-check">&#10004;</span>
-				    </label>
+					<span class="critere">
+						<h5>Effets spéciaux</h5>
+						<input type="radio" name="sfx" class="falseInput" id="sfx_false" value="false">
+						<input type="radio" name="sfx" class="nullInput" id="sfx_null" value="null" checked>
+						<input type="radio" name="sfx" class="trueInput" id="sfx_true" value="true">
+						<span class="loadcheck">
+							<label for="sfx_false" class="falseLabel" id="label_sfx_false" title="Je n'aime pas">
+								<span class="entypo-cancel">&#10008;</span>
+							</label>
+					    <label for="sfx_null" class="nullLabel" id="label_sfx_null" title="neutre">
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="loadMid"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+							<span class="load"></span>
+					    </label>
+					    <label for="sfx_true" class="trueLabel" id="label_sfx_true" title="J'aime">
+							<span class="entypo-check">&#10004;</span>
+					    </label>
+						</span>
 					</span>
-				</span>
+				</form>
 
-			</form>
-			<button id='dislikeButton' class="btn btn-lg btn-danger">Je n'aime rien</button>
-			<button form="critere_form" type="reset" class="btn btn-lg btn-primary">Reset</button>
-			<button id="likeButton" class="btn btn-lg btn-success">J'aime tout</button><br/><br/>
-			<button form="critere_form" type="submit" class="btn btn-lg btn-primary">Valider</button>
+				<button id='dislikeButton' class="btn btn-lg btn-danger">Un bon gros tas de merde</button>
+				<button form="critere_form" type="reset" class="btn btn-lg btn-primary">Reset</button>
+				<button id="likeButton" class="btn btn-lg btn-success">Un véritable chef d'œuvre</button><br/><br/>
+				<button form="critere_form" type="submit" class="btn btn-lg btn-primary">Valider</button>
+			</div>
+			<div id="formX">
+				<p>Ce film n'est pas encore sorti en salle. Il n'est donc (pour le moment) pas possible de le noter.<br/>
+					Si vous avez déjà vu ce film vous êtes soit le réalisateur (auquel cas, bienvenu sur BestMoviesChoice <span class="glyphicon glyphicon-thumbs-up" style='color:#58d37b;'></span>), soit un pirate (et ça c'est pas joli joli ! <span class="glyphicon glyphicon-thumbs-down" style="color:#db1536;"></span>).
+				</p>
+			</div
 		</section>
-
 	</div>
 
 
@@ -466,6 +472,19 @@
 		releaseDate.style.marginBottom = '10px';
 		movie.appendChild(releaseDate);
 
+		//Vérification de la date de sortie du film pour affichage du formulaire de notation
+		var release_date = new Date(film.release_date);
+		if (release_date.getTime() > Date.now())
+		{
+			document.getElementById('notation').removeChild(document.getElementById('formOK'));
+			document.getElementById('formX').style.display = "block";
+		}
+		else {
+			document.getElementById('notation').removeChild(document.getElementById('formX'));
+			document.getElementById('formOK').style.display = "block";
+		}
+		//Fin vérification de la date de sortie
+
 		var overview = document.createElement('div');
 		overview.setAttribute('id', 'overview');
 		overview.textContent = 'Synopsis : ' + film.overview;
@@ -497,6 +516,7 @@
 			}
 		}
 
+		//Evènement onclick pour le bouton likeButton
 		document.getElementById("likeButton").onclick = function()
 		{
 			var inputs = document.getElementsByClassName("trueInput");
@@ -506,6 +526,7 @@
 				inputs[i].checked = true;
 			}
 		};
+		//Evènement onclick pour le bouton dislikeButton
 		document.getElementById("dislikeButton").onclick = function()
 		{
 			var inputs = document.getElementsByClassName("falseInput");
