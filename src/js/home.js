@@ -90,28 +90,45 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 			JSON.parse(getMovieById(text)).results
 		);
 	}
-	this.showRecommandedMoviesByNotes = function(){
+	this.showRecommandedMoviesByNotes = function(users){
+		if(users == "friends"){
+			users = JSON.parse($("#friends").html());
+		}
 	    var notes = JSON.parse($("#notes").html());
 	    var userID = $("#userID").html();
-		var finalMovies = getRecommandations(notes, userID);
-	    if(finalMovies.length == 0){
+		if(users.length == 0){
 			this.updateData(
-			"Nous ne pouvons vous recommander de films pour l'instant. Noter des films peut résoudre ce problème ;)",
+			"Vous devez ajouter des amis pour avoir des recommandations.",
 			null
-		);
-		} else {
-			var resultMovies = {
-					results: []
-			};
-			for(var i = 0; i < finalMovies.length; i++){
-				var movie = JSON.parse(getMovieById(finalMovies[i]));
-				resultMovies.results.push(movie);
-			}
-			this.updateData(
-				"Films recommandés par algorithme",
-				resultMovies.results
 			);
 		}
+		else{
+			var finalMovies = getRecommandations(notes, userID, users);
+			if(finalMovies.length == 0){
+				var title = "Nous ne pouvons vous recommander de films pour l'instant. Noter des films peut résoudre ce problème ;)";
+				if(users != "all"){
+					title = "En nous basant sur les notes de vos amis, nous ne trouvons pas encore de films à vous recommander.";
+				}
+				this.updateData(title,null);
+			} else {
+				var resultMovies = {
+						results: []
+				};
+				for(var i = 0; i < finalMovies.length; i++){
+					var movie = JSON.parse(getMovieById(finalMovies[i]));
+					resultMovies.results.push(movie);
+				}
+				var title = "Films recommandés par BestMoviesChoice";
+				if(users != "all"){
+					title = "Films recommandés selon les notes de mes amis";
+				}
+				this.updateData(
+					title,
+					resultMovies.results
+				);
+			}
+		}
+		
 	}
 
 	/* Update des donnees pour afficher les films recommandés par les catégories préférées de l'utilisateur */
@@ -136,7 +153,6 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 		} else {
 			// récupérer les films notés par l'utilisateur
 			var ratedMovies = JSON.parse($("#ratedMovies").html());
-			//console.log("ratedMovies = " + getMovieById(ratedMovies[0].local.id_movie));
 
 			// pour chaque film de popularMovies
 			for(var i in popularMovies)

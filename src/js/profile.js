@@ -47,9 +47,7 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 		var friends = null;
 		try{
 			friends = JSON.parse($("#friends").html()).local.friends;
-		} catch(e){
-			console.warn("Erreur de parsing des amis :\n", e);
-		}
+		} catch(e){}
 		if(friends && friends.length) {
 			$("#message-friends").hide();
 			this.friends = friends;

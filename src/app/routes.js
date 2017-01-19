@@ -68,14 +68,24 @@ module.exports = function (app, passport) {
   app.get('/home', isLoggedIn, function (req, res) {
     Note.find(null).sort([['local.id_user', 'ascending']]).exec(function (err, notes) {
       var notes = JSON.stringify(notes);
-      Note.find({ 'local.id_user': req.user._id }).lean().exec(function (err, note) {
+      Note.find({ 'local.id_user': req.user._id }).exec(function (err, note) {
         var ratedMovies = JSON.stringify(note);
-        res.render('home.ejs', {
-          ratedMovies: ratedMovies,
-          notes: notes,
-          userId: req.user._id,
-          user: req.user // get the user out of session and pass to template
+        var friendsIDs = [];
+        Friend.findOne({ 'local.id_user': req.user._id}, function(err, friend){
+          if(friend && friend.local.friends){
+            for(var i = 0; i < friend.local.friends.length; i++){
+              friendsIDs.push(friend.local.friends[i]._id);
+            }
+          }
+          res.render('home.ejs', {
+            ratedMovies: ratedMovies,
+            notes: notes,
+            friendsIDs: JSON.stringify(friendsIDs)  ,
+            userId: req.user._id,
+            user: req.user // get the user out of session and pass to template
+          });
         });
+        
       });
     });
   });

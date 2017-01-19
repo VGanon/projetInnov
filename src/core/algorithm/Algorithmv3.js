@@ -5,7 +5,7 @@ var sortedRatedCrit = [];
 var filmCount = new Object();
 var finalMovies = [];
 var randomRecommandation = [];
-function getRecommandations(notes, userid){
+function getRecommandations(notes, userid, users){
   userID = userid;
   ratedMovies = [];
   ratedCrit = [];
@@ -13,64 +13,57 @@ function getRecommandations(notes, userid){
   filmCount = new Object();
   finalMovies = [];
   randomRecommandation = [];
-  var array = buildArray(notes, userID);
+  var array = buildArray(notes, userID, users);
   if(ratedMovies.length == 0){
     return randomRecommandation;
   }
-  console.log("1) Array");
-  console.log(array);
   var map = buildMap(array);
-  console.log("2) Map");
-  console.log(map);
-  console.log("3) Calcul des scores");
   var allCrit = computeScore(map);
-  console.log(allCrit);
   findBestCritOfUser();
   var bestCrit = sortedRatedCrit[0];
-  console.log("4) Meilleur critère de " + userID + " : " + bestCrit);
   var i = 0;
-  var limit = 9;
+  var limit = 15;
   while(finalMovies.length < limit && i<13){
-    console.log("Critère : " + bestCrit);
     sortByBestCrit(bestCrit, allCrit);
     i++;
     bestCrit = sortedRatedCrit[i];
   }
-  console.log("5) Films recommandables");
-  console.log(finalMovies);
   if(bestCrit == sortedRatedCrit[1]){
-    console.log("Random en cours");
     randomize(limit);
   }
   else{
     randomRecommandation = finalMovies;
   }
-  console.log("6) Films à recommander");
-  console.log(randomRecommandation);
   return randomRecommandation;
 }
 
 
-function buildArray(notes, userID){
+function buildArray(notes, userID,users){
   var array = [];
 
   for(var i = 0; i < notes.length; i++){
     var note = notes[i];
     var id_film = note.local.id_movie;
-    if(note.local.id_user == userID){
-      ratedMovies.push(id_film);
-    }
+    var id_user_note = note.local.id_user;
     if(filmCount[id_film] == null){
       filmCount[id_film] = 1;
     }
     else{
       filmCount[id_film]++;
     }
+    if(id_user_note == userID){
+      ratedMovies.push(id_film);
+    }
     for(var key in note.local.criteres){
       if(note.local.criteres[key] === true){
-        array.push(id_film + "_" + key);
+        if(users != "all" && ($.inArray(id_user_note, users) != -1)){
+          array.push(id_film + "_" + key);
+        }
+        else if(users == "all"){
+          array.push(id_film + "_" + key);
+        }  
       }
-      if(note.local.id_user == userID){
+      if(id_user_note == userID){
         ratedCrit.push(key);
       }
     }
