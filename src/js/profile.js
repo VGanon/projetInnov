@@ -46,11 +46,10 @@ angular.module('ratedMovies', []).controller('Controller', function() {
 	this.showFriends = function(){
 		var friends = null;
 		try{
-			friends = JSON.parse($("#friends").html());
+			friends = JSON.parse($("#friends").html()).local.friends;
 		} catch(e){
 			console.warn("Erreur de parsing des amis :\n", e);
 		}
-
 		if(friends && friends.length) {
 			$("#message-friends").hide();
 			this.friends = friends;

@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="/css/profile.css">
 	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+	<script src="/node_modules/<socke></socke>t.io/node_modules/socket.io-client/dist/socket.io.js"></script>
 	<script src="/core/apiRequests/apirequests.js"></script>
 	<script src="/node_modules/angular/angular.js"></script>
 	<script src="/js/profile.js"></script>
@@ -130,15 +130,15 @@
 
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
-			<% } else /*if(condition not friends)*/ {%>
-				<button type="button" class="btn btn-md pull-right btn-danger" onclick="alert('Ami ajouté TODO!')">Ajouter ami</button>
+			<% } else if(!isAFriend) {%>
+				<form id="friend_form" action="/profile/<%= profile._id %>" method="post"></form>
+				<button form='friend_form' type="submit" class="btn btn-lg btn-primary pull-right">Ajouter ami</button>
 			<% } %>
 
 		</div>
 	</div>
 
 	<!-- ------------------------------------------------------ AMIS ------------------------------------------------------- -->
-	<!-- Copier coller de la partie 'FILMS NOTES'. C'est tres sale, je le fais a contre-coeur T_T -->
 
 	<legend>
 		<h2><span class="fa fa-users"></span> Amis</h2>
@@ -146,7 +146,7 @@
 
 	<div class="row">
 		<div class="col-sm-12 well">
-			<h2 style="display:none;" id="friends"><%= profile.local.friends %></h2>
+			<h2 style="display:none;" id="friends"><%= friends %></h2>
 
 			<h5 id="message-friends">Aucun ami !</h5>
 
