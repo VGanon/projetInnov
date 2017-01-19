@@ -158,7 +158,18 @@ module.exports = function (app, passport) {
     });
     Friend.findOne({ 'local.id_user': req.user._id }, function (err, friend) {
       if (friend) {
-        friend.local.friends.push(friendToAdd);
+        var isAFriend = false;
+        for(var i = 0; i < friend.local.friends.length; i++){
+          if(friend.local.friends[i]._id == req.params.userId){
+            isAFriend = true;
+            friend.local.friends.splice(i, 1);
+            Friend.remove({ 'local.id_user': req.user._id });
+            break;
+          }
+        }
+        if(!isAFriend){
+          friend.local.friends.push(friendToAdd);
+        }
         friend.save(function (err) {
           if (err) console.log("Erreur : " + err);
         });

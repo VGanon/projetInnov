@@ -127,12 +127,13 @@
                     </tbody>
             </table>
       
-
+			<form id="friend_form" action="/profile/<%= profile._id %>" method="post"></form>
             <% if(profile._id.equals(user._id)){ %>
 				<a href="/configure"><button type="submit" class="btn btn-primary pull-right">Modifier le profil</button></a><br><br>
 			<% } else if(!isAFriend) {%>
-				<form id="friend_form" action="/profile/<%= profile._id %>" method="post"></form>
-				<button form='friend_form' type="submit" class="btn btn-lg btn-primary pull-right">Ajouter ami</button>
+				<button form='friend_form' type="submit" class="btn btn-primary pull-right">Ajouter dans mes amis</button>
+			<% } else { %>
+				<button form='friend_form' type="submit" class="btn btn-danger pull-right">Supprimer de mes amis</button>
 			<% } %>
 
 		</div>
