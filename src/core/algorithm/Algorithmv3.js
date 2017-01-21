@@ -13,23 +13,35 @@ function getRecommandations(notes, userid, users){
   filmCount = new Object();
   finalMovies = [];
   randomRecommandation = [];
+  console.time('buildArray');
   var array = buildArray(notes, userID, users);
+  console.timeEnd('buildArray');
   if(ratedMovies.length == 0){
     return randomRecommandation;
   }
+  console.time('buildMap');
   var map = buildMap(array);
+  console.timeEnd('buildMap');
+  console.time('computeScore');
   var allCrit = computeScore(map);
+  console.timeEnd('computeScore');
+  console.time('findBestCritOfUser');
   findBestCritOfUser();
+  console.timeEnd('findBestCritOfUser');
   var bestCrit = sortedRatedCrit[0];
   var i = 0;
   var limit = 15;
+  console.time('whileFinal');
   while(finalMovies.length < limit && i<13){
     sortByBestCrit(bestCrit, allCrit);
     i++;
     bestCrit = sortedRatedCrit[i];
   }
+  console.timeEnd('whileFinal');
   if(bestCrit == sortedRatedCrit[1]){
+    console.time('randomize')
     randomize(limit);
+    console.timeEnd('randomize')
   }
   else{
     randomRecommandation = finalMovies;
