@@ -15,8 +15,8 @@ form {
 	text-align: center;
 }
 
-#likeButton, #dislikeButton{
-	width: 250px;
+.btn {
+	width: 100px;
 }
 
 #formOK, #formX {
