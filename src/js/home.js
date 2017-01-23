@@ -118,7 +118,7 @@ angular.module('movieRecommendationCategorie', []).controller('Controller', func
 					var movie = JSON.parse(getMovieById(finalMovies[i]));
 					resultMovies.results.push(movie);
 				}
-				var title = "Films recommandés par BestMoviesChoice";
+				var title = "Films recommandés par MoviesBestChoice";
 				if(users != "all"){
 					title = "Films recommandés selon les notes de mes amis";
 				}
